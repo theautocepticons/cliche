@@ -19,8 +19,16 @@
 			</div>
 		</header>
 
+		<div class="tabs-bar">
+			<button class="tab-btn active" data-tab="gen5">Gen &lt; 6</button>
+			<button class="tab-btn" data-tab="gen6">Gen 6+</button>
+			<button class="tab-btn" data-tab="sac">SAC</button>
+			<button class="tab-btn" data-tab="fru">FRU</button>
+		</div>
+
 		<main class="main-content">
 
+			<div class="tab-content" data-generation="gen5">
 			<div class="command" data-command="cm-connection">
 				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Establish CM Connection</h2>
 				<div class="command-header">
@@ -187,7 +195,7 @@
 				</div>
 			</div>
 
-			<div class="command" data-command="blade-mezz">
+			<div class="command">
 				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Blade Mezz Status</h2>
 				<div class="command-header">
 					<input type="text" class="command-display" readonly value="-getblademezzstatus -i">
@@ -409,6 +417,27 @@
 					<input type="text" class="command-display" readonly value="-v">
 					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
 				</div>
+			</div>
+
+			</div>
+
+			<div class="tab-content" data-generation="gen6">
+			<div class="command">
+				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Gen 6+ Placeholder Command</h2>
+				<div style="margin-bottom: 12px; padding: 12px; background-color: var(--bg-tertiary); border-radius: 8px; font-size: 13px; color: var(--text-secondary);">
+					This is a placeholder command for Gen 6+ devices. Actual commands will be added here.
+				</div>
+				<div class="command-header">
+					<input type="text" class="command-display" readonly value="-gen6placeholder">
+					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+				</div>
+			</div>
+			</div>
+
+			<div class="tab-content" data-generation="sac">
+			</div>
+
+			<div class="tab-content" data-generation="fru">
 			</div>
 		</main>
 	</div>

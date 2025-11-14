@@ -54,6 +54,9 @@ body {
 .main-content {
 	padding-top: 20px;
 	padding-bottom: 20px;
+	position: relative;
+	overflow: hidden;
+	transition: min-height 0.3s ease;
 }
 
 header {
@@ -82,6 +85,49 @@ h1 {
 	color: var(--text-primary);
 	margin: 0;
 	white-space: nowrap;
+}
+
+.tabs-bar {
+	position: sticky;
+	top: 68px;
+	background-color: var(--bg-secondary);
+	padding: 12px 20px;
+	display: flex;
+	gap: 8px;
+	border-bottom: 1px solid var(--border);
+	z-index: 999;
+	transition: all 0.3s ease;
+	box-shadow: var(--shadow-sm);
+	border-bottom-left-radius: 6px;
+	border-bottom-right-radius: 6px;
+}
+
+.tab-btn {
+	padding: 8px 16px;
+	background-color: var(--bg-tertiary);
+	color: var(--text-secondary);
+	border: 1px solid var(--border);
+	border-radius: 8px;
+	cursor: pointer;
+	font-size: 14px;
+	font-weight: 500;
+	transition: all 0.2s ease;
+	white-space: nowrap;
+}
+
+.tab-btn:hover {
+	background-color: var(--border);
+	color: var(--text-primary);
+}
+
+.tab-btn.active {
+	background-color: var(--accent);
+	color: white;
+	border-color: var(--accent);
+}
+
+.tab-btn:active {
+	transform: scale(0.95);
 }
 
 .header-inputs {
@@ -181,6 +227,107 @@ input[type="password"]:focus {
 
 .command:hover {
 	box-shadow: var(--shadow-md);
+}
+
+/* Tab content containers */
+.tab-content {
+	will-change: transform, opacity;
+}
+
+.tab-content.hidden {
+	display: none;
+}
+
+/* Ensure smooth animations on all devices */
+.tab-content.slide-in-left,
+.tab-content.slide-in-right,
+.tab-content.slide-out-left,
+.tab-content.slide-out-right {
+	backface-visibility: hidden;
+	-webkit-backface-visibility: hidden;
+	perspective: 1000px;
+	-webkit-perspective: 1000px;
+}
+
+/* Tab transition animations - Calendar-style smooth sliding */
+@keyframes slideInFromLeft {
+	0% {
+		opacity: 0;
+		transform: translateX(-100%);
+	}
+	20% {
+		opacity: 0.3;
+	}
+	100% {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+@keyframes slideInFromRight {
+	0% {
+		opacity: 0;
+		transform: translateX(100%);
+	}
+	20% {
+		opacity: 0.3;
+	}
+	100% {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+@keyframes slideOutToLeft {
+	0% {
+		opacity: 1;
+		transform: translateX(0);
+	}
+	80% {
+		opacity: 0.3;
+	}
+	100% {
+		opacity: 0;
+		transform: translateX(-100%);
+	}
+}
+
+@keyframes slideOutToRight {
+	0% {
+		opacity: 1;
+		transform: translateX(0);
+	}
+	80% {
+		opacity: 0.3;
+	}
+	100% {
+		opacity: 0;
+		transform: translateX(100%);
+	}
+}
+
+.tab-content.slide-in-left {
+	animation: slideInFromLeft 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.tab-content.slide-in-right {
+	animation: slideInFromRight 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.tab-content.slide-out-left {
+	animation: slideOutToLeft 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+	position: absolute;
+	width: calc(100% - 40px);
+	left: 20px;
+	top: 0;
+}
+
+.tab-content.slide-out-right {
+	animation: slideOutToRight 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+	position: absolute;
+	width: calc(100% - 40px);
+	left: 20px;
+	top: 0;
 }
 
 .command-header {
@@ -535,9 +682,26 @@ input[type="password"]:focus {
 		width: 100%;
 	}
 
+	.tabs-bar {
+		flex-wrap: wrap;
+		padding: 8px 16px;
+	}
+
+	.tab-btn {
+		font-size: 13px;
+		padding: 6px 12px;
+	}
+
 	.main-content {
 		padding: 16px;
 		padding-top: 160px;
+	}
+
+	/* Adjust slide animations for mobile */
+	.tab-content.slide-out-left,
+	.tab-content.slide-out-right {
+		width: calc(100% - 32px);
+		left: 16px;
 	}
 
 	.command-options.grid-4 {
