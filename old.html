@@ -1,0 +1,2834 @@
+<!DOCTYPE html>
+<html xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
+<head>
+<title>Command Line Cheet Sheet v2.1</title>
+
+<!--[if gte mso 9]><xml>
+<mso:CustomDocumentProperties>
+<mso:docLang msdt:dt="string">en</mso:docLang>
+</mso:CustomDocumentProperties>
+</xml><![endif]-->
+</head><body>
+<h12 id="top"></h12>
+
+<div class="header" id="myHeader">
+  <p1 style="font-size:30pt; margin-left:170px;">Command Line Cheat Sheet v2.1</p1>
+
+<br>
+<input type="color" id="colorSelection">
+<input type="button" id="colorButton" value="Change Page Color" onclick="changeColor()">
+<input type="text" id="colorTextbox" maxlength="16" size="6">
+
+<script>
+function changeColor() {
+let color = document.getElementById('colorSelection').value;
+document.body.style.backgroundColor = color;
+document.getElementById('colorTextbox').value = color;
+}
+</script>
+
+<a href="#bottom" style="font-family:segoe ui; font-size:14pt; margin-left:440px; color:#ffffff;"><b>&#8595; Bottom of Page &#8595;</b></a>
+
+</div>
+
+<style>
+body {
+  margin: 0px;
+  font-family: Arial, Helvetica, sans-serif, segoe ui;
+}
+.top-container {
+  background-color: rgb(255,255,255);
+  padding: 100px;
+}
+.header {
+  position: auto;
+  width: 100%;
+  padding: 5px 15px;
+  background: rgb(63, 81, 181);
+  color: white;
+}
+.content {
+  padding: 10px;
+}
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+.sticky + .content {
+  padding-top: 102px;
+  width: 100%;
+}
+</style>
+</head>
+
+<script>
+window.onscroll = function() {myFunction()};
+
+var header = document.getElementById("myHeader");
+var sticky = header.offsetTop;
+
+function myFunction() {
+  if (window.pageYOffset > sticky) {
+    header.classList.add("sticky");
+  } else {
+    header.classList.remove("sticky");
+  }
+}
+</script>
+
+<div class="header2" id="myHeader2">
+  <p1 style="font-size:10pt; margin-left:20px;"></p1>
+
+<button onclick='window.open("https://mw1p.rdm.osdinfra.net/FrontEnd/UpdateMacAddress");return false;'>Public MAC Update</button>
+<button onclick='window.open("https://dm2n.rdm.osdinfra.net/FrontEnd/UpdateMacAddress");return false;'>Gov MAC Update</button>
+<button onclick='window.open("https://phynet.trafficmanager.net");return false;'>PhyNet Tools</button>
+</div>
+
+<style>
+body {
+  margin: 0px;
+  font-family: Arial, Helvetica, sans-serif, segoe ui;
+}
+.header2 {
+  position: fixed;
+  left: 0px;
+  right: 0px;
+  top: 82px;
+  width: 100%;
+  padding: 5px 15px;
+  background: rgb(158,158,158);
+  color: white;
+}
+.content {
+  padding: 10px;
+}
+.sticky {
+  position: fixed;
+
+  left: 0px;
+  right: 0px;
+  width: 100%;
+}
+.sticky + .content {
+  padding-top: 102px;
+  width: 100%;
+}
+</style>
+</head>
+
+<script>
+window.onscroll = function() {myFunction()};
+
+var header2 = document.getElementById("myHeader2");
+var sticky = header.offsetTop;
+
+function myFunction() {
+  if (window.pageYOffset > sticky) {
+    header.classList.add("sticky");
+  } else {
+    header.classList.remove("sticky");
+  }
+}
+</script><br>
+
+<style>
+.grid-containerDLC {
+  display: grid;
+  height: 25px;
+  width:900px ;
+  align-content: space-evenly;
+  grid-template-columns: 1px 55px;
+  grid-gap: 15px;
+  padding: 6px;
+}
+.grid-containerDLC > div {
+  text-align: left;
+}
+</style>
+
+<style>
+.grid-containerGLC1 {
+  display: grid;
+  height: 25px;
+  width:900px ;
+  align-content: space-evenly;
+  grid-template-columns: 360px 80px 132px 43px 55px;
+  grid-gap: 10px;
+  padding: 6px;
+}
+.grid-containerGLC1 > div {
+  text-align: left;
+}
+</style>
+
+<style>
+.grid-containerGLC2 {
+  display: grid;
+  height: 0px;
+  width:900px ;
+  align-content: space-evenly;
+  grid-template-columns: 300px 50px 85px 132px 81px 75px 43px 55px;
+  grid-gap: 10px;
+  padding: 6px;
+}
+.grid-containerGLC2 > div {
+  text-align: left;
+}
+</style>
+
+<style>
+.grid-container {
+  display: grid;
+  height: 25px;
+  width:900px ;
+  align-content: space-evenly;
+  grid-template-columns: 300px 260px 50px 40px 40px 55px;
+  grid-gap: 15px;
+  padding: 5px;
+}
+.grid-container > div {
+  text-align: left;
+}
+</style>
+
+<style>
+.grid-container1 {
+  display: grid;
+  height: 25px;
+  width:900px ;
+  align-content: space-evenly;
+  grid-template-columns: 300px 120px 125px 50px 40px 40px 55px;
+  grid-gap: 15px;
+  padding: 5px;
+}
+
+.grid-container1 > div {
+  text-align: left;
+}
+</style>
+
+<style>
+.grid-container2 {
+  display: grid;
+  height: 25px;
+  width:900px ;
+  align-content: space-evenly;
+  grid-template-columns: 300px 190px 55px 50px 40px 40px 55px;
+  grid-gap: 15px;
+  padding: 5px;
+}
+
+.grid-container2 > div {
+  text-align: left;
+}
+</style>
+
+<style>
+.grid-container3 {
+  display: grid;
+  height: 25px;
+  width:900px ;
+  align-content: space-evenly;
+  grid-template-columns: 300px 190px 57px 50px 40px 40px 55px;
+  grid-gap: 15px;
+  padding: 5px;
+}
+
+.grid-container3 > div {
+  text-align: left;
+}
+</style>
+
+<style>
+.grid-container4 {
+  display: grid;
+  height: 25px;
+  width:900px ;
+  align-content: space-evenly;
+  grid-template-columns: 300px 190px 55px;
+  grid-gap: 15px;
+  padding: 5px;
+}
+
+.grid-container4 > div {
+  text-align: left;
+}
+</style>
+
+<style>
+.grid-container5 {
+  display: grid;
+  height: 25px;
+  width:900px ;
+  align-content: space-evenly;
+  grid-template-columns: 300px 450px 55px;
+  grid-gap: 15px;
+  padding: 5px;
+}
+
+.grid-container5 > div {
+  text-align: left;
+}
+</style>
+
+<style>
+.grid-containerCMSIP {
+  display: grid;
+  height: 25px;
+  width:900px ;
+  align-content: space-evenly;
+  grid-template-columns: 300px 190px;
+  grid-gap: 15px;
+  padding: 5px;
+}
+
+.grid-containerCMSIP > div {
+  text-align: left;
+}
+</style>
+
+<style>
+.grid-containerCMSIP1 {
+  display: grid;
+  height: 25px;
+  width:900px ;
+  align-content: space-evenly;
+  grid-template-columns: 466px 30px;
+
+  grid-gap: 15px;
+  padding: 5px;
+}
+
+.grid-containerCMSIP1 > div {
+  text-align: left;
+}
+</style>
+
+<style>
+.grid-containerGBBC {
+  display: grid;
+  height: 25px;
+  width:900px ;
+  align-content: space-evenly;
+  grid-template-columns: 300px 261px 50px 40px 40px 55px;
+  grid-gap: 15px;
+  padding: 5px;
+}
+
+.grid-containerGBBC > div {
+  text-align: left;
+}
+</style>
+
+<style>
+.grid-containerRMOut {
+  display: grid;
+  height: 25px;
+  width:1200px ;
+  align-content: space-evenly;
+  grid-template-columns: 30px;
+  margin-left: 481px;
+  grid-gap: 15px;
+  padding: 5px;
+}
+
+.grid-containerRMOut > div {
+  text-align: left;
+}
+</style>
+
+<style>
+.grid-containerRMBBC {
+  display: grid;
+  height: 25px;
+  width:900px ;
+  align-content: space-evenly;
+  grid-template-columns: 300px 260px 50px 40px 40px 55px;
+  grid-gap: 15px;
+  padding: 5px;
+}
+
+.grid-containerRMBBC > div {
+  text-align: left;
+}
+</style>
+
+<style>
+.grid-containerREP {
+  display: grid;
+  height: 25px;
+  width:900px ;
+  align-content: space-evenly;
+  grid-template-columns: 640px 40px 110px;
+  grid-gap: 15px;
+  padding: 5px;
+}
+.grid-container > div {
+  text-align: left;
+}
+</style>
+
+
+<p style="border:4px; border-style:solid; border-color:black; font-size:32px; font-family:calibri; text-align:center; width:875px; height:40px; padding:5px; margin-left:4px">CM / RM DEFAULT LOGIN CREDENTIALS</p>
+
+<div class="grid-containerDLC">
+
+<p style="margin-left:10px;"><input type="text" value="wcscli -establishcmconnection -p 8000 -s 1 -u admin -x $pl3nd1D" size="76" id="AdminSplendid">
+
+<p style="margin-left:525px;"><button onclick="myFunction1()">COPY</button>
+
+<script>
+function myFunction1() {
+  var copyText = document.getElementById("AdminSplendid");
+  copyText.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-containerDLC">
+
+<p style="margin-left:10px;"><input type="text" value="wcscli -establishcmconnection -p 8000 -s 1 -u administrator -x $pl3nd1D" size="76" id="AdministratorSplendid">
+
+<p style="margin-left:525px;"><button onclick="myFunction2()">COPY</button>
+
+<script>
+function myFunction2() {
+  var copyText = document.getElementById("AdministratorSplendid");
+  copyText.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-containerDLC">
+
+<p style="margin-left:10px;"><input type="text" value="wcscli -establishcmconnection -p 8000 -s 1 -u admin -x Rd!Pa$$w0rd!#9K" size="76" id="AdminRd!">
+
+<p style="margin-left:525px;"><button onclick="myFunction3()">COPY</button>
+
+<script>
+function myFunction3() {
+  var copyText = document.getElementById("AdminRd!");
+  copyText.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-containerDLC">
+
+<p style="margin-left:10px;"><input type="text" value="wcscli -establishcmconnection -p 8000 -s 1 -m localhost -u admin -x Rd!Pa$$w0rd!#9K" size="76" id="AdminRd!local">
+
+<p style="margin-left:525px;"><button onclick="myFunction4()">COPY</button>
+
+<script>
+function myFunction4() {
+  var copyText = document.getElementById("AdminRd!local");
+  copyText.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+
+<p style="border:4px; border-style:solid; border-color:black; font-size:32px; font-family:calibri; text-align:center; width:875px; height:40px; padding:10px; margin-left:4px">CM / RM GENERATED LOGIN CREDENTIALS</p>
+
+<div class="grid-containerGLC1">
+
+<input type="text" value="wcscli -establishcmconnection -p 8000 -s 1 -u admin -x" size="50" id="AdminCreds1" style="margin-left:10px;">
+<span style="font-size:14pt;">Password:</span>
+<input type="text" value=" " size="15" id="AdminCreds2">
+<input type="text" value=" " maxlength="4" size="1" id="AdminCredsOutput">
+
+<button onclick="myFunction5()">COPY</button>
+
+<script>
+function myFunction5() {
+  var copyText = document.getElementById("AdminCreds1");
+  var copyText2 = document.getElementById("AdminCreds2");
+  var output = document.getElementById("AdminCredsOutput");
+  output.value = copyText.value + copyText2.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-containerGLC1">
+
+<input type="text" value="wcscli -establishcmconnection -p 8000 -s 1 -u WcsRma -x" size="50" id="WscCreds1" style="margin-left:10px;">
+<span style="font-size:14pt;">Password:</span>
+<input type="text" value=" " size="15" id="WscCreds2">
+<input type="text" value=" " maxlength="4" size="1" id="WscCredsOutput">
+
+<button onclick="myFunction6()">COPY</button>
+
+
+<script>
+function myFunction6() {
+  var copyText = document.getElementById("WscCreds1");
+  var copyText2 = document.getElementById("WscCreds2");
+  var output = document.getElementById("WscCredsOutput");
+  output.value = copyText.value + copyText2.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-containerGLC1">
+
+<input type="text" value="wcscli -establishcmconnection -p 8000 -s 1 -u root -x" size="50" id="RootCreds1" style="margin-left:10px;">
+<span style="font-size:14pt;">Password:</span>
+<input type="text" value=" " size="15" id="RootCreds2">
+<input type="text" value=" " maxlength="4" size="1" id="RootCredsOutput">
+
+<button onclick="myFunction7()">COPY</button>
+
+<script>
+function myFunction7() {
+  var copyText = document.getElementById("RootCreds1");
+  var copyText2 = document.getElementById("RootCreds2");
+  var output = document.getElementById("RootCredsOutput");
+  output.value = copyText.value + copyText2.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<p><span style="font-size:16pt; margin-left:14px;">BreakFix SSL Off</span></p>
+
+<div class="grid-containerGLC2">
+
+<input type="text" value="wcscli -establishcmconnection -p 8000 -s 0 -u" size="40" id="BFCOFF1" style="margin-left:10px;">
+<input type="text" value=" -x" maxlength="3" size="3" id="BFCOFF2">
+<span style="font-size: 14pt; margin-left:2px;">Username:</span>
+<input type="text" value=" " size="15" id="BFCOFF3">
+<span style="font-size: 14pt;">Password:</span>
+<input type="text" value=" " size="16" id="BFCOFF4">
+<input type="text" value=" " maxlength="4" size="1" id="BFCOFFOutput">
+
+<button onclick="myFunctionBFCOFF()">COPY</button>
+
+
+<script>
+function myFunctionBFCOFF() {
+  var copyText = document.getElementById("BFCOFF1");
+  var copyText2 = document.getElementById("BFCOFF3");
+  var copyText3 = document.getElementById("BFCOFF2");
+  var copyText4 = document.getElementById("BFCOFF4");
+  var output = document.getElementById("BFCOFFOutput");
+  output.value = copyText.value + copyText2.value + copyText3.value + copyText4.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<p><span style="font-size:16pt; margin-left:14px;">BreakFix SSL On</span></p>
+
+<div class="grid-containerGLC2">
+
+<input type="text" value="wcscli -establishcmconnection -p 8000 -s 1 -u" size="40" id="BFCON1" style="margin-left:10px;">
+<input type="text" value=" -x" maxlength="3" size="3" id="BFCON2">
+<span style="font-size: 14pt; margin-left:3px;">Username:</span>
+<input type="text" value=" " size="15" id="BFCON3">
+<span style="font-size: 14pt;">Password:</span>
+<input type="text" value=" " size="16" id="BFCON4">
+<input type="text" value=" " maxlength="4" size="1" id="BFCONOutput">
+
+<button onclick="myFunctionBFCON()">COPY</button>
+
+
+<script>
+function myFunctionBFCON() {
+  var copyText = document.getElementById("BFCON1");
+  var copyText2 = document.getElementById("BFCON3");
+  var copyText3 = document.getElementById("BFCON2");
+  var copyText4 = document.getElementById("BFCON4");
+  var output = document.getElementById("BFCONOutput");
+  output.value = copyText.value + copyText2.value + copyText3.value + copyText4.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<p style="border:4px; border-style:solid; border-color:black; font-size:32px; font-family:calibri; text-align:center; width:875px; height:40px; padding:10px; margin-left:4px">CM BLADE BASIC COMMANDS</p>
+
+<div class="grid-containerREP">
+
+<div><span style="font-size: 14pt; margin-left:590px;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="MassReplicate"></div>
+<button id="MassReplicate" onClick="CopyFields()">REPLICATE</button>
+
+<script>
+function CopyFields()
+{
+var text = document.getElementById("MassReplicate");
+var text1 = document.getElementById("CMLedOn2");
+var text2 =document.getElementById("CMLedOff2");
+var text3 = document.getElementById("CMPowOn2");
+var text4 =document.getElementById("CMPowOff2");
+var text5 =document.getElementById("GBI2");
+var text6 = document.getElementById("SBS2");
+var text7 =document.getElementById("SPBS2");
+var text8 =document.getElementById("RBL2");
+var text9 =document.getElementById("CBL2");
+var text10 =document.getElementById("GBM2");
+var text11 =document.getElementById("PCB2");
+var text12 =document.getElementById("GBW2");
+var text13 =document.getElementById("GBA2");
+var text14 =document.getElementById("BTU2");
+var text15 =document.getElementById("BTB2");
+var text16 =document.getElementById("BTP2");
+var text17 =document.getElementById("GBHM2");
+var text18 =document.getElementById("GBHC2");
+var text19 =document.getElementById("GBHJ2");
+var text20 =document.getElementById("GBHP2");
+var text21 =document.getElementById("GBHS2");
+var text22 =document.getElementById("GBHT2");
+var text23 =document.getElementById("GBHF2");
+var text24 =document.getElementById("GBBC2");
+var text25 =document.getElementById("CGN2");
+var text26 =document.getElementById("CAZ2");
+var text27 =document.getElementById("CAH2");
+var text28 =document.getElementById("CAS2");
+var text29 =document.getElementById("CAT2");
+var text30 =document.getElementById("CAX2");
+var text31 =document.getElementById("CAY2");
+var text32 =document.getElementById("CAA2");
+var text33 =document.getElementById("CAI2");
+var text34 =document.getElementById("CBA2");
+var text35 =document.getElementById("CBB2");
+var text36 =document.getElementById("CBC2");
+var text37 =document.getElementById("CEA2");
+var text38 =document.getElementById("CPA2");
+var text39 =document.getElementById("RMSBS2");
+var text40 =document.getElementById("RMSPBS2");
+var text41 =document.getElementById("VBBI2");
+var text42 =document.getElementById("VBI2");
+var text43 =document.getElementById("RRBL2");
+var text44 =document.getElementById("RCBL2");
+var text45 =document.getElementById("RMSBS2");
+var text46 =document.getElementById("RMGFS2");
+var text47 =document.getElementById("RMPCB2");
+var text48 =document.getElementById("RMGBW2");
+var text49 =document.getElementById("RMBTU2");
+var text50 =document.getElementById("RMBTB2");
+var text51 =document.getElementById("RMBTP2");
+var text52 =document.getElementById("RGBHS2");
+var text53 =document.getElementById("RGBHM2");
+var text54 =document.getElementById("RGBHC2");
+var text55 =document.getElementById("RGBHP2");
+var text56 =document.getElementById("RGBHA2");
+var text57 =document.getElementById("RGBHP2");
+var text58 =document.getElementById("RGBHF2");
+var text59 =document.getElementById("RGBHT2");
+var text60 =document.getElementById("RGBHR2");
+var text61 =document.getElementById("RGBHN2");
+var text62 =document.getElementById("RGBBC2");
+var text63 =document.getElementById("RGN2");
+var text64 =document.getElementById("RAZ2");
+var text65 =document.getElementById("RAU2");
+var text66 =document.getElementById("RAG2");
+var text67 =document.getElementById("RAT2");
+var text68 =document.getElementById("RAS2");
+var text69 =document.getElementById("RAO2");
+var text70 =document.getElementById("RAC2");
+
+text1.value = text.value;
+text2.value = text.value;
+text3.value = text.value;
+text4.value = text.value;
+text5.value = text.value;
+text6.value = text.value;
+text7.value = text.value;
+text8.value = text.value;
+text9.value = text.value;
+text10.value = text.value;
+text11.value = text.value;
+text12.value = text.value;
+text13.value = text.value;
+text14.value = text.value;
+text15.value = text.value;
+text16.value = text.value;
+text17.value = text.value;
+text18.value = text.value;
+text19.value = text.value;
+text20.value = text.value;
+text21.value = text.value;
+text22.value = text.value;
+text23.value = text.value;
+text24.value = text.value;
+text25.value = text.value;
+text26.value = text.value;
+text27.value = text.value;
+text28.value = text.value;
+text29.value = text.value;
+text30.value = text.value;
+text31.value = text.value;
+text32.value = text.value;
+text33.value = text.value;
+text34.value = text.value;
+text35.value = text.value;
+text36.value = text.value;
+text37.value = text.value;
+text38.value = text.value;
+text39.value = text.value;
+text40.value = text.value;
+text41.value = text.value;
+text42.value = text.value;
+text43.value = text.value;
+text44.value = text.value;
+text45.value = text.value;
+text46.value = text.value;
+text47.value = text.value;
+text48.value = text.value;
+text49.value = text.value;
+text50.value = text.value;
+text51.value = text.value;
+text52.value = text.value;
+text53.value = text.value;
+text54.value = text.value;
+text55.value = text.value;
+text56.value = text.value;
+text57.value = text.value;
+text58.value = text.value;
+text59.value = text.value;
+text60.value = text.value;
+text61.value = text.value;
+text62.value = text.value;
+text63.value = text.value;
+text64.value = text.value;
+text65.value = text.value;
+text66.value = text.value;
+text67.value = text.value;
+text68.value = text.value;
+text69.value = text.value;
+text70.value = text.value;
+}
+</script>
+</div>
+
+<div class="grid-container">
+
+<div><span style="font-size: 14pt; margin-left:10px;">TURN BLADE LED ON</span></div>
+<div><input type="text" value="wcscli -setbladeattentionledon -i" size="34" id="CMLedOn1"></div>
+<div><span style="font-size: 14pt;">Blade#:</span></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="CMLedOn2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="CMLedOnOutput"></div>
+
+<button onclick="myFunction8()">COPY</button>
+
+<script>
+function myFunction8() {
+  var copyText = document.getElementById("CMLedOn1");
+  var copyText2 = document.getElementById("CMLedOn2");
+  var output = document.getElementById("CMLedOnOutput");
+  output.value = copyText.value + copyText2.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container">
+
+<div><span style="font-size: 14pt; margin-left:10px;">TURN BLADE LED OFF</span></div>
+<div><input type="text" value="wcscli -setbladeattentionledoff -i" size="34" id="CMLedOff1"></div>
+<div><span style="font-size: 14pt;">Blade#:</span></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="CMLedOff2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="CMLedOffOutput"></div>
+
+<button onclick="myFunction9()">COPY</button>
+
+<script>
+function myFunction9() {
+  var copyText = document.getElementById("CMLedOff1");
+  var copyText2 = document.getElementById("CMLedOff2");
+  var output = document.getElementById("CMLedOffOutput");
+  output.value = copyText.value + copyText2.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container">
+
+<div><span style="font-size: 14pt; margin-left:10px;">SET POWER ON</span></div>
+<div><input type="text" value="wcscli -setpoweron -i" size="34" id="CMPowOn1"></div>
+<div><span style="font-size: 14pt;">Blade#:</span></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="CMPowOn2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="CMPowOnOutput"></div>
+
+<button onclick="myFunction72()">COPY</button>
+
+<script>
+function myFunction72() {
+  var copyText = document.getElementById("CMPowOn1");
+  var copyText2 = document.getElementById("CMPowOn2");
+  var output = document.getElementById("CMPowOnOutput");
+  output.value = copyText.value + copyText2.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container">
+
+<div><span style="font-size: 14pt; margin-left:10px;">SET POWER OFF</span></div>
+<div><input type="text" value="wcscli -setpoweroff -i" size="34" id="CMPowOff1"></div>
+<div><span style="font-size: 14pt;">Blade#:</span></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="CMPowOff2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="CMPowOffOutput"></div>
+
+<button onclick="myFunction10()">COPY</button>
+
+<script>
+function myFunction10() {
+  var copyText = document.getElementById("CMPowOff1");
+  var copyText2 = document.getElementById("CMPowOff2");
+  var output = document.getElementById("CMPowOffOutput");
+  output.value = copyText.value + copyText2.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container">
+
+<div><span style="font-size: 14pt; margin-left:10px;">VIEW BLADE INFO</span></div>
+<div><input type="text" value="wcscli -getbladeinfo -i" size="34" id="GBI1"></div>
+<div><span style="font-size: 14pt;">Blade#:</span></div>
+<div><input type="text" value=" " maxlength="4" size="1"  id="GBI2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="GBIOutput"></div>
+
+<button onclick="myFunction11()">COPY</button>
+
+<script>
+function myFunction11() {
+  var copyText = document.getElementById("GBI1");
+  var copyText2 = document.getElementById("GBI2");
+  var output = document.getElementById("GBIOutput");
+  output.value = copyText.value + copyText2.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container">
+
+<div><span style="font-size: 14pt; margin-left:10px;">START BLADE SESSION</span></div>
+<div><input type="text" value="wcscli -startbladeserialsession -i" size="34" id="SBS1"></div>
+<div><span style="font-size: 14pt;">Blade#:</span></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="SBS2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="SBSOutput"></div>
+
+<button onclick="myFunction12()">COPY</button>
+
+<script>
+function myFunction12() {
+  var copyText = document.getElementById("SBS1");
+  var copyText2 = document.getElementById("SBS2");
+  var output = document.getElementById("SBSOutput");
+  output.value = copyText.value + copyText2.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container">
+
+<div><span style="font-size: 14pt; margin-left:10px;">STOP BLADE SESSION</span></div>
+<div><input type="text" value="wcscli -stopbladeserialsession -i" size="34" id="SPBS1"></div>
+<div><span style="font-size: 14pt;">Blade#:</span></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="SPBS2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="SPBSOutput"></div>
+
+<button onclick="myFunction13()">COPY</button>
+
+<script>
+function myFunction13() {
+  var copyText = document.getElementById("SPBS1");
+  var copyText2 = document.getElementById("SPBS2");
+  var output = document.getElementById("SPBSOutput");
+  output.value = copyText.value + copyText2.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container">
+
+<div><span style="font-size: 14pt; margin-left:10px;">READ BLADE LOG</span></div>
+<div><input type="text" value="wcscli -readbladelog -i" size="34" id="RBL1"></div>
+<div><span style="font-size: 14pt;">Blade#:</span></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RBL2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RBLOutput"></div>
+
+<button onclick="myFunction14()">COPY</button>
+
+<script>
+function myFunction14() {
+  var copyText = document.getElementById("RBL1");
+  var copyText2 = document.getElementById("RBL2");
+  var output = document.getElementById("RBLOutput");
+  output.value = copyText.value + copyText2.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container">
+
+<div><span style="font-size: 14pt; margin-left:10px;">CLEAR BLADE LOG</span></div>
+<div><input type="text" value="wcscli -clearbladelog -i" size="34" id="CBL1"></div>
+<div><span style="font-size: 14pt;">Blade#:</span></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="CBL2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="CBLOutput"></div>
+
+<button onclick="myFunction15()">COPY</button>
+
+<script>
+function myFunction15() {
+  var copyText = document.getElementById("CBL1");
+  var copyText2 = document.getElementById("CBL2");
+  var output = document.getElementById("CBLOutput");
+  output.value = copyText.value + copyText2.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container">
+
+<div><span style="font-size: 14pt; margin-left:10px;">GET FPGA STATUS</span></div>
+<div><input type="text" value="wcscli -getblademezzstatus -i" size="34" id="GBM1"></div>
+<div><span style="font-size: 14pt;">Blade#:</span></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="GBM2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="GBMOutput"></div>
+
+<button onclick="myFunction16()">COPY</button>
+
+<script>
+function myFunction16() {
+  var copyText = document.getElementById("GBM1");
+  var copyText2 = document.getElementById("GBM2");
+  var output = document.getElementById("GBMOutput");
+  output.value = copyText.value + copyText2.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container">
+
+<div><span style="font-size: 14pt; margin-left:10px;">POWER CYCLE BLADE</span></div>
+<div><input type="text" value="wcscli -setbladeactivepowercycle -i" size="34" id="PCB1"></div>
+<div><span style="font-size: 14pt;">Blade#:</span></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="PCB2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="PCBOutput"></div>
+
+<button onclick="myFunction17()">COPY</button>
+
+<script>
+function myFunction17() {
+  var copyText = document.getElementById("PCB1");
+  var copyText2 = document.getElementById("PCB2");
+  var output = document.getElementById("PCBOutput");
+  output.value = copyText.value + copyText2.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container">
+
+<div><span style="font-size: 14pt; margin-left:10px;">GET BLADE WATTAGE</span></div>
+<div><input type="text" value="wcscli -getbladepowerreading -i" size="34" id="GBW1"></div>
+<div><span style="font-size: 14pt;">Blade#:</span></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="GBW2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="GBWOutput"></div>
+
+<button onclick="myFunctionGBW()">COPY</button>
+
+<script>
+function myFunctionGBW() {
+  var copyText = document.getElementById("GBW1");
+  var copyText2 = document.getElementById("GBW2");
+  var output = document.getElementById("GBWOutput");
+  output.value = copyText.value + copyText2.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container">
+
+<div><span style="font-size: 14pt; margin-left:10px;">GET ALL BLADES INFO</span></div>
+<div><input type="text" value="wcscli -getbladeinfo -a" size="34" id="GBA1"></div>
+<div><span style="font-size: 14pt;">Blade#:</span></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="GBA2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="GBAOutput"></div>
+
+<button onclick="myFunctionGBA()">COPY</button>
+
+<script>
+function myFunctionGBA() {
+  var copyText = document.getElementById("GBA1");
+  var copyText2 = document.getElementById("GBA2");
+  var output = document.getElementById("GBAOutput");
+  output.value = copyText.value + copyText2.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container1">
+
+<div><span style="font-size: 14pt; margin-left:10px;">BOOT TO USB</span></div>
+<div><input type="text" value="wcscli -setnextboot -i" size="15" id="BTU1"></div>
+<div><input type="text" value=" -t 5 -m 0 -p 0 -n 0" size="13" id="BTU3"></div>
+<div><span style="font-size: 14pt;">Blade#:</span></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="BTU2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="BTUOutput"></div>
+
+<button onclick="myFunction18()">COPY</button>
+
+<script>
+function myFunction18() {
+  var copyText = document.getElementById("BTU1");
+  var copyText2 = document.getElementById("BTU2");
+  var copyText3 = document.getElementById("BTU3");
+  var output = document.getElementById("BTUOutput");
+  output.value = copyText.value + copyText2.value + copyText3.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container1">
+
+<div><span style="font-size: 14pt; margin-left:10px;">BOOT TO BIOS</span></div>
+<div><input type="text" value="wcscli -setnextboot -i" size="15" id="BTB1"></div>
+<div><input type="text" value=" -t 4 -m 0 -p 0 -n 0" size="13" id="BTB3"></div>
+<div><span style="font-size: 14pt;">Blade#:</span></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="BTB2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="BTBOutput"></div>
+
+<button onclick="myFunction19()">COPY</button>
+
+<script>
+function myFunction19() {
+  var copyText = document.getElementById("BTB1");
+  var copyText2 = document.getElementById("BTB2");
+  var copyText3 = document.getElementById("BTB3");
+  var output = document.getElementById("BTBOutput");
+  output.value = copyText.value + copyText2.value + copyText3.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container1">
+
+<div><span style="font-size: 14pt; margin-left:10px;">BOOT TO PXE</span></div>
+<div><input type="text" value="wcscli -setnextboot -i" size="15" id="BTP1"></div>
+<div><input type="text" value=" -t 3 -m 0 -p 0 -n 0" size="13" id="BTP3"></div>
+<div><span style="font-size: 14pt;">Blade#:</span></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="BTP2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="BTPOutput"></div>
+
+<button onclick="myFunction20()">COPY</button>
+
+<script>
+function myFunction20() {
+  var copyText = document.getElementById("BTP1");
+  var copyText2 = document.getElementById("BTP2");
+  var copyText3 = document.getElementById("BTP3");
+  var output = document.getElementById("BTPOutput");
+  output.value = copyText.value + copyText2.value + copyText3.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+
+<p style="border:4px; border-style:solid; border-color:black; font-size:32px; font-family:calibri; text-align:center; width:875px; height:40px; padding:5px; margin-left:4px">CM BLADE HEALTH COMMANDS</p>
+
+<div class="grid-container2">
+
+<div><span style="font-size: 14pt; margin-left:10px;">BLADE MEMORY INFO</span></div>
+<div><input type="text" value="wcscli -getbladehealth -i" size="25" id="GBHM1"></div>
+<div><input type="text" value=" -m" maxlength="4" size="1" id="GBHM3"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value="" maxlength="4" size="1" id="GBHM2"></div>
+<div><input type="text" value="" maxlength="4" size="1" id="GBHMOutput"></div>
+
+<button onclick="myFunction30()">COPY</button>
+
+<script>
+function myFunction30() {
+  var copyText = document.getElementById("GBHM1");
+  var copyText2 = document.getElementById("GBHM2");
+  var copyText3 = document.getElementById("GBHM3");
+  var output = document.getElementById("GBHMOutput");
+  output.value = copyText.value + copyText2.value + copyText3.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container2">
+
+<div><span style="font-size: 14pt; margin-left:10px;">BLADE CPU INFO</span></div>
+<div><input type="text" value="wcscli -getbladehealth -i" size="25" id="GBHC1"></div>
+<div><input type="text" value=" -q" maxlength="4" size="1" id="GBHC3"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="GBHC2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="GBHCOutput"></div>
+
+<button onclick="myFunction31()">COPY</button>
+
+<script>
+function myFunction31() {
+  var copyText = document.getElementById("GBHC1");
+  var copyText2 = document.getElementById("GBHC2");
+  var copyText3 = document.getElementById("GBHC3");
+  var output = document.getElementById("GBHCOutput");
+  output.value = copyText.value + copyText2.value + copyText3.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container2">
+
+<div><span style="font-size: 14pt; margin-left:10px;">BLADE JBOD INFO</span></div>
+<div><input type="text" value="wcscli -getbladehealth -i " size="25" id="GBHJ1"></div>
+<div><input type="text" value=" -d" maxlength="4" size="1" id="GBHJ3"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="GBHJ2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="GBHJOutput"></div>
+
+<button onclick="myFunction32()">COPY</button>
+
+<script>
+function myFunction32() {
+  var copyText = document.getElementById("GBHJ1");
+  var copyText2 = document.getElementById("GBHJ2");
+  var copyText3 = document.getElementById("GBHJ3");
+  var output = document.getElementById("GBHJOutput");
+  output.value = copyText.value + copyText2.value + copyText3.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container2">
+
+<div><span style="font-size: 14pt; margin-left:10px;">BLADE PCIE INFO</span></div>
+<div><input type="text" value="wcscli -getbladehealth -i" size="25" id="GBHP1"></div>
+<div><input type="text" value=" -p" maxlength="4" size="1" id="GBHP3"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="GBHP2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="GBHPOutput"></div>
+
+<button onclick="myFunction33()">COPY</button>
+
+<script>
+function myFunction33() {
+  var copyText = document.getElementById("GBHP1");
+  var copyText2 = document.getElementById("GBHP2");
+  var copyText3 = document.getElementById("GBHP3");
+  var output = document.getElementById("GBHPOutput");
+  output.value = copyText.value + copyText2.value + copyText3.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container2">
+
+<div><span style="font-size: 14pt; margin-left:10px;">BLADE SENSOR INFO</span></div>
+<div><input type="text" value="wcscli -getbladehealth -i" size="25" id="GBHS1"></div>
+<div><input type="text" value=" -s" maxlength="4" size="1" id="GBHS3"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="GBHS2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="GBHSOutput"></div>
+
+<button onclick="myFunction34()">COPY</button>
+
+<script>
+function myFunction34() {
+  var copyText = document.getElementById("GBHS1");
+  var copyText2 = document.getElementById("GBHS2");
+  var copyText3 = document.getElementById("GBHS3");
+  var output = document.getElementById("GBHSOutput");
+  output.value = copyText.value + copyText2.value + copyText3.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container2">
+
+<div><span style="font-size: 14pt; margin-left:10px;">BLADE TEMP INFO</span></div>
+<div><input type="text" value="wcscli -getbladehealth -i" size="25" id="GBHT1"></div>
+<div><input type="text" value=" -p" maxlength="4" size="1" id="GBHT3"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="GBHT2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="GBHTOutput"></div>
+
+<button onclick="myFunction35()">COPY</button>
+
+<script>
+function myFunction35() {
+  var copyText = document.getElementById("GBHT1");
+  var copyText2 = document.getElementById("GBHT2");
+  var copyText3 = document.getElementById("GBHT3");
+  var output = document.getElementById("GBHTOutput");
+  output.value = copyText.value + copyText2.value + copyText3.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container2">
+
+<div><span style="font-size: 14pt; margin-left:10px;">BLADE FRU INFO</span></div>
+<div><input type="text" value="wcscli -getbladehealth -i" size="25" id="GBHF1"></div>
+<div><input type="text" value=" -s" maxlength="4" size="1" id="GBHF3"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="GBHF2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="GBHFOutput"></div>
+
+<button onclick="myFunction36()">COPY</button>
+
+<script>
+function myFunction36() {
+  var copyText = document.getElementById("GBHF1");
+  var copyText2 = document.getElementById("GBHF2");
+  var copyText3 = document.getElementById("GBHF3");
+  var output = document.getElementById("GBHFOutput");
+  output.value = copyText.value + copyText2.value + copyText3.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<p style="border:4px; border-style:solid; border-color:black; font-size:32px; font-family:calibri; text-align:center; width:875px; height:40px; padding:5px; margin-left:4px">CM BIOS FLAVORS</p>
+
+<div class="grid-containerGBBC">
+
+<div><span style="font-size: 14pt; margin-left:10px;">GET BLADE BIOS CONFIG</span></div>
+<div><input type="text" value="wcscli -getbladebiosconfig -i" size="25" id="GBBC1"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="GBBC2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="GBBCOutput"></div>
+
+<button onclick="myFunction46()">COPY</button>
+
+<script>
+function myFunction46() {
+  var copyText = document.getElementById("GBBC1");
+  var copyText2 = document.getElementById("GBBC2");
+  var output = document.getElementById("GBBCOutput");
+  output.value = copyText.value + copyText2.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container3">
+
+<div><span style="font-size: 14pt; margin-left:10px;">GN1 (WCS General)</span></div>
+<div><input type="text" value="wcscli -setbladebiosconfig -i" size="25" id="CGN1"></div>
+<div><input type="text" value=" -j 0 -n 0" size="4" id="CGN3"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="CGN2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="CGNOutput"></div>
+
+<button onclick="myFunction47()">COPY</button>
+
+<script>
+function myFunction47() {
+  var copyText = document.getElementById("CGN1");
+  var copyText2 = document.getElementById("CGN2");
+  var copyText3 = document.getElementById("CGN3");
+  var output = document.getElementById("CGNOutput");
+  output.value = copyText.value + copyText2.value + copyText3.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container3">
+
+<div><span style="font-size: 14pt; margin-left:10px;">AZ1 (Azure Compute)</span></div>
+<div><input type="text" value="wcscli -setbladebiosconfig -i" size="25" id="CAZ1"></div>
+<div><input type="text" value=" -j 1 -n 0" size="4" id="CAZ3"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="CAZ2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="CAZOutput"></div>
+
+<button onclick="myFunction48()">COPY</button>
+
+<script>
+function myFunction48() {
+  var copyText = document.getElementById("CAZ1");
+  var copyText2 = document.getElementById("CAZ2");
+  var copyText3 = document.getElementById("CAZ3");
+  var output = document.getElementById("CAZOutput");
+  output.value = copyText.value + copyText2.value + copyText3.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container3">
+
+<div><span style="font-size: 14pt; margin-left:10px;">AH1 (Azure Compute HT/Legacy)</span></div>
+<div><input type="text" value="wcscli -setbladebiosconfig -i" size="25" id="CAH1"></div>
+<div><input type="text" value=" -j 1 -n 1" size="4" id="CAH3"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="CAH2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="CAHOutput"></div>
+
+<button onclick="myFunction49()">COPY</button>
+
+<script>
+function myFunction49() {
+  var copyText = document.getElementById("CAH1");
+  var copyText2 = document.getElementById("CAH2");
+  var copyText3 = document.getElementById("CAH3");
+  var output = document.getElementById("CAHOutput");
+  output.value = copyText.value + copyText2.value + copyText3.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container3">
+
+<div><span style="font-size: 14pt; margin-left:10px;">AS1 (Azure XStore Standard)</span></div>
+<div><input type="text" value="wcscli -setbladebiosconfig -i" size="25" id="CAS1"></div>
+<div><input type="text" value=" -j 1 -n 2" size="4" id="CAS3"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="CAS2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="CASOutput"></div>
+
+<button onclick="myFunction50()">COPY</button>
+
+<script>
+function myFunction50() {
+  var copyText = document.getElementById("CAS1");
+  var copyText2 = document.getElementById("CAS2");
+  var copyText3 = document.getElementById("CAS3");
+  var output = document.getElementById("CASOutput");
+  output.value = copyText.value + copyText2.value + copyText3.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container3">
+
+<div><span style="font-size: 14pt; margin-left:10px;">AT1 (Azure XStore Utility)</span></div>
+<div><input type="text" value="wcscli -setbladebiosconfig -i" size="25" id="CAT1"></div>
+<div><input type="text" value=" -j 1 -n 3" size="4" id="CAT3"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="CAT2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="CATOutput"></div>
+
+<button onclick="myFunction51()">COPY</button>
+
+<script>
+function myFunction51() {
+  var copyText = document.getElementById("CAT1");
+  var copyText2 = document.getElementById("CAT2");
+  var copyText3 = document.getElementById("CAT3");
+  var output = document.getElementById("CATOutput");
+  output.value = copyText.value + copyText2.value + copyText3.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container3">
+
+<div><span style="font-size: 14pt; margin-left:10px;">AX1 (Azure XIO Standard)</span></div>
+<div><input type="text" value="wcscli -setbladebiosconfig -i" size="25" id="CAX1"></div>
+<div><input type="text" value=" -j 1 -n 4" size="4" id="CAX3"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="CAX2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="CAXOutput"></div>
+
+<button onclick="myFunction52()">COPY</button>
+
+<script>
+function myFunction52() {
+  var copyText = document.getElementById("CAX1");
+  var copyText2 = document.getElementById("CAX2");
+  var copyText3 = document.getElementById("CAX3");
+  var output = document.getElementById("CAXOutput");
+  output.value = copyText.value + copyText2.value + copyText3.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container3">
+
+<div><span style="font-size: 14pt; margin-left:10px;">AY1 (Azure XIO Utility)</span></div>
+<div><input type="text" value="wcscli -setbladebiosconfig -i" size="25" id="CAY1"></div>
+<div><input type="text" value=" -j 1 -n 5" size="4" id="CAY3"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="CAY2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="CAYOutput"></div>
+
+<button onclick="myFunction53()">COPY</button>
+
+<script>
+function myFunction53() {
+  var copyText = document.getElementById("CAY1");
+  var copyText2 = document.getElementById("CAY2");
+  var copyText3 = document.getElementById("CAY3");
+  var output = document.getElementById("CAYOutput");
+  output.value = copyText.value + copyText2.value + copyText3.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container3">
+
+<div><span style="font-size: 14pt; margin-left:10px;">AA1 (Azure Compute HT/Legacy)</span></div>
+<div><input type="text" value="wcscli -setbladebiosconfig -i" size="25" id="CAA1"></div>
+<div><input type="text" value=" -j 1 -n 6" size="4" id="CAA3"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="CAA2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="CAAOutput"></div>
+
+<button onclick="myFunction54()">COPY</button>
+
+<script>
+function myFunction54() {
+  var copyText = document.getElementById("CAA1");
+  var copyText2 = document.getElementById("CAA2");
+  var copyText3 = document.getElementById("CAA3");
+  var output = document.getElementById("CAAOutput");
+  output.value = copyText.value + copyText2.value + copyText3.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container3">
+
+<div><span style="font-size: 14pt; margin-left:10px;">AI1 (Azure Compute HT/UEFI)</span></div>
+<div><input type="text" value="wcscli -setbladebiosconfig -i" size="25" id="CAI1"></div>
+<div><input type="text" value=" -j 1 -n 7" size="4" id="CAI3"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="CAI2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="CAIOutput"></div>
+
+<button onclick="myFunction55()">COPY</button>
+
+<script>
+function myFunction55() {
+  var copyText = document.getElementById("CAI1");
+  var copyText2 = document.getElementById("CAI2");
+  var copyText3 = document.getElementById("CAI3");
+  var output = document.getElementById("CAIOutput");
+  output.value = copyText.value + copyText2.value + copyText3.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container3">
+
+<div><span style="font-size: 14pt; margin-left:10px;">BA1 (Bing Online)</span></div>
+<div><input type="text" value="wcscli -setbladebiosconfig -i" size="25" id="CBA1"></div>
+<div><input type="text" value=" -j 2 -n 0" size="4" id="CBA3"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="CBA2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="CBAOutput"></div>
+
+<button onclick="myFunction56()">COPY</button>
+
+<script>
+function myFunction56() {
+  var copyText = document.getElementById("CBA1");
+  var copyText2 = document.getElementById("CBA2");
+  var copyText3 = document.getElementById("CBA3");
+  var output = document.getElementById("CBAOutput");
+  output.value = copyText.value + copyText2.value + copyText3.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container3">
+
+<div><span style="font-size: 14pt; margin-left:10px;">BB1 (Bing Offline)</span></div>
+<div><input type="text" value="wcscli -setbladebiosconfig -i" size="25" id="CBB1"></div>
+<div><input type="text" value=" -j 2 -n 1" size="4" id="CBB3"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="CBB2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="CBBOutput"></div>
+
+<button onclick="myFunction57()">COPY</button>
+
+<script>
+function myFunction57() {
+  var copyText = document.getElementById("CBB1");
+  var copyText2 = document.getElementById("CBB2");
+  var copyText3 = document.getElementById("CBB3");
+  var output = document.getElementById("CBBOutput");
+  output.value = copyText.value + copyText2.value + copyText3.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container3">
+
+<div><span style="font-size: 14pt; margin-left:10px;">BC1 (Bing Offline/HT)</span></div>
+<div><input type="text" value="wcscli -setbladebiosconfig -i" size="25" id="CBC1"></div>
+<div><input type="text" value=" -j 2 -n 2" size="4" id="CBC3"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="CBC2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="CBCOutput"></div>
+
+<button onclick="myFunction58()">COPY</button>
+
+<script>
+function myFunction58() {
+  var copyText = document.getElementById("CBC1");
+  var copyText2 = document.getElementById("CBC2");
+  var copyText3 = document.getElementById("CBC3");
+  var output = document.getElementById("CBCOutput");
+  output.value = copyText.value + copyText2.value + copyText3.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container3">
+
+<div><span style="font-size: 14pt; margin-left:10px;">EA1 (Exchange)</span></div>
+<div><input type="text" value="wcscli -setbladebiosconfig -i" size="25" id="CEA1"></div>
+<div><input type="text" value=" -j 3 -n 0" size="4" id="CEA3"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="CEA2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="CEAOutput"></div>
+
+<button onclick="myFunction59()">COPY</button>
+
+<script>
+function myFunction59() {
+  var copyText = document.getElementById("CEA1");
+  var copyText2 = document.getElementById("CEA2");
+  var copyText3 = document.getElementById("CEA3");
+  var output = document.getElementById("CEAOutput");
+  output.value = copyText.value + copyText2.value + copyText3.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container3">
+
+<div><span style="font-size: 14pt; margin-left:10px;">PA1 (CPS)</span></div>
+<div><input type="text" value="wcscli -setbladebiosconfig -i" size="25" id="CPA1"></div>
+<div><input type="text" value=" -j 4 -n 0" size="4" id="CPA3"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="CPA2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="CPAOutput"></div>
+
+<button onclick="myFunction60()">COPY</button>
+
+<script>
+function myFunction60() {
+  var copyText = document.getElementById("CPA1");
+  var copyText2 = document.getElementById("CPA2");
+  var copyText3 = document.getElementById("CPA3");
+  var output = document.getElementById("CPAOutput");
+  output.value = copyText.value + copyText2.value + copyText3.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+
+<p style="border:4px; border-style:solid; border-color:black; font-size:32px; font-family:calibri; text-align:center; width:875px; height:40px; padding:5px; margin-left:4px">CM BASIC COMMANDS</p>
+
+<div class="grid-container4">
+
+<div><span style="font-size: 14pt; margin-left:10px;">VIEW CM HEALTH</span></div>
+<div><input type="text" value="wcscli -getchassishealth" size="25" id="CMH"></div>
+
+<button onclick="myFunction21()">COPY</button>
+
+<script>
+function myFunction21() {
+  var copyText = document.getElementById("CMH");
+  copyText.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container4">
+
+<div><span style="font-size: 14pt; margin-left:10px;">VIEW CM INFO</span></div>
+<div><input type="text" value="wcscli -getchassisinfo" size="25" id="CMI"></div>
+
+<button onclick="myFunction22()">COPY</button>
+
+<script>
+function myFunction22() {
+  var copyText = document.getElementById("CMI");
+  copyText.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container4">
+
+<div><span style="font-size: 14pt; margin-left:10px;">GET CM PSU INFO 1</span></div>
+<div><input type="text" value="wcscli -getchassisinfo -p" size="25" id="CMPSU"></div>
+
+<button onclick="myFunctionCMPSU()">COPY</button>
+
+<script>
+function myFunctionCMPSU() {
+  var copyText = document.getElementById("CMPSU");
+  copyText.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container4">
+
+<div><span style="font-size: 14pt; margin-left:10px;">GET CM PSU INFO 2</span></div>
+<div><input type="text" value="wcscli -getchassishealth -p" size="25" id="CMPSU2"></div>
+
+<button onclick="myFunctionCMPSU2()">COPY</button>
+
+<script>
+function myFunctionCMPSU2() {
+  var copyText = document.getElementById("CMPSU2");
+  copyText.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container4">
+
+<div><span style="font-size: 14pt; margin-left:10px;">GET CM FAN INFO</span></div>
+<div><input type="text" value="wcscli -getchassishealth -f" size="25" id="CMFI"></div>
+
+<button onclick="myFunctionCMFI()">COPY</button>
+
+<script>
+function myFunctionCMFI() {
+  var copyText = document.getElementById("CMFI");
+  copyText.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container4">
+
+<div><span style="font-size: 14pt; margin-left:10px;">SET CM TO DHCP</span></div>
+<div><input type="text" value="setnic -a DHCP -t 0" size="25" id="CMDHCP"></div>
+
+<button onclick="myFunction23()">COPY</button>
+
+<script>
+function myFunction23() {
+  var copyText = document.getElementById("CMDHCP");
+  copyText.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-containerCMSIP">
+
+<div><span style="font-size: 14pt; margin-left:10px;">SET CM TO STATIC IP</span></div>
+<div><input type="text" value="wcscli -setnic -a static -i" size="25" id="CMSTATIC1"></div>
+</div>
+
+<div class="grid-containerCMSIP1">
+
+<div><span style="font-size: 14pt; margin-left:282px;">IP ><input type="text" value=" " size="17" id="CMSTATIC2"></span></div>
+<input type="text" value=" -m" maxlength="2" size="2" id="CMSTATIC3"></div>
+
+<div class="grid-containerCMSIP1">
+
+<div><span style="font-size: 14pt; margin-left:240px;">Subnet ><input type="text" value=" " size="17" id="CMSTATIC4"></span></div>
+<input type="text" value=" -g" maxlength="2" size="2" id="CMSTATIC5"></div>
+
+
+<div class="grid-containerCMSIP1">
+
+<div><span style="font-size: 14pt; margin-left:225px;">Gateway ><input type="text" value=" " size="17" id="CMSTATIC6"></span></div>
+<input type="text" value=" " maxlength="1" size="1" id="CMSTATICOutput"></div>
+</div>
+
+<div class="grid-containerCMSIP1">
+
+<span style="font-size: 14pt; margin-left:520px; margin-bottom:72px;"><button onclick="myFunction24()">COPY</button>
+
+<script>
+function myFunction24() {
+  var copyText = document.getElementById("CMSTATIC1");
+  var copyText2 = document.getElementById("CMSTATIC2");
+  var copyText3 = document.getElementById("CMSTATIC3");
+  var copyText4 = document.getElementById("CMSTATIC4");
+  var copyText5 = document.getElementById("CMSTATIC5");
+  var copyText6 = document.getElementById("CMSTATIC6");
+  var output = document.getElementById("CMSTATICOutput");
+  output.value = copyText.value + copyText2.value + copyText3.value + copyText4.value + copyText5.value + copyText6.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+
+
+
+
+<p style="border:4px; border-style:solid; border-color:black; font-size:32px; font-family:calibri; text-align:center; width:875px; height:40px; padding:5px; margin-left:4px">RM BLADE BASIC COMMANDS</p>
+
+<div class="grid-containerRMBBC">
+
+<div><span style="font-size: 14pt; margin-left:10px;">START BLADE SESSION</span></div>
+<div><input type="text" value="start serial session -i" size="25" id="RMSBS1"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RMSBS2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RMSBSOutput"></div>
+
+<button onclick="myFunction25()">COPY</button>
+
+<script>
+function myFunction25() {
+  var copyText = document.getElementById("RMSBS1");
+  var copyText2 = document.getElementById("RMSBS2");
+  var output = document.getElementById("RMSBSOutput");
+  output.value = copyText.value + copyText2.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-containerRMBBC">
+
+<div><span style="font-size: 14pt; margin-left:10px;">STOP BLADE SESSION</span></div>
+<div><input type="text" value="stop serial session -i" size="25" id="RMSPBS1"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RMSPBS2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RMSPBSOutput"></div>
+
+<button onclick="myFunction26()">COPY</button>
+
+<script>
+function myFunction26() {
+  var copyText = document.getElementById("RMSPBS1");
+  var copyText2 = document.getElementById("RMSPBS2");
+  var output = document.getElementById("RMSPBSOutput");
+  output.value = copyText.value + copyText2.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-containerRMBBC">
+
+<div><span style="font-size: 14pt; margin-left:10px;">GET BASIC BLADE INFO</span></div>
+<div><input type="text" value="wcscli -getbladeinfo -i" size="25" id="VBBI1"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="VBBI2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="VBBIOutput"></div>
+
+<button onclick="myFunctionVBBI()">COPY</button>
+
+<script>
+function myFunctionVBBI() {
+  var copyText = document.getElementById("VBBI1");
+  var copyText2 = document.getElementById("VBBI2");
+  var output = document.getElementById("VBBIOutput");
+  output.value = copyText.value + copyText2.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-containerRMBBC">
+
+<div><span style="font-size: 14pt; margin-left:10px;">GET FULL BLADE INFO</span></div>
+<div><input type="text" value="show system info -i" size="25" id="VBI1"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="VBI2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="VBIOutput"></div>
+
+<button onclick="myFunction27()">COPY</button>
+
+<script>
+function myFunction27() {
+  var copyText = document.getElementById("VBI1");
+  var copyText2 = document.getElementById("VBI2");
+  var output = document.getElementById("VBIOutput");
+  output.value = copyText.value + copyText2.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-containerRMBBC">
+
+<div><span style="font-size: 14pt; margin-left:10px;">READ BLADE LOG</span></div>
+<div><input type="text" value="show system log read -i" size="25" id="RRBL1"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RRBL2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RRBLOutput"></div>
+
+<button onclick="myFunction28a()">COPY</button>
+
+<script>
+function myFunction28a() {
+  var copyText = document.getElementById("RRBL1");
+  var copyText2 = document.getElementById("RRBL2");
+  var output = document.getElementById("RRBLOutput");
+  output.value = copyText.value + copyText2.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-containerRMBBC">
+
+<div><span style="font-size: 14pt; margin-left:10px;">CLEAR BLADE LOG</span></div>
+<div><input type="text" value="set system log clear -i" size="25" id="RCBL1"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RCBL2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RCBLOutput"></div>
+
+<button onclick="myFunction29()">COPY</button>
+
+<script>
+function myFunction29() {
+  var copyText = document.getElementById("RCBL1");
+  var copyText2 = document.getElementById("RCBL2");
+  var output = document.getElementById("RCBLOutput");
+  output.value = copyText.value + copyText2.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-containerRMBBC">
+
+<div><span style="font-size: 14pt; margin-left:10px;">GET FPGA STATUS</span></div>
+<div><input type="text" value="show system fpga health -i" size="25" id="RMGFS1"></div>
+<div><span style="font-size: 14pt;">Blade#:</span></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RMGFS2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RMGFSOutput"></div>
+
+<button onclick="myFunctionRMGFS()">COPY</button>
+
+<script>
+function myFunctionRMGFS() {
+  var copyText = document.getElementById("RMGFS1");
+  var copyText2 = document.getElementById("RMGFS2");
+  var output = document.getElementById("RMGFSOutput");
+  output.value = copyText.value + copyText2.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-containerRMBBC">
+
+<div><span style="font-size: 14pt; margin-left:10px;">POWER CYCLE BLADE</span></div>
+<div><input type="text" value="set system reset -i" size="25" id="RMPCB1"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RMPCB2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RMPCBOutput"></div>
+
+<button onclick="myFunctionRMPCB()">COPY</button>
+
+<script>
+function myFunctionRMPCB() {
+  var copyText = document.getElementById("RMPCB1");
+  var copyText2 = document.getElementById("RMPCB2");
+  var output = document.getElementById("RMPCBOutput");
+  output.value = copyText.value + copyText2.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-containerRMBBC">
+
+<div><span style="font-size: 14pt; margin-left:10px;">GET BLADE WATTAGE</span></div>
+<div><input type="text" value="show system power reading -i" size="25" id="RMGBW1"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RMGBW2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RMGBWOutput"></div>
+
+<button onclick="myFunctionRMGBW()">COPY</button>
+
+<script>
+function myFunctionRMGBW() {
+  var copyText = document.getElementById("RMGBW1");
+  var copyText2 = document.getElementById("RMGBW2");
+  var output = document.getElementById("RMGBWOutput");
+  output.value = copyText.value + copyText2.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container1">
+
+<div><span style="font-size: 14pt; margin-left:10px;">BOOT TO USB</span></div>
+<div><input type="text" value="set system boot -i" size="13" id="RMBTU1"></div>
+<div><input type="text" value=" -t floppy" size="4" id="RMBTU3"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RMBTU2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RMBTUOutput"></div>
+
+<button onclick="myFunctionRMBTU()">COPY</button>
+
+<script>
+function myFunctionRMBTU() {
+  var copyText = document.getElementById("RMBTU1");
+  var copyText2 = document.getElementById("RMBTU2");
+  var copyText3 = document.getElementById("RMBTU3");
+  var output = document.getElementById("RMBTUOutput");
+  output.value = copyText.value + copyText2.value + copyText3.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container1">
+
+<div><span style="font-size: 14pt; margin-left:10px;">BOOT TO BIOS</span></div>
+<div><input type="text" value="set system boot -i" size="13" id="RMBTB1"></div>
+<div><input type="text" value=" -t bios" size="4" id="RMBTB3"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RMBTB2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RMBTBOutput"></div>
+
+<button onclick="myFunctionRMBTB()">COPY</button>
+
+<script>
+function myFunctionRMBTB() {
+  var copyText = document.getElementById("RMBTB1");
+  var copyText2 = document.getElementById("RMBTB2");
+  var copyText3 = document.getElementById("RMBTB3");
+  var output = document.getElementById("RMBTBOutput");
+  output.value = copyText.value + copyText2.value + copyText3.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container1">
+
+<div><span style="font-size: 14pt; margin-left:10px;">BOOT TO PXE</span></div>
+<div><input type="text" value="set system boot -i" size="13" id="RMBTP1"></div>
+<div><input type="text" value=" -t pxe" size="4" id="RMBTP3"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RMBTP2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RMBTPOutput"></div>
+
+<button onclick="myFunctionRMBTP()">COPY</button>
+
+<script>
+function myFunctionRMBTP() {
+  var copyText = document.getElementById("RMBTP1");
+  var copyText2 = document.getElementById("RMBTP2");
+  var copyText3 = document.getElementById("RMBTP3");
+  var output = document.getElementById("RMBTPOutput");
+  output.value = copyText.value + copyText2.value + copyText3.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container1">
+
+<div><span style="font-size: 14pt; margin-left:10px;">EXIT RM SESSION</span></div>
+<div><input type="text" value="Press ALT+T & session will end" size="25"></div>
+</div>
+
+
+<p style="border:4px; border-style:solid; border-color:black; font-size:32px; font-family:calibri; text-align:center; width:875px; height:40px; padding:5px; margin-left:4px">RM BLADE HEALTH COMMANDS</p>
+
+<div class="grid-container3">
+
+<div><span style="font-size: 14pt; margin-left:10px;">BLADE SERVER HEALTH</span></div>
+<div><input type="text" value="show system health -i" size="25" id="RGBHS1"></div>
+<div><input type="text" value=" -s" maxlength="4" size="1" id="RGBHS3"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RGBHS2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RGBHSOutput"></div>
+
+<button onclick="myFunction37()">COPY</button>
+
+<script>
+function myFunction37() {
+  var copyText = document.getElementById("RGBHS1");
+  var copyText2 = document.getElementById("RGBHS2");
+  var copyText3 = document.getElementById("RGBHS3");
+  var output = document.getElementById("RGBHSOutput");
+  output.value = copyText.value + copyText2.value + copyText3.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container3">
+
+<div><span style="font-size: 14pt; margin-left:10px;">BLADE MEMORY INFO</span></div>
+<div><input type="text" value="show system health -i" size="25" id="RGBHM1"></div>
+<div><input type="text" value=" -m" maxlength="4" size="1" id="RGBHM3"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RGBHM2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RGBHMOutput"></div>
+
+<button onclick="myFunction38()">COPY</button>
+
+<script>
+function myFunction38() {
+  var copyText = document.getElementById("RGBHM1");
+  var copyText2 = document.getElementById("RGBHM2");
+  var copyText3 = document.getElementById("RGBHM3");
+  var output = document.getElementById("RGBHMOutput");
+  output.value = copyText.value + copyText2.value + copyText3.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container3">
+
+<div><span style="font-size: 14pt; margin-left:10px;">BLADE CPU INFO</span></div>
+<div><input type="text" value="show system health -i" size="25" id="RGBHC1"></div>
+<div><input type="text" value=" -c" maxlength="4" size="1" id="RGBHC3"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RGBHC2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RGBHCOutput"></div>
+
+<button onclick="myFunction39()">COPY</button>
+
+<script>
+function myFunction39() {
+  var copyText = document.getElementById("RGBHC1");
+  var copyText2 = document.getElementById("RGBHC2");
+  var copyText3 = document.getElementById("RGBHC3");
+  var output = document.getElementById("RGBHCOutput");
+  output.value = copyText.value + copyText2.value + copyText3.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container3">
+
+<div><span style="font-size: 14pt; margin-left:10px;">BLADE PCIE INFO</span></div>
+<div><input type="text" value="show system health -i" size="25" id="RGBHP1"></div>
+<div><input type="text" value=" -p" maxlength="4" size="1" id="RGBHP3"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RGBHP2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RGBHPOutput"></div>
+
+<button onclick="myFunction40()">COPY</button>
+
+<script>
+function myFunction40() {
+  var copyText = document.getElementById("RGBHP1");
+  var copyText2 = document.getElementById("RGBHP2");
+  var copyText3 = document.getElementById("RGBHP3");
+  var output = document.getElementById("RGBHPOutput");
+  output.value = copyText.value + copyText2.value + copyText3.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container3">
+
+<div><span style="font-size: 14pt; margin-left:10px;">BLADE ASSET INFO</span></div>
+<div><input type="text" value="show system health -i" size="25" id="RGBHA1"></div>
+<div><input type="text" value=" -a" maxlength="4" size="1" id="RGBHA3"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RGBHA2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RGBHAOutput"></div>
+
+<button onclick="myFunction41()">COPY</button>
+
+<script>
+function myFunction41() {
+  var copyText = document.getElementById("RGBHA1");
+  var copyText2 = document.getElementById("RGBHA2");
+  var copyText3 = document.getElementById("RGBHA3");
+  var output = document.getElementById("RGBHAOutput");
+  output.value = copyText.value + copyText2.value + copyText3.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container3">
+
+<div><span style="font-size: 14pt; margin-left:10px;">BLADE FAN INFO</span></div>
+<div><input type="text" value="show system health -i" size="25" id="RGBHF1"></div>
+<div><input type="text" value=" -f" maxlength="4" size="1" id="RGBHF3"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RGBHF2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RGBHFOutput"></div>
+
+<button onclick="myFunction42()">COPY</button>
+
+<script>
+function myFunction42() {
+  var copyText = document.getElementById("RGBHF1");
+  var copyText2 = document.getElementById("RGBHF2");
+  var copyText3 = document.getElementById("RGBHF3");
+  var output = document.getElementById("RGBHFOutput");
+  output.value = copyText.value + copyText2.value + copyText3.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container3">
+
+<div><span style="font-size: 14pt; margin-left:10px;">BLADE TEMP INFO</span></div>
+<div><input type="text" value="show system health -i" size="25" id="RGBHT1"></div>
+<div><input type="text" value=" -t" maxlength="4" size="1" id="RGBHT3"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RGBHT2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RGBHTOutput"></div>
+
+<button onclick="myFunction43()">COPY</button>
+
+<script>
+function myFunction43() {
+  var copyText = document.getElementById("RGBHT1");
+  var copyText2 = document.getElementById("RGBHT2");
+  var copyText3 = document.getElementById("RGBHT3");
+  var output = document.getElementById("RGBHTOutput");
+  output.value = copyText.value + copyText2.value + copyText3.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container3">
+
+<div><span style="font-size: 14pt; margin-left:10px;">BLADE SENSOR INFO</span></div>
+<div><input type="text" value="show system health -i" size="25" id="RGBHR1"></div>
+<div><input type="text" value=" -r" maxlength="4" size="1" id="RGBHR3"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RGBHR2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RGBHROutput"></div>
+
+<button onclick="myFunction44()">COPY</button>
+
+<script>
+function myFunction44() {
+  var copyText = document.getElementById("RGBHR1");
+  var copyText2 = document.getElementById("RGBHR2");
+  var copyText3 = document.getElementById("RGBHR3");
+  var output = document.getElementById("RGBHROutput");
+  output.value = copyText.value + copyText2.value + copyText3.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container3">
+
+<div><span style="font-size: 14pt; margin-left:10px;">BLADE NVME INFO</span></div>
+<div><input type="text" value="show system health -i" size="25" id="RGBHN1"></div>
+<div><input type="text" value=" -n" maxlength="4" size="1" id="RGBHN3"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RGBHN2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RGBHNOutput"></div>
+
+<button onclick="myFunction45()">COPY</button>
+
+<script>
+function myFunction45() {
+  var copyText = document.getElementById("RGBHN1");
+  var copyText2 = document.getElementById("RGBHN2");
+  var copyText3 = document.getElementById("RGBHN3");
+  var output = document.getElementById("RGBHNOutput");
+  output.value = copyText.value + copyText2.value + copyText3.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<p style="border:4px; border-style:solid; border-color:black; font-size:32px; font-family:calibri; text-align:center; width:875px; height:40px; padding:5px; margin-left:4px">RM BIOS FLAVORS</p>
+
+<div class="grid-containerGBBC">
+
+<div><span style="font-size: 14pt; margin-left:10px;">GET BLADE BIOS CONFIG</span></div>
+<div><input type="text" value="show system bios config -i" size="25" id="RGBBC1"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RGBBC2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RGBBCOutput"></div>
+
+<button onclick="myFunctionGBBC()">COPY</button>
+
+<script>
+function myFunctionGBBC() {
+  var copyText = document.getElementById("RGBBC1");
+  var copyText2 = document.getElementById("RGBBC2");
+  var output = document.getElementById("RGBBCOutput");
+  output.value = copyText.value + copyText2.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container3">
+
+<div><span style="font-size: 14pt; margin-left:10px;">GN1 (WCS General/Generic)</span></div>
+<div><input type="text" value="set system bios config -i" size="25" id="RGN1"></div>
+<div><input type="text" value=" -j 0 -n 0" size="4" id="RGN3"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RGN2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RGNOutput"></div>
+
+<button onclick="myFunction61()">COPY</button>
+
+<script>
+function myFunction61() {
+  var copyText = document.getElementById("RGN1");
+  var copyText2 = document.getElementById("RGN2");
+  var copyText3 = document.getElementById("RGN3");
+  var output = document.getElementById("RGNOutput");
+  output.value = copyText.value + copyText2.value + copyText3.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container3">
+
+<div><span style="font-size: 14pt; margin-left:10px;">AZ1 (Azure Compute)</span></div>
+<div><input type="text" value="set system bios config -i" size="25" id="RAZ1"></div>
+<div><input type="text" value=" -j 1 -n 0" size="4" id="RAZ3"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RAZ2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RAZOutput"></div>
+
+<button onclick="myFunction62()">COPY</button>
+
+<script>
+function myFunction62() {
+  var copyText = document.getElementById("RAZ1");
+  var copyText2 = document.getElementById("RAZ2");
+  var copyText3 = document.getElementById("RAZ3");
+  var output = document.getElementById("RAZOutput");
+  output.value = copyText.value + copyText2.value + copyText3.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container3">
+
+<div><span style="font-size: 14pt; margin-left:10px;">AU1 (Azure Compute Pilot)</span></div>
+<div><input type="text" value="set system bios config -i" size="25" id="RAU1"></div>
+<div><input type="text" value=" -j 1 -n 1" size="4" id="RAU3"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RAU2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RAUOutput"></div>
+
+<button onclick="myFunction63()">COPY</button>
+
+<script>
+function myFunction63() {
+  var copyText = document.getElementById("RAU1");
+  var copyText2 = document.getElementById("RAU2");
+  var copyText3 = document.getElementById("RAU3");
+  var output = document.getElementById("RAUOutput");
+  output.value = copyText.value + copyText2.value + copyText3.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container3">
+
+<div><span style="font-size: 14pt; margin-left:10px;">AG1 (Azure HGX1)</span></div>
+<div><input type="text" value="set system bios config -i" size="25" id="RAG1"></div>
+<div><input type="text" value=" -j 1 -n 2" size="4" id="RAG3"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RAG2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RAGOutput"></div>
+
+<button onclick="myFunction64()">COPY</button>
+
+<script>
+function myFunction64() {
+  var copyText = document.getElementById("RAG1");
+  var copyText2 = document.getElementById("RAG2");
+  var copyText3 = document.getElementById("RAG3");
+  var output = document.getElementById("RAGOutput");
+  output.value = copyText.value + copyText2.value + copyText3.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container3">
+
+<div><span style="font-size: 14pt; margin-left:10px;">AT1 (Azure Compute Transition)</span></div>
+<div><input type="text" value="set system bios config -i" size="25" id="RAT1"></div>
+<div><input type="text" value=" -j 1 -n 3" size="4" id="RAT3"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RAT2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RATOutput"></div>
+
+<button onclick="myFunction65()">COPY</button>
+
+<script>
+function myFunction65() {
+  var copyText = document.getElementById("RAT1");
+  var copyText2 = document.getElementById("RAT2");
+  var copyText3 = document.getElementById("RAT3");
+  var output = document.getElementById("RATOutput");
+  output.value = copyText.value + copyText2.value + copyText3.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container3">
+
+<div><span style="font-size: 14pt; margin-left:10px;">AS1 (Azure XStore Standard)</span></div>
+<div><input type="text" value="set system bios config -i" size="25" id="RAS1"></div>
+<div><input type="text" value=" -j 1 -n 4" size="4" id="RAS3"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RAS2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RASOutput"></div>
+
+<button onclick="myFunction66()">COPY</button>
+
+<script>
+function myFunction66() {
+  var copyText = document.getElementById("RAS1");
+  var copyText2 = document.getElementById("RAS2");
+  var copyText3 = document.getElementById("RAS3");
+  var output = document.getElementById("RASOutput");
+  output.value = copyText.value + copyText2.value + copyText3.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container3">
+
+<div><span style="font-size: 14pt; margin-left:10px;">AO1 (Azure Optimization)</span></div>
+<div><input type="text" value="set system bios config -i" size="25" id="RAO1"></div>
+<div><input type="text" value=" -j 1 -n 6" size="4" id="RAO3"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RAO2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RAOOutput"></div>
+
+<button onclick="myFunction67()">COPY</button>
+
+<script>
+function myFunction67() {
+  var copyText = document.getElementById("RAO1");
+  var copyText2 = document.getElementById("RAO2");
+  var copyText3 = document.getElementById("RAO3");
+  var output = document.getElementById("RAOOutput");
+  output.value = copyText.value + copyText2.value + copyText3.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container3">
+
+<div><span style="font-size: 14pt; margin-left:10px;">AC1 (Azure Compute Optimized)</span></div>
+<div><input type="text" value="set system bios config -i" size="25" id="RAC1"></div>
+<div><input type="text" value=" -j 1 -n 8" size="4" id="RAC3"></div>
+<div><span style="font-size: 14pt;">Blade#:</div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RAC2"></div>
+<div><input type="text" value=" " maxlength="4" size="1" id="RACOutput"></div>
+
+<button onclick="myFunction68()">COPY</button>
+
+<script>
+function myFunction68() {
+  var copyText = document.getElementById("RAC1");
+  var copyText2 = document.getElementById("RAC2");
+  var copyText3 = document.getElementById("RAC3");
+  var output = document.getElementById("RACOutput");
+  output.value = copyText.value + copyText2.value + copyText3.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<p style="border:4px; border-style:solid; border-color:black; font-size:32px; font-family:calibri; text-align:center; width:875px; height:40px; padding:5px; margin-left:4px">RM BASIC COMMANDS</p>
+
+<div class="grid-container4">
+
+<div><span style="font-size: 14pt; margin-left:10px;">GET RM INFO</span></div>
+<div><input type="text" value="show manager info -m" size="25" id="GRMI"></div>
+
+<button onclick="myFunctionGRMI()">COPY</button>
+
+<script>
+function myFunctionGRMI() {
+  var copyText = document.getElementById("GRMI");
+  copyText.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container4">
+
+<div><span style="font-size: 14pt; margin-left:10px;">GET RM HEALTH</span></div>
+<div><input type="text" value="show manager health" size="25" id="GRMH"></div>
+
+<button onclick="myFunctionGRMH()">COPY</button>
+
+<script>
+function myFunctionGRMH() {
+  var copyText = document.getElementById("GRMH");
+  copyText.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container4">
+
+<div><span style="font-size: 14pt; margin-left:10px;">SET RM TO DHCP (ETH0)</span></div>
+<div><input type="text" value="set network dhcp -i eth0" size="25" id="SRME0"></div>
+
+<button onclick="myFunctionSRME0()">COPY</button>
+
+<script>
+function myFunctionSRME0() {
+  var copyText = document.getElementById("SRME0");
+  copyText.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container4">
+
+<div><span style="font-size: 14pt; margin-left:10px;">SET RM TO DHCP (ETH1)</span></div>
+<div><input type="text" value="set network dhcp -i eth1" size="25" id="SRME1"></div>
+
+<button onclick="myFunctionSRME1()">COPY</button>
+
+<script>
+function myFunctionSRME1() {
+  var copyText = document.getElementById("SRME1");
+  copyText.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+
+<div class="grid-containerCMSIP">
+
+<div><span style="font-size: 14pt; margin-left:10px;">SET RM TO STATIC IP (ETH0)</span></div>
+<div><input type="text" value="set network static -i eth0" size="25" id="RMSTATIC01"></div>
+</div>
+
+<div class="grid-containerCMSIP1">
+
+<div><span style="font-size: 14pt; margin-left:282px;">IP ><input type="text" value=" " size="17" id="RMSTATIC02"></div>
+<input type="text" value=" -a" maxlength="2" size="2" id="RMSTATIC03"></div>
+</div>
+
+<div class="grid-containerCMSIP1">
+
+<div><span style="font-size: 14pt; margin-left:240px;">Subnet ><input type="text" value=" " size="17" id="RMSTATIC04"></div>
+<input type="text" value=" -s" maxlength="2" size="2" id="RMSTATIC05"></div>
+</div>
+
+<div class="grid-containerCMSIP1">
+
+<div><span style="font-size: 14pt; margin-left:225px;">Gateway ><input type="text" value=" " size="17" id="RMSTATIC06"></div>
+<input type="text" value=" -g" maxlength="2" size="2" id="RMSTATIC07"></div>
+</div>
+
+<div class="grid-containerRMOut">
+
+<input type="text" value=" " maxlength="2" size="1" id="RMSTATIC01Output"></div>
+</div>
+
+<div class="grid-containerRMOut">
+
+<span style="font-size: 14pt; margin-left:37px; margin-bottom:72px;"><button onclick="myFunctionRMSTATIC01()">COPY</button>
+
+<script>
+function myFunctionRMSTATIC01() {
+  var copyText = document.getElementById("RMSTATIC01");
+  var copyText2 = document.getElementById("RMSTATIC03");
+  var copyText3 = document.getElementById("RMSTATIC02");
+  var copyText4 = document.getElementById("RMSTATIC05");
+  var copyText5 = document.getElementById("RMSTATIC04");
+  var copyText6 = document.getElementById("RMSTATIC07");
+  var copyText7 = document.getElementById("RMSTATIC06");
+  var output = document.getElementById("RMSTATIC01Output");
+  output.value = copyText.value + copyText2.value + copyText3.value + copyText4.value + copyText5.value + copyText6.value + copyText7.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-containerCMSIP">
+
+<div><span style="font-size: 14pt; margin-left:10px;">SET RM TO STATIC IP (ETH1)</span></div>
+<div><input type="text" value="set network static -i eth1" size="25" id="RMSTATIC11"></div>
+</div>
+
+<div class="grid-containerCMSIP1">
+
+<div><span style="font-size: 14pt; margin-left:282px;">IP ><input type="text" value=" " size="17" id="RMSTATIC12"></div>
+<input type="text" value=" -a" maxlength="2" size="2" id="RMSTATIC13"></div>
+</div>
+
+<div class="grid-containerCMSIP1">
+
+<div><span style="font-size: 14pt; margin-left:240px;">Subnet ><input type="text" value=" " size="17" id="RMSTATIC14"></div>
+<input type="text" value=" -s" maxlength="2" size="2" id="RMSTATIC15"></div>
+</div>
+
+<div class="grid-containerCMSIP1">
+
+<div><span style="font-size: 14pt; margin-left:225px;">Gateway ><input type="text" value=" " size="17" id="RMSTATIC16"></div>
+<input type="text" value=" -g" maxlength="2" size="2" id="RMSTATIC17"></div>
+</div>
+
+<div class="grid-containerRMOut">
+
+<input type="text" value=" " maxlength="1" size="2" id="RMSTATIC11Output"></div>
+</div>
+
+<div class="grid-containerRMOut">
+
+<span style="font-size: 14pt; margin-left:37px; margin-bottom:72px;"><button onclick="myFunctionRMSTATIC11()">COPY</button>
+
+<script>
+function myFunctionRMSTATIC11() {
+  var copyText = document.getElementById("RMSTATIC11");
+  var copyText2 = document.getElementById("RMSTATIC13");
+  var copyText3 = document.getElementById("RMSTATIC12");
+  var copyText4 = document.getElementById("RMSTATIC15");
+  var copyText5 = document.getElementById("RMSTATIC14");
+  var copyText6 = document.getElementById("RMSTATIC17");
+  var copyText7 = document.getElementById("RMSTATIC16");
+  var output = document.getElementById("RMSTATIC11Output");
+  output.value = copyText.value + copyText2.value + copyText3.value + copyText4.value + copyText5.value + copyText6.value + copyText7.value
+  output.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<p style="border:4px; border-style:solid; border-color:black; font-size:32px; font-family:calibri; text-align:center; width:875px; height:40px; padding:5px; margin-left:4px">1U/6U UPS COMMANDS</p>
+
+<div class="grid-container5">
+
+<div><span style="font-size: 14pt; margin-left:10px;">DEFAULT LOGIN</span></div>
+<div><input type="text" value="wcscli -establishcmconnection -p 8000 -s 1 -u administrator -x $pl3nd1D" size="65" id="AdministratorSplendid"></div>
+
+<button onclick="myFunction2()">COPY</button>
+
+<script>
+function myFunction2() {
+  var copyText = document.getElementById("AdministratorSplendid");
+  copyText.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container5">
+
+<div><span style="font-size: 14pt; margin-left:10px;">VERSION LOOKUP</span></div>
+<div><input type="text" value="wcscli -v" size="65" id="LVer"></div>
+
+<button onclick="myFunction69()">COPY</button>
+
+<script>
+function myFunction69() {
+  var copyText = document.getElementById("LVer");
+  copyText.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container5">
+
+<div><span style="font-size: 14pt; margin-left:10px;">PULL DATA (1U)</span></div>
+<div><input type="text" value="wcscli -getauxdevicestatus -i 3" size="65" id="1UD"></div>
+
+<button onclick="myFunction70()">COPY</button>
+
+<script>
+function myFunction70() {
+  var copyText = document.getElementById("1UD");
+  copyText.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container5">
+
+<div><span style="font-size: 14pt; margin-left:10px;">PULL DATA (6U)</span></div>
+<div><input type="text" value="wcscli -getauxdevicestatus -i 1" size="65" id="6UD"></div>
+
+<button onclick="myFunction71()">COPY</button>
+
+<script>
+function myFunction71() {
+  var copyText = document.getElementById("6UD");
+  copyText.select();
+  document.execCommand("copy");
+}
+</script>
+</div>
+</div>
+
+<div class="grid-container5">
+
+<div><span style="font-size: 14pt; margin-left:10px;">MOR UPS BATTERY LOGS</span></div>
+<div><input type="text" value="Press Esc+B" size="10"></div>
+</div>
+
+<div class="grid-container5">
+
+<div><span style="font-size: 14pt; margin-left:10px;">MOR UPS GET LOGS</span></div>
+<div><input type="text" value="Press Esc+L" size="10"></div>
+</div>
+
+<h12 id="bottom"></h12>
+
+
+
+<br><br><br>
+
+<style>
+.footer {
+   position: fixed;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   width: 100%;
+   height: 30px;
+   background-color: rgb(63, 81, 181);
+   color: white;
+}
+</style>
+
+<div class="footer">
+  <p1 style="margin-left:5px";>For comments and suggestions, please contact<i> Alan Alves (<a href="mailto:alalve@microsoft.com"><b>alalve@microsoft.com</b></a>)</i>
+<a href="#top" style="font-family:segoe ui; font-size:14pt; margin-left:120px; color:#ffffff;"><b>&#8593;   Top of Page   &#8593;</b></a></p1>
+</div>
+</div>
+
+
+
+
+
+
+
+</body>
+</html>
