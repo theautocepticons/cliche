@@ -1,0 +1,4799 @@
+Windows Cloud Server
+System Specifications
+Software: Chassis Manager Command-Line Interface
+Author:
+Document:
+Revision:
+Version:
+Date:
+
+Microsoft
+H007933
+A
+V2.9.5
+October 15, 2015
+
+Distribution:
+Internal Only
+External All
+External Restricted
+
+If restricted, specify restricted to whom:
+
+(c) 2015 Microsoft Corporation. All rights reserved.
+This document is provided "AS-IS" with no warranties. Information and views expressed in this document may
+change without notice. You bear the risk of using it.
+Microsoft and/or third parties may have intellectual property rights covering the subject matter in this
+document. Except as may be expressly provided in a separate agreement, if any, the furnishing of this document
+does not grant any licenses to any such intellectual property rights. Instead, this document is for your internal
+reference purposes. This document and its contents are confidential and proprietary to Microsoft. It is disclosed
+and can be used only pursuant to a non-disclosure agreement between you and Microsoft.
+
+CONFIDENTIAL
+
+Revision History
+Revision/
+Date
+V9.1
+12/18/12
+
+Notes
+• Initial specification (different format, versioning)
+
+V0.9.2.2
+1/31/13
+
+• Formatted and edited document
+
+V1.0
+2/11/13
+
+• Put in new template
+
+V1.3
+9/24/13
+
+• Removed non supported values for the SetNextBoot command. The removed values
+are: ForceDefaultHddSafeMode, ForceDefaultDiagPartition and ForceDefaultDvd.
+
+V1.4
+12/31/13
+
+• Added CLI Over Serial (WCSCLI+) commands. Added two more blade and serial console
+session commands.
+
+V1.5
+3/4/2014
+
+• Added battery information for GetChassisInfo and GetChassisHealth
+• Removed disk info for blades in GetBladeHealth for compute blades and updated
+sample response
+• Updated arguments for setnic and output for getnic commands.
+Fix command names for readbladelog and clearbladelognly
+Adding command ‘Clear’ to clear history for CLI over serial.
+ReadChassisLog updated with with start and end timestamp
+Added commands GetBIOSPostCode, SetPSUAlertDPC, GetPSUAlertDPC, GetPSUAlert,
+ActivateDeactivateBladePSUAlert.Rev Versionsupported.
+
+V1.91
+
+• Add Update PSU Firmware and Get PSU Firmware Status APIs.
+
+V2.0
+
+•
+•
+•
+•
+
+V2.0.1
+
+• Added detail for UpdatePSUFirmware for errors during firmware update.
+• Updated bladeState for GetBladeHealth and GetChassisHealth to show that it indicates
+the hard power state rather than the internal CM state.
+
+V2.1
+
+• Added putty setting for implicit CR in LF for correctly displaying command output in
+Putty.
+• Make username (-u) and password (-x) as mandatory parameters for
+EstablisCmConnection and when connecting through WCSCLI
+• Added Set/GetBladeMezzPassThroughMode commands
+
+V2.2
+
+• Update stopbladeserialsession and get/set chassis manager asset info syntax
+
+V2.6
+
+• Added Team Center ID
+
+Added recommended PuTTY settings for connecting via serial
+Fix names for chassis LED commands
+Added detail on min/max power limit for SetBladePowerLimit.
+Updated Sample output for asset management APIs.
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 2
+
+SW: CM CLI
+
+V1.90
+
+•
+•
+•
+•
+
+V2.7
+
+V2.9
+
+V2.9.5
+
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+
+Clarified default values for StartPortSerialSession command.
+Updated battery info section for GetChassisInfo and GetChassisHealth
+Updated getbladeinfo output to show BIOS and CPLD versions
+Updated SSL to on by default in section 2
+Added –t option to updatepsufw to ignore faults when updating PSU firmware
+Removed PSU alert based power capping test APIs - SetPSUAlertDPC, GetPSUAlertDPC,
+GetPSUAlert, ActivateDeactivateBladePSUAlert.
+Added runbatteryhealthtest command
+Added WCSCLI supported version in section 2
+Added fandiagnostic command
+Added auxiliary devices command
+
+•
+
+Revision bump to 2.9 only; no change to content.
+
+•
+•
+•
+•
+
+Added Dynamic Chassis Power Alert based Capping commands
+Added Dynamic BIOS configuration API
+Added note on ForceEmersonPsu for UpdatePsuFirmware
+Added I2C GPIO Info extension to GetBladeMezzStatus, and made relevant
+modifications to API description and example
+Added new fields to Get{ChassisManager/PDB/Blade}AssetInfo and made relevant
+modifications to API example
+Added additional description to FanDiagnostics
+Added Scandevice command
+Added GetBladeMezzAssetInfo
+Update Set/Get BladeBiosConfiguration arguments
+Added Set/Get BladeTpmPhysicalPresence
+
+•
+•
+•
+•
+•
+•
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 3
+
+SW: CM CLI
+
+V2.6
+
+• Added Ctrl-X as control key sequence to exit serial session.
+• Added command GetBladeMezzStatus.
+• Added note about entering user credentials using EstablishCmConnection before using
+the CLI Over Serial commands.
+• Added note about specifying domain when calling establishCmConnection.
+• Added SetBladeDatasafeActivePowerCycle and GetBladeDatasafePowerState.
+• Fixed text for GetNextBoot and SetNextBoot commands.
+• Clarified descriptions for SetNextBoot and GetNextBoot.
+• Rearrange PuTTY settings to group Terminal settings together.
+• Updated time taken for PSU firmware update.
+• Added CLI commands SetFirmwareUpdate, GetFirmwareUpdateStatus, SetLocalUpdate,
+GetLocalUpdateStatus
+• Update ReadBladeLog to indicate that up to 300 entries will be returned by default.
+• Added COM5 and COM6 for StartPortSerialSession.
+
+Contents
+1
+
+Overview of Chassis Manager Command-Line Interface Specification......................................................... 5
+
+2
+
+Chassis Manager Service .......................................................................................................................... 6
+2.1
+
+Service Installation........................................................................................................................................ 6
+
+3
+
+State and Information Commands ............................................................................................................ 7
+
+4
+
+Blade Management Commands .............................................................................................................. 21
+
+5
+
+Chassis Manager Management Commands ............................................................................................. 41
+
+6
+
+Blade and Serial Console Session Commands .......................................................................................... 50
+
+7
+
+CLI Over Serial (WCSCLI+) ....................................................................................................................... 56
+
+8
+
+Auxiliary Devices .................................................................................................................................... 62
+GetAuxDeviceType ...................................................................................................................................... 63
+
+8.2
+
+GetAuxDeviceStatus ................................................................................................................................... 63
+
+8.3
+
+SetAuxDeviceInfo ........................................................................................................................................ 64
+
+Power Alert driven Power Capping ......................................................................................................... 64
+9.1
+
+setbladepoweralertpolicy ........................................................................................................................... 64
+
+9.2
+
+getbladepoweralertpolicy........................................................................................................................... 66
+
+9.3
+
+setchassispoweralertpolicy ......................................................................................................................... 66
+
+9.4
+
+getchassispoweralertpolicy ........................................................................................................................ 68
+
+9.5
+
+getbladethrottlingstatistics ........................................................................................................................ 68
+
+10
+
+PuTTY Settings for serial connection ....................................................................................................... 69
+
+11
+
+Service Install......................................................................................................................................... 74
+
+12
+
+Appendix: Commonly Used of Acronyms................................................................................................. 75
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 4
+
+SW: CM CLI
+
+9
+
+8.1
+
+1 Overview of Chassis Manager Command-Line
+Interface Specification
+This document, “Windows Cloud Server System Specifications─Software: Chassis Manager CommandLine Interface,” describes the command-line interface (CLI) that can be used to manage the Windows
+Cloud Server (WCS) system. Systems management in the WCS system is designed to present a
+consistent, optimized interface. A Chassis Manager (CM) provides the front end through an applications
+interface (RESTful web API) for automated management and the command-line interface for manual
+management. It manages all devices within the rack and communicates directly with the blade
+management system through a serial multiplexor.
+Table 1 lists the WCS system specifications, with this document highlighted.
+
+Specification title
+
+Description
+
+Overview
+
+Explains the guiding principles used for the design of the WCS system.
+
+Architecture
+
+Details the WCS blade, chassis, and rack.
+
+Hardware: Chassis
+
+Describes the hardware used in the WCS system, including the chassis, tray, and
+systems management.
+
+Hardware: Blade
+
+Describes the blade used in the WCS system, including interconnect and blade
+hardware and blade management.
+
+Mezzanine I/O
+
+Describes the mezzanine expansion cards used in the WCS system.
+
+Software: Architecture
+
+Describes the architecture of the software used in the WCS system, including
+the software requirements and systems management.
+
+Software: Chassis
+Manager CLI
+
+Describes the Chassis Manager command-line interface (CLI).
+
+Software: Rest API
+
+Describes the Chassis Manager user interface access and security features,
+and then describes Rest API.
+
+Software: GPIO
+
+Describes the Compute Blade BMC and PCH GPIO assignment.
+
+Software: Blade-BIOS
+
+Describes the Compute Blade BIOS interfaces and features.
+
+Software: Blade API
+
+Details the application programming interface (API) of the blades used in
+the WCS system.
+
+Note that this document is intended for designers and engineers who will be building a WCS system.
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 5
+
+SW: CM CLI
+
+Table 1. List of WCS System Specifications
+
+2 Chassis Manager Service
+WCSCLI Version Supported: 2.7.0.5
+
+2.1 Service Installation
+Table 2 lists the commands to install, start, stop, and uninstall the Chassis Manager service and to
+launch command-line interface.
+Table 2. Commands to Install Chassis Manager Service and Launch the CLI
+
+Action
+
+Command
+
+Install service
+
+CM-Binary-Directory>
+C:\Windows\Microsoft.NET\Framework\v4.0.30319\InstallUtil.exe
+Microsoft.GFS.WCS.ChassisManager.exe
+
+Start service
+
+net start chassismanager
+
+Stop service
+
+net stop chassismanager
+
+Uninstall
+service
+
+CM-Binary-Directory>
+C:\Windows\Microsoft.NET\Framework\v4.0.30319\InstallUtil.exe
+/u Microsoft.GFS.WCS.ChassisManager.exe
+
+Launch CLI
+
+WcsCli-Binary-Directory> wcscli.exe <-u username> <-x password>
+[-h host_name] [-p port] [-s SSL_option] [-b batchfileName] [v]
+
+Usage:
+-u - username to connect to CM service. Use domain\username
+if not using local domain
+-x - password to connect to CM service
+-h - host_name - Specify host name for Chassis Manager
+(Optional. Default is localhost)
+-p - port - Specify a valid Port to connect to for Chassis Manager
+(Optional. Default is 8000)
+-s - Select Chassis Manager (CM)'s SSL Encryption mode
+SW: CM CLI
+
+(Optional. 0: disabled/ 1 (default): enabled)
+Enter 0 if CM is not configured to use SSL encrytion
+(SSL disabled in CM)
+Enter 1 if CM requires SSl Encryption (SSL enabled in CM)
+-b - Optional batch file option (not supported in serial mode).
+-v - Get CLI version information
+Get CLI version
+
+WcsCli-Binary-Directory> wcscli –v
+
+Returns the current CLI version.
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 6
+
+3 State and Information Commands
+•
+
+GetChassisInfo
+
+•
+
+GetBladeInfo
+
+•
+
+GetChassisHealth
+
+•
+
+GetBladeHeatlh
+
+•
+
+GetServiceVersion
+
+•
+
+UpdatePSUFirmware
+
+•
+
+GetPSUFirmwareStatus
+
+•
+
+RunBatteryHealthTest
+
+•
+
+SetFirmwareUpdate
+
+•
+
+GetFirmwareUpdateStatus
+
+•
+
+FanDiagnostics
+
+•
+
+FanControllerDiagnostic
+
+•
+
+GetChassisConfig
+
+•
+
+GetchassisUserConfig
+
+•
+
+UpdateChassisConfig
+
+•
+
+UpdatechassisUserConfig
+
+•
+
+ResetPsu
+
+•
+
+ResetFanController
+
+•
+
+GetPsuFaultLogs
+
+•
+
+ClearPsuFaultLogs
+
+•
+
+GetSystemEventLogs
+
+•
+
+GetMaxPwmRequirement
+
+SW: CM CLI
+
+Table 3 describes the following WCS system CLI commands, which provide information about the system
+state:
+
+Table 3. CLI State and Information Commands
+
+3.1 GetChassisInfo
+Description:
+This command gets status information about chassis components including the following:
+•
+
+Blades – for example, GUID and power status
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 7
+
+•
+
+Power supplies – for example, power draw status and serial number
+
+•
+
+Batteries – charge level, power output, fault status
+
+•
+
+Chassis Manager – version information, IP information, and system uptime
+
+The power supply and battery status are not available during a PSU firmware upgrade process.
+Syntax:
+wcscli –getchassisinfo [-s] [-p] [-c] [-t] [-h]
+-s – Show information about blades
+-p – Show information about power supplies
+-c – Show chassis manager information
+-t – Show battery information
+-h – Help, display the correct syntax
+
+Sample output:
+== Compute Nodes ==
+#
+| Name | GUID
+| State | BMC MAC
+| Completion Code
+1
+| BLADE1
+| 71cd4e40-a900-11e1-9856-089e013a37e8 | On
+| DeviceID: 0MAC Address: 08:9E:01:22:FB:42
+| Success
+2
+| BLADE2
+| 590fbcc0-a910-11e1-b117-089e013a37f8 | On
+| DeviceID: 0MAC Address: 08:9E:01:22:FB:32
+| Success
+3
+| BLADE3
+| b56945e0-a93d-11e1-be83-089e013a3809 | On
+| DeviceID: 0MAC Address: 08:9E:01:22:FB:3E
+| Success
+4
+| BLADE4
+| 9f7f0a40-a83d-11e1-a8ad-089e013a3798 | On
+| DeviceID: 0MAC Address:
+08:9E:01:29:60:32
+| Success
+5
+| BLADE5
+| ae7ee0a0-d50c-11e1-b27d-089e015a2876 | On
+| DeviceID: 0MAC Address: 08:9E:01:5A:2C:16
+| Success
+6
+| BLADE6
+| 506d99c0-d4fd-11e1-b020-089e015a2872 | On
+| DeviceID: 0MAC Address: 08:9E:01:5A:2C:1C
+| Success
+7
+| BLADE7
+| 07c79a60-d505-11e1-a944-089e015a2874 | On
+| DeviceID: 0MAC Address: 08:9E:01:5A:2C:0A
+| Success
+8
+| BLADE8
+| 7b7398a0-d4e8-11e1-aa7a-089e015a286c | On
+| DeviceID: 0MAC Address: 08:9E:01:5A:2C:18
+| Success
+9
+| BLADE9
+| 3d54f900-d4df-11e1-a52d-089e015a286a | On
+| DeviceID: 0MAC Address: 08:9E:01:5A:2C:1E
+| Success
+10
+| BLADE10
+| dcfaf040-d4f3-11e1-8ce3-089e015a2870 | On
+| DeviceID: 0MAC Address: 08:9E:01:5A:2C:40
+| Success
+….....
+== Power Supplies ==
+#
+| Serial Num
+| State | Pout (W)
+| Completion Code
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 8
+
+SW: CM CLI
+
+Sample usage:
+wcscli# wcscli –s –p –c -t
+
+1
+
+| L076NK001AALZ | On
+
+| 194
+
+| Success
+
+2
+
+| L076NK001AAMZ | On
+
+| 228
+
+| Success
+
+3
+
+| L076NK001AAKZ | On
+
+| 190
+
+| Success
+
+4
+
+| L076NK001AAJZ | On
+
+| 214
+
+| Success
+
+5
+
+| L076NK001AAHZ | On
+
+| 188
+
+| Success
+
+6
+
+| L076NK001AANZ | On
+
+| 203
+
+| Success
+
+== Batteries ==
+#
+| Present
+| Completion Code
+
+| Pout (W)
+
+| Charge (%)
+
+| Fault Status
+
+1
+| 1
+| Success
+
+| 0
+
+| 97
+
+| 0x0
+
+2
+| 1
+| Success
+
+| 0
+
+| 98
+
+| 0x0
+
+3
+| 1
+| Success
+
+| 0
+
+| 96
+
+| 0x0
+
+4
+| 1
+| Success
+
+| 0
+
+| 99
+
+| 0x0
+
+5
+| 1
+| Success
+
+| 0
+
+| 100
+
+| 0x0
+
+6
+| 1
+| Success
+
+| 0
+
+| 99
+
+| 0x0
+
+== Chassis Controller ==
+Firmware Version
+
+: 02.02
+
+Hardware Version
+
+: 1
+
+Serial Number
+
+: 33333333
+
+Asset Tag
+
+:
+
+IP Address
+
+: 192.168.100.23
+
+IP Address Source
+
+: 192.168.100.8
+
+System Uptime
+
+: 00:21:32.5127429
+SW: CM CLI
+
+State Information
+1.) Battery Fault Status
+Battery fault detected bits indicate the following:
+Bit
+Bit
+Bit
+Bit
+Bit
+Bit
+Bit
+Bit
+
+7
+6
+5
+4
+3
+2
+1
+0
+
+-
+
+Fault. Set to 1 if any bit 6:1 are set.
+Under voltage fault
+Over current charge
+Over temperature
+Cell balance not good
+Over voltage
+Over current discharge
+Reserved
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 9
+
+2.) Blade State – Blade Power State
+Possible values:
+public enum PowerState : int
+{
+// power state codes
+ON = 0x1,
+OFF = 0x0,
+OnFwDecompress = 0x2,
+NA = 0x3,
+}
+
+ON – Blade Powered ON, State OK.
+OFF – Blade Powered OFF, Do nothing.
+OnFwDecompress – Time during Blade Set power ON, when Chassis Manager cannot send
+commands to BMC, Do nothing.
+NA – Unknown, Do nothing
+3.) Power Supply State – PSU Power State
+Possible values:
+ON – Power good signal is high and PSU is healthy.
+OFF – Power good signal is low, failure state.
+NA – Indicates Power supply cannot be reached, Unknown state.
+3.2 GetBladeInfo
+Description:
+This command gets information about the blades, including serial number and version information.
+Syntax:
+wcscli -getbladeinfo <-i blade_index | -a> [-h]
+-i – Blade index (1-24)
+-a – Get information for all blades
+-h – Help, display the correct syntax
+
+Sample usage:
+To get information on blade 1, execute the following command:
+SW: CM CLI
+
+WcsCli# wcscli -getbladeinfo -i 2
+
+Sample output:
+== Compute Node Info ==
+BMC Firmware Version
+: 03.07.02
+BIOS Version
+: C1031.BS.3A10.GN1
+CPLD Version
+: 3A03
+Hardware Version
+: C1030Q
+Serial Number
+: QTFCLJ5893241
+Asset Tag
+: 0x1849
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 10
+
+== MAC Address ==
+Device Id
+
+: 1
+
+MAC Address
+
+: F4:52:14:D6:A7:82
+
+Device Id
+
+: 2
+
+MAC Address
+
+:
+
+3.3 GetChassisHealth
+Description:
+This command gets health status for blades, power supplies, batteries and fans. The power supply and
+battery status are not available during a PSU firmware upgrade process.
+Syntax:
+wcscli -getchassishealth [-b] [-p] [-f] [-t] [-h]
+-b – Show blade health
+-p – Show PSU health
+-f – Show fan health
+-t – Show battery health
+-h – Help, display the correct syntax
+
+Sample usage:
+To get information about blade 1, execute the following command:
+wcscli# wcscli –getchassishealth –b –p –f -t
+
+==
+: 1
+: ON
+: Server
+
+Blade Id
+
+: 2
+
+Blade State
+
+: ON
+
+Blade Type
+
+: Server
+
+Blade Id
+
+: 3
+
+Blade State
+
+: ON
+
+Blade Type
+
+: Server
+
+Blade Id
+
+: 4
+
+Blade State
+
+: OFF
+
+Blade Type
+
+: Server
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+SW: CM CLI
+
+Sample output:
+== Blade Health
+Blade Id
+Blade State
+Blade Type
+
+Page | 11
+
+Blade Id
+
+: 5
+
+Blade State
+
+: ON
+
+Blade Type
+
+: Unknown
+
+Blade Id
+
+: 6
+
+Blade State
+
+: ON
+
+Blade Type
+
+: Unknown
+
+……
+……….
+== PSU Health ==
+Psu Id
+
+: 1
+
+Psu Serial Number
+
+: L076NK001AALZ
+
+Psu State
+
+: ON
+
+PSU Power Out
+
+: 0
+
+Psu Completion code: Success
+Psu Id
+
+: 2
+
+Psu Serial Number
+
+: L076NK001AAMZ
+
+Psu State
+
+: ON
+
+PSU Power Out
+
+: 0
+
+Psu Completion code: Success
+Psu Id
+
+: 3
+
+Psu Serial Number
+
+: L076NK001AAKZ
+
+Psu State
+
+: ON
+
+PSU Power Out
+
+: 0
+
+Psu Completion code: Success
+: 4
+
+Psu Serial Number
+
+: L076NK001AAJZ
+
+Psu State
+
+: ON
+
+PSU Power Out
+
+: 0
+
+SW: CM CLI
+
+Psu Id
+
+Psu Completion code: Success
+Psu Id
+
+: 5
+
+Psu Serial Number
+
+: L076NK001AAHZ
+
+Psu State
+
+: ON
+
+PSU Power Out
+
+: 0
+
+Psu Completion code: Success
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 12
+
+Psu Id
+
+: 6
+
+Psu Serial Number
+
+: L076NK001AANZ
+
+Psu State
+
+: ON
+
+PSU Power Out
+
+: 0
+
+Psu Completion code: Success
+== Battery Health ==
+Battery Id
+
+: 1
+
+Battery Present
+
+: 1
+
+Battery Power Out
+
+: 0
+
+Battery Charge Level
+
+: 97
+
+Battery Fault Status
+
+: 0x0
+
+Battery Completion Code : Success
+Battery Id
+
+: 2
+
+Battery Present
+
+: 1
+
+Battery Power Out
+
+: 0
+
+Battery Charge Level
+
+: 98
+
+Battery Fault Status
+
+: 0x0
+
+Battery Completion Code : Success
+Battery Id
+
+: 3
+
+Battery Present
+
+: 1
+
+Battery Power Out
+
+: 0
+
+Battery Charge Level
+
+: 96
+
+Battery Fault Status
+
+: 0x0
+
+Battery Id
+
+: 4
+
+Battery Present
+
+: 1
+
+Battery Power Out
+
+: 0
+
+Battery Charge Level
+
+: 99
+
+Battery Fault Status
+
+: 0x0
+
+SW: CM CLI
+
+Battery Completion Code : Success
+
+Battery Completion Code : Success
+Battery Id
+
+: 5
+
+Battery Present
+
+: 1
+
+Battery Power Out
+
+: 0
+
+Battery Charge Level
+
+: 100
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 13
+
+Battery Fault Status
+
+: 0x0
+
+Battery Completion Code : Success
+Battery Id
+
+: 6
+
+Battery Present
+
+: 1
+
+Battery Power Out
+
+: 0
+
+Battery Charge Level
+
+: 99
+
+Battery Fault Status
+
+: 0x0
+
+Battery Completion Code : Success
+== Fan Health ==
+Fan Id
+
+: 1
+
+Fan Speed: 3670
+Fan status: ON
+Fan Id
+
+: 2
+
+Fan Speed: 3683
+Fan status: ON
+Fan Id
+
+: 3
+
+Fan Speed: 3474
+Fan status: ON
+Fan Id
+
+: 4
+
+Fan Speed: 3468
+Fan status: ON
+Fan Id
+
+: 5
+
+Fan Speed: 3633
+
+Fan Id
+
+SW: CM CLI
+
+Fan status: ON
+: 6
+
+Fan Speed: 3571
+Fan status: ON
+
+State Information
+1.) Battery Fault Status
+Battery fault detected bits indicate the following:
+Bit 7 - Fault. Set to 1 if any bit 6:1 are set.
+Bit 6 - Under voltage fault
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 14
+
+Bit
+Bit
+Bit
+Bit
+Bit
+Bit
+
+5
+4
+3
+2
+1
+0
+
+-
+
+Over current charge
+Over temperature
+Cell balance not good
+Over voltage
+Over current discharge
+Reserved
+
+2.) Blade State – Blade Power State
+Possible values:
+public enum PowerState : int
+{
+// power state codes
+ON = 0x1,
+OFF = 0x0,
+OnFwDecompress = 0x2,
+NA = 0x3,
+}
+
+ON – Blade Powered ON, State OK.
+OFF – Blade Powered OFF, Do nothing.
+OnFwDecompress – Time during Blade Set power ON, when Chassis Manager cannot send
+commands to BMC, Do nothing.
+NA – Unknown, Do nothing
+3.) Power Supply State – PSU Power State
+Possible values:
+ON – Power good signal is high and PSU is healthy.
+OFF – Power good signal is low, failure state.
+NA – Indicates Power supply cannot be reached, Unknown state.
+4.) Fan Health
+Possible values: True/False
+For one fan failure, it is still a healthy scenario, other fan speeds are increased to 100%.
+For two or more fan failures – Raise error.
+
+Description:
+This command gets health information about the blade, including CPU, memory, disk (JBOD only),
+PCIe, sensor, and FRU information. The information can be requested separately using specific
+command options.
+Syntax:
+wcscli -getbladehealth <-i blade_index> [-q] [-m] [-d] [-p] [-s] [-t] [f] [-h]
+-q – Show blade CPU information
+-m – Show blade memory information
+-d – Show JBOD disk information
+-p – Show blade PCIe information
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 15
+
+SW: CM CLI
+
+3.4 GetBladeHealth
+
+-s – Show blade sensor information
+-t – Show temperature sensor information
+-f – Show blade FRU information
+-h – Help, display the correct syntax
+
+Sample usage:
+To get information on blade 1, execute the following command:
+wcscli# wcscli –getbladehealth –i 1
+Sample output:
+== Blade 2 Health
+Blade ID
+:
+Blade State
+:
+Blade Type
+:
+
+Information ==
+2
+ON
+Server
+
+== Memory Information ==
+Dimm
+
+: 1
+
+Dimm Type
+
+: DDR3
+
+Memory Voltage
+
+: 1.35V
+
+Size
+
+: 16384
+
+Speed
+
+: 1333
+
+Memory Status
+
+: Ok
+
+Memory Completion code: Success
+Dimm
+
+: 2
+
+Dimm Type
+
+: NotPresent
+
+Memory Voltage
+
+: NotPresent
+
+Size
+
+: 0
+
+Speed
+
+: 0
+
+Memory Status
+
+: NotPresent
+
+Dimm
+
+: 3
+
+Dimm Type
+
+: DDR3
+
+Memory Voltage
+
+: 1.35V
+
+Size
+
+: 16384
+
+Speed
+
+: 1333
+
+Memory Status
+
+: Ok
+
+SW: CM CLI
+
+Memory Completion code: Success
+
+Memory Completion code: Success
+== PCIE Information ==
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 16
+
+Dimm
+
+: 1
+
+Dimm Type
+
+: DDR3
+
+Memory Voltage
+
+: 1.35V
+
+Size
+
+: 16384
+
+Speed
+
+: 1333
+
+Memory Status
+
+: Ok
+
+Memory Completion code: Success
+Dimm
+
+: 2
+
+Dimm Type
+
+: NotPresent
+
+Memory Voltage
+
+: NotPresent
+
+Size
+
+: 0
+
+Speed
+
+: 0
+
+Memory Status
+
+: NotPresent
+
+Memory Completion code: Success
+Dimm
+
+: 3
+
+Dimm Type
+
+: DDR3
+
+Memory Voltage
+
+: 1.35V
+
+Size
+
+: 16384
+
+Speed
+
+: 1333
+
+Memory Status
+
+: Ok
+
+Memory Completion code: Success
+== FRU Information ==
+Blade Serial Number
+
+: QTFCTM2370293
+
+Blade Product Type
+
+:
+
+Blade Hardware Version
+
+: T6M
+
+Note that some of the fields populated are blank as complete FRU data is not available for the on
+which the sample command was executed.
+Status Defination:
+1.) Memory Status
+Possible values:
+/// <summary>
+/// Memory Status
+/// </summary>
+public enum MemoryStatus : int
+{
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 17
+
+SW: CM CLI
+
+Blade Asset Tag :
+
+Reserved = 0x00,
+Unknown = 0x01,
+Ok = 0x02,
+NotPresent = 0x03,
+SingleBitError = 0x05,
+MultiBitError = 0x07
+}
+
+Unknown – Memory status unknown, do nothing.
+OK – Memory status is OK
+NotPresent – Memory not present, do nothing.
+SingleBitError– Memory single bit error occurred, Raise Error
+MultiBitError – Memory multi-bit error occurred, Raise error
+2.) Sensor/Device Entity ID
+Possible values:
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+SW: CM CLI
+
+/// <summary>
+/// Entity Id's are used for identifying the physical entity
+/// that a sensor or device is associated with
+/// </summary>
+public enum IpmiEntityId : int
+{
+Unspecified = 0,
+Other = 1,
+Unknown = 2,
+Processor = 3,
+Disk = 4,
+Peripheral = 5,
+MgmtModule = 6,
+SystemBoard = 7,
+MemoryModule = 8,
+ProcessorModule = 9,
+PowerSupply = 10,
+AddInCard = 11,
+FrontPanel = 12,
+BackPanel = 13,
+PowerSystem = 14,
+DriveBackplane = 15,
+IntExp = 16,
+OtherSystemBoard = 17,
+ProcessorBoard = 18,
+PowerUnit = 19,
+PowerModule = 20,
+PowerManagement = 21,
+ChassisPanel = 22,
+SystemChassis = 23,
+SubChassis = 24,
+ChassisBoard = 25,
+DiskBay = 26,
+PeripheralBay = 27,
+DeviceBay = 28,
+FanDevice = 29,
+
+Page | 18
+
+CoolingUnit = 30,
+CableConnect = 31,
+MemoryDevice = 32,
+MgmtSoftware = 33,
+SystemFirmware = 34,
+OS = 35,
+SystemBus = 36,
+EntityGroup = 37,
+RemoteDevice = 38,
+ExternalEnvironment = 39,
+Battery = 40,
+ProcessorBlade = 41,
+ConSwitch = 42,
+ProcessorMemModule = 43,
+IOModule = 44,
+ProcessorIOModule = 45,
+MgmtCntrlFirmware = 46,
+IpmiChannel = 47,
+PCIBus = 48,
+PCIeBus = 49,
+SCSIBus = 50,
+SataSAS = 51,
+ProcessorFSB = 52,
+Clock = 53,
+ReservedSystemFirmware = 54,
+AirInlet = 55,
+Reserved = 56,
+Baseboard = 66,
+ChassisSpecific = 144,
+BoardSpecific = 176,
+Oem = 208
+}
+
+3.) Sensor State:
+Possible values for each sensor type is defined in EventsData.xml
+
+EventDataStrings.xml
+
+SW: CM CLI
+
+3.5 GetServiceVersion
+Description:
+This command gets chassis manager service assembly version.
+Syntax:
+wcscli -getserviceversion [-h]
+-h – Help, display the correct syntax
+
+Sample usage:
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 19
+
+To get information on blade 1, execute the following command:
+wcscli# wcscli -getserviceversion
+Sample output:
+Chassis Manager Service version: 1.2.0.0
+
+3.6 Update PSU Firmware
+Description:
+This command updates the firmware of the primary or secondary controller of the power supply unit
+(PSU). When a firmware update is initiated, the PSU will shut off its output power. The Chassis
+Manager will also stop monitoring the PSU that is being updated.
+Since firmware update takes approximately 12 minutes each for the primary controller and the
+secondary controller, the update process should only be performed while AC power is supplied to the
+PSU. Firmware update cannot complete in time and should not be performed if the PSU is operating
+on battery power.
+Once firmware update is initiated on a primary or secondary controller, the firmware update must
+complete successfully before updating the other controller. For example, if firmware update is
+initiated but failed for any reason on the secondary controller, the firmware update must be executed
+again on the secondary controller until it completes successfully.
+A failed firmware update on a PSU will cause the PSU to output invalid model ID when it is queried. If
+the Chassis Manager service is started or restarted with a PSU in this condition, the Chassis Manager
+service will not recognize the PSU. In this case, set the ‘ForceEmersonPsu’ flag to ‘1’ in the
+Microsoft.GFS.WCS.ChassisManager.exe.config file and restart the Chassis Manager service to force it
+to recognize the PSU as an Emerson PSU.
+Use the getpsufwstatus command to check the status of the firmware update.
+Syntax:
+
+SW: CM CLI
+
+wcscli -updatepsufw <-i psuId> <-f filePath> <-p isPrimaryImage> [-t] [-h]
+psuId - the target PSU number to update. Typically 1-6
+-f - path to firmware image file
+-p - 1: Firmware image file is for primary controller.
+0: Firmware image file is for secondary controller.
+-t - Optional argument. If specified, ignore PSU status faults and
+update firmware even if fault present.
+Default is to not update firmware if PSU fault present.
+-h - help; display the correct syntax
+Sample usage:
+To update the secondary controller on PSU 1, execute the following command:
+wcscli# wcscli –updatepsufw -i 1 –f c:\test\630_002279_0000
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 20
+
+_MS1425W_SecWithBootloader_CSE76E_V021700.hex –p 0
+Sample output:
+OK. Use wcscli -getpsufwstatus to check the status of the firmware update.
+3.7 Get PSU Firmware Update Status
+Description:
+This command gets the firmware revision, overall firmware update status and the progress stage of
+the firmware update.
+Syntax:
+wcscli -getpsufwstatus <-i psuId> [-h]
+psuId - the target PSU number. Typically 1-6
+-h - help; display the correct syntax
+Sample usage:
+To get the firmware update status on PSU 1, execute the following command:
+wcscli# wcscli –getpsufwstatus -i 1
+Sample output:
+== PSU Firmware Status ==
+Firmware Revision
+: D1.11.11
+Firmware Update Status : NotStarted
+Firmware Update Stage : NotStarted
+Completion Code
+: Success
+3.8 RunBatteryHealthTest
+
+This command runs the battery health test on the specified PSU. The test takes approximately 2
+seconds to run. The test will only run if all PSUs and batteries in the chassis do not contain any faults.
+The test will not run if any PSU firmware is being updated. The battery health test can only be run on
+one PSU at a time. If more than one command is sent to the Chassis Manager, the tests will run in
+order.
+Syntax:
+wcscli -runbatteryhealthtest <-i psuId> [-h]
+psuId - the target PSU to run the battery test. Typically 1-6
+-h - help; display the correct syntax
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 21
+
+SW: CM CLI
+
+Description:
+
+Sample usage:
+To run battery health test on PSU 1, execute the following command:
+wcscli# wcscli –runbatteryhealthtest –i 1
+Sample output:
+Command Success:
+== Battery Health Test Results ==
+Battery ID
+
+:1
+
+Battery Healthy
+
+: True
+
+== Battery Fault Indicator ==
+Battery Fault Raw Word
+Battery Fault
+
+: 0x0
+
+:0
+
+Under Voltage Fault
+
+:0
+
+Overcurrent Charge Fault
+Overtemp Fault
+
+:0
+:0
+
+Cell Balance Not Good Fault
+Over Voltage Fault
+
+:0
+
+:0
+
+Overcurrent Discharge Fault
+
+:0
+
+== Battery Health Status ==
+Battery Health Raw Word
+
+: 0x00E0
+
+Overcharged Alarm
+
+:0
+
+Terminate Charge Alarm
+
+:0
+:0
+
+Terminate Discharge Alarm
+
+:0
+
+Remaining Capacity Alarm
+
+:0
+
+Remaining Time Alarm
+Initialized
+Discharging
+Fully Charged
+Fully Discharged
+Completion Code
+
+SW: CM CLI
+
+Over Temp Alarm
+
+:0
+
+:1
+:1
+:1
+:0
+: Success
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 22
+
+3.9 SetFirmwareUpdate
+Description:
+This command updates Chassis Manager firmware ( Chassis Manager service, WCSCLI, BIOS) and can
+also be used to execute a custom script. Command requires specifying the TFTP package location that
+contains the firmware to be updated.
+Update is invoked using this command, in-between status of update can be monitored using
+GetFirmwareUpdateStatus command.
+If there is already an update in progress the completion status returns “In-progress”, indicating that.
+Syntax:
+wcscli -setfirmwareupdate <-f filePath> [-h]
+-f - path to firmware image file
+-h - help; display the correct syntax
+Sample usage:
+To update the secondary controller on PSU 1, execute the following command:
+wcscli# wcscli –setfirmwareupdate –f tftp://wcstftp/test.zip
+Sample output:
+Command Success : Set Firmware Update Status : Invoked
+3.10 GetFirmwareUpdateStatus
+Description:
+This command gets the Chassis Manager firmware update status, progress stage of the firmware
+update.
+Syntax:
+
+SW: CM CLI
+
+wcscli -getfirmwareupdatetatus [-h]
+-h - help; display the correct syntax
+Sample usage:
+To get the firmware update status, execute the following command:
+wcscli# wcscli –getfirmwareupdatestatus
+Sample output:
+Command Success: Firmware Update Status : UpdatedWcscli
+3.11 FanDiagnostics
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 23
+
+Description:
+This command runs the fan diagnostic function. The function determines if a fan has degraded from
+its original state by maximizing the fan PWM for all fans and comparing their speeds to see which fans
+are no longer in their intended functional state. The fans are run for 20 seconds before checking for
+degradation in order to obtain greater accuracy.
+Syntax:
+wcscli -fandiagnostics [-h]
+-h - help; display the correct syntax
+Sample usage:
+To run the fan diagnostics, use the following command:
+wcscli# wcscli -fandiagnostics
+Sample output:
+Running fan diagnostics. Please wait...
+== Fan Health ==
+Fan Id
+:1
+Fan Speed
+: 7114
+Fan Status
+: Healthy
+Fan Completion Code : Success
+Fan Id
+:2
+Fan Speed
+: 7095
+Fan Status
+: Healthy
+Fan Completion Code : Success
+Fan Id
+:3
+Fan Speed
+: 7012
+Fan Status
+: Healthy
+Fan Completion Code : Success
+SW: CM CLI
+
+Fan Id
+:4
+Fan Speed
+: 7058
+Fan Status
+: Healthy
+Fan Completion Code : Success
+Fan Id
+:5
+Fan Speed
+: 7105
+Fan Status
+: Healthy
+Fan Completion Code : Success
+Fan Id
+Fan Speed
+
+:6
+: 7012
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 24
+
+Fan Status
+: Healthy
+Fan Completion Code : Success
+3.11 FanControllerDiagnostic
+Description:
+Syntax:
+wcscli -fancontrollerdiagnostic [-h]
+-h - help; no arguments accepted
+Sample usage:
+To run the fan diagnostics, use the following command:
+wcscli# wcscli -fancontrollerdiagnostic
+Sample output:
+Running fan diagnostics. Please wait...
+== Config Registers ==
+Register Name: Configuration Register 1 [0x40]
+Value: 0x01
+Match: True
+Expected: 0x01
+Register Name: Configuration Register 2 [0x74]
+Value: 0x00
+Match: True
+Expected: 0x00
+
+SW: CM CLI
+
+== Input Registers ==
+Register Name: Interrupt Register 1 [0x41]
+Value: 0x80
+Match:
+Expected:
+Register Name: Interrupt Register 2 [0x42]
+Value: 0x08
+Match:
+Expected:
+Command Success: Command Completed.
+3.12 GetchassisConfig
+Description:
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 25
+
+Syntax:
+wcscli -getchassisconfig -n name
+-h - help
+Sample usage:
+To run the fan diagnostics, use the following command:
+wcscli# wcscli -getchassisconfig -n numpsus
+Sample output:
+Config Name- numpsus : Config Value – 6
+3.12 UpdatechassisConfig
+Description:
+Syntax:
+wcscli -updatechassisconfig -n name -v value
+-h - help
+Sample usage:
+To run the fan diagnostics, use the following command:
+wcscli# wcscli -updatechassisconfig -n numpsus -v 6
+Sample output:
+Command Success: Command Completed.
+Completion Code: Success
+
+3.13 GetchassisUserConfig
+SW: CM CLI
+
+Description:
+Syntax:
+wcscli -getchassisconfig -n name
+-h - help
+Sample usage:
+To run the fan diagnostics, use the following command:
+wcscli# wcscli -getchassisuserconfig -n csi
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 26
+
+Sample output:
+Config Name- csi : Config Value – 100
+3.14 UpdatechassisUserConfig
+Description:
+Syntax:
+wcscli -updatechassisconfig -n name -v value
+-h - help
+Sample usage:
+To run the fan diagnostics, use the following command:
+wcscli# wcscli -updatechassisuserconfig -n csi -v 100
+Sample output:
+Command Success: Command Completed.
+Completion Code: Success
+
+3.14 GetAllPsusFirmwareStatus
+Description:
+Syntax:
+wcscli -getallpsusfirmwarestatus -n name
+-h – help; no arguments taken
+Sample usage:
+SW: CM CLI
+
+To run the fan diagnostics, use the following command:
+wcscli# wcscli - getallpsusfirmwarestatus
+
+Sample output:
+== All Psus Firmware Status ==
+Firmware Version: A0.F2.J2
+Firmware Update Status: NotStarted
+Firmware Update Stage: NotStarted
+Id: 1
+Serial Number:
+Model Number: PL1600H
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 27
+
+Manufacturer Id: ARTESYN
+Part Number: X900304001
+Firmware Version:
+Firmware Update Status:
+Firmware Update Stage:
+Id: 0
+Serial Number:
+Model Number:
+Manufacturer Id:
+Part Number:
+Firmware Version: A0.F2.J2
+Firmware Update Status: NotStarted
+Firmware Update Stage: NotStarted
+Id: 3
+Serial Number: L076PK00WTAZZ
+Model Number: PL1600H
+Manufacturer Id: ARTESYN
+Part Number: X900304001
+Firmware Version: A0.F2.J2
+Firmware Update Status: NotStarted
+Firmware Update Stage: NotStarted
+Id: 4
+Serial Number: L076Q701ENBEZ
+Model Number: PL1600H
+Manufacturer Id: ARTESYN
+Part Number: X900304001
+
+SW: CM CLI
+
+Firmware Version:
+Firmware Update Status:
+Firmware Update Stage:
+Id: 0
+Serial Number:
+Model Number:
+Manufacturer Id:
+Part Number:
+Firmware Version: A0.F2.J2
+Firmware Update Status: NotStarted
+Firmware Update Stage: NotStarted
+Id: 6
+Serial Number: L076PH00E4AZZ
+Model Number: PL1600H
+Manufacturer Id: ARTESYN
+Part Number: X900304001
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 28
+
+3.15 ResetPsu
+Description:
+Syntax:
+wcscli -resetpsu -i psuid
+-h – help;
+Sample usage:
+To run the fan diagnostics, use the following command:
+wcscli# wcscli – resetpsu -i 1
+
+Sample output:
+Command Success: Command Completed.
+Completion Code: Success
+3.16 ResetFanController
+Description:
+Syntax:
+wcscli -resetfancontroller -c controller
+-s shutdown
+-h – help; no arguments taken
+Sample usage:
+To run the fan diagnostics, use the following command:
+wcscli# wcscli - resetfancontroller
+SW: CM CLI
+
+Sample output:
+Command Success: Command Completed.
+Completion Code: Success
+3.17 GetSystemEventLogs
+Description:
+Syntax:
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 29
+
+wcscli -getsystemeventlogs -b bladeid
+-h – help
+Sample usage:
+To run the fan diagnostics, use the following command:
+wcscli# wcscli – getsystemeventlogs -b 1
+
+Sample output:
+Command Success: Command Completed.
+== Log Entries ==
+Event Description: BD-4A-02-C0-71-56-5F-20-00-04-28-FD-6F-A3-06-FF
+Event Time: 9/7/2020 5:45:36 PM
+Event Description: BC-4A-02-BD-71-56-5F-20-00-04-10-8A-6F-05-FF-64
+Event Time: 9/7/2020 5:45:33 PM
+Event Description: BB-4A-02-BC-71-56-5F-20-00-04-16-FD-0A-00-FF-FF
+Event Time: 9/7/2020 5:45:32 PM
+Event Description: BA-4A-02-85-6C-56-5F-20-00-04-02-2A-01-52-1F-6C
+Event Time: 9/7/2020 5:23:17 PM
+Event Description: B9-4A-02-85-6C-56-5F-20-00-04-02-2A-01-50-1F-6E
+Event Time: 9/7/2020 5:23:17 PM
+3.17 GetMaxPwmRequirement
+Description:
+Syntax:
+wcscli# wcscli -getmaxpwmrequirement
+
+Sample output:
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+SW: CM CLI
+
+Command Success: Command Completed.
+Max Pwm Requirement: 35
+== Blade Pwm Requests ==
+1: 35
+2: 35
+3: 35
+4: 20
+5: 20
+6: 20
+7: 20
+8: 20
+9: 20
+10: 20
+11: 20
+12: 20
+Page | 30
+
+13:
+14:
+15:
+16:
+17:
+18:
+19:
+20:
+21:
+22:
+23:
+24:
+
+20
+20
+20
+20
+20
+20
+20
+20
+20
+20
+20
+20
+
+4 Blade Management Commands
+•
+
+SetPowerOn
+
+•
+
+SetPowerOff
+
+•
+
+GetPowerState
+
+•
+
+SetBladeOn
+
+•
+
+SetBladeOff
+
+•
+
+GetBladeState
+
+•
+
+SetBladeDefaultPowerState
+
+•
+
+GetBladeDefaultPowerState
+
+•
+
+SetBladeActivePowerCycle
+
+•
+
+SetBladeAttentionLEDON
+
+•
+
+SetBladeAttentionLEDOFF
+
+•
+
+ReadBladeLog
+
+•
+
+ClearBladeLog
+
+•
+
+SetBladePowerLimit
+
+•
+
+SetBladePowerLimitOn
+
+•
+
+SetBladePowerLimitOff
+
+•
+
+GetBladePowerLimit
+
+•
+
+GetBladePowerReading
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+SW: CM CLI
+
+Table 4 describes the following WCS system CLI blade management commands:
+
+Page | 31
+
+•
+
+GetNextBoot
+
+•
+
+SetNextBoot
+
+•
+
+GetBladeAssetInfo
+
+•
+
+SetBladeAssetInfo
+
+•
+
+GetPDBAssetInfo
+
+•
+
+SetPDBAssetInfo
+
+•
+
+GetBladeBIOSPostCode
+
+•
+
+SetBladeDataSafeOn
+
+•
+
+SetBladeDataSafeOff
+
+•
+
+SetDataSafePowerOn
+
+•
+
+SetDataSafePowerOff
+
+•
+
+SetBladeDataSafeActivePowerCycle
+
+•
+
+GetBladeDataSafePowerState
+
+•
+
+GetBladeMezzPassThroughMode
+
+•
+
+SetBladeMezzPassThroughMode
+
+•
+
+GetBladeMezzStatus
+
+•
+
+GetBladeBiosConfiguration
+
+•
+
+SetBladeBiosConfiguration
+
+•
+
+GetBladeMezzAssetInfo
+
+•
+
+SetBladeTpmPhysicalPresence
+
+•
+
+GetBladeTpmPhysicalPresence
+
+Table 4. CLI Blade Management Commands
+
+Description:
+This command turns the AC outlet power ON for the blade.
+When AC power gets supplied to the blade and the default blade power state is set to ON, the blade
+chipset will start to receive power and boot process will be initiated. If the default blade power state
+is set to OFF when AC power is applied, the blade chipset will not receive power (and the boot process
+will not be initiated). You can explicitly send a SetBladeOn command to power the blade on.
+Syntax:
+wcscli –setpoweron <-i blade_index | -a> [-h]
+-i – Blade index (1-24)
+-a – Get information for all blades
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 32
+
+SW: CM CLI
+
+4.1 SetPowerOn
+
+-h – Help, display the correct syntax
+
+Sample usage:
+To turn the power ON on blade 3, use the following command:
+wcscli# wcscli –setpoweron –i 3
+Sample output:
+OK
+4.2 SetPowerOff
+Description:
+This command turns the AC outlet power OFF for the blades.
+Syntax:
+wcscli –setpoweroff <-i blade_index | -a> [-h]
+-i – Blade index (1-24)
+-a – Get information for all blades
+-h – Help, display the correct syntax
+
+Sample usage:
+To turn the power OFF on blade 3, use the following command:
+wcscli# wcscli –setpoweroff –i 3
+Sample output:
+OK
+4.3 GetPowerState
+Description:
+This command gets the AC outlet power ON/OFF state of blades (whether or not the blades are
+receiving AC power).
+•
+
+When ON, blade is receiving AC power (hard power state).
+
+•
+
+When OFF, blade is not receiving AC power.
+SW: CM CLI
+
+Syntax:
+wcscli –getpowerstate <-i blade_index | -a> [-h]
+-i – Blade index (1-24)
+-a – Get information for all blades
+-h – Help, display the correct syntax
+
+Sample usage:
+To get the power state for blade 1, use the following command:
+wcscli# wcscli –getpowerstate –i 1
+Sample output:
+Blade 5: On
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 33
+
+4.4 SetBladeOn
+Description:
+This command supplies the power to the blade chipset, initializing the boot process. This command is
+used to soft power the blade ON.
+Syntax:
+wcscli –setbladeon <-i blade_index | -a> [-h]
+-i – Blade index (1-24)
+-a – All connected blades
+-h – Help, display the correct syntax
+
+Sample usage:
+To soft power ON blade 1, use the following command:
+wcscli# wcscli –setbladeon –i 1
+Sample output:
+Blade 1: ON
+4.5 SetBladeOff
+Description:
+This command removes the power from the blade chipset. This command is used to soft power the
+blade OFF.
+Syntax:
+wcscli –setbladeoff <-i blade_index | -a> [-h]
+-i – Blade index (1-48)
+-a – All connected blades
+-h – Help, display the correct syntax
+
+Sample usage:
+To soft power OFF blade 1, use the following command:
+wcscli# wcscli –setbladeoff –i 1
+
+SW: CM CLI
+
+Sample output:
+Blade 1: OFF
+4.6 GetBladeState
+Description:
+This command gets the ON/OFF state of the blade (whether the blade chipset is receiving power).
+•
+
+When ON, blade is receiving AC power (hard power state) and the chipset is receiving power
+(soft power state).
+
+•
+
+When OFF, blade chipset is not receiving power.
+
+Syntax:
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 34
+
+wcscli –getbladestate <-i blade_index | -a> [-h]
+-i – Blade index (1-24)
+-a – All connected blades
+-h – Help, display the correct syntax
+
+Sample usage:
+To get the ON/OFF state of blade 1, use the following command:
+wcscli# wcscli –getbladestate –i 1
+Sample output:
+Blade State 1: ON
+4.7 SetBladeDefaultPowerState
+Description:
+This command sets the default power state of the blade ON/OFF.
+The default blade power state denotes the behavior of the blade after receiving AC power, either
+when a blade is initially inserted in to its slot or power returns after a utility failure. If the blade
+default power state is set to OFF, the blade won’t be powered ON after receiving AC input power. An
+explicit SetBladeOn command needs to be sent to power ON the blade. If the blade default power
+state is set to ON, the blade will be powered ON after receiving AC input power.
+Note that the blade default power state does not affect the active power state of the blade, only their
+behaviors after a hard power recycle.
+Syntax:
+wcscli –setbladedefaultpowerstate <-i blade_index | -a> <-s state> [-h]
+-i – Blade index (1-24)
+-a – All connected blades
+-s – State, can be 0 (stay OFF) or 1 (power ON)
+-h – Help, display the correct syntax
+
+Sample usage:
+To set the default power state of of blade 1 to ON, use the following command:
+wcscli# wcscli –setbladedefaultpowerstate –i 1 -s 1
+SW: CM CLI
+
+Sample output:
+Blade 1 Default Power State: ON
+4.8 GetBladeDefaultPowerState
+Description:
+This command gets the default power state of the blade ON/OFF.
+Syntax:
+wcscli –getbladedefaultpowerstate <-i blade_index | -a> [-h]
+-i – Blade index, the number of blades (1-24)
+-a – Gets information for all blades
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 35
+
+-h – Help, display the correct syntax
+
+Sample usage:
+To set the default power state of of blade 1 to ON, use the following command:
+wcscli# wcscli –getbladedefaultpowerstate –i 1
+Sample output:
+Blade 1 Default Power State: ON
+4.9 SetBladeActivePowerCycle
+Description:
+This command power cycles or soft resets the blade(s).
+Power cycle resets the blade (causing a software reboot sequence). Blade AC power signal remains
+ON throughout this process. Any serial session active on that blade will continue to be active during
+this process.
+Syntax:
+wcscli –setbladeactivepowercycle <-i blade_index | -a> [-t off_time] [h]
+-i – Blade index, the number of blades (1-24)
+-a – Gets information for all blades
+-t – Indicates the power off time, i.e., the time interval in seconds for how long the blade stays OFF
+before the power is again turned on. If not specified, the default interval is 0 seconds.
+-h – Help, display the correct syntax
+
+Sample usage:
+To power cycle blade 3, use the following command:
+wcscli# wcscli –setbladeactivepowercycle –i 3
+Sample output:
+OK
+
+Description:
+This command turns the blade attention LED On. The purpose of this attention LED is to indicate that
+this blade needs attention. The command can also be used to identify the blade.
+The blade attention LED is used to help service technicians find the blade during repair. Users can also
+flag a service requirement by turning ON this LED. Operators/users must ensure that the blade
+attention LED is turned OFF after service is complete.
+
+Syntax:
+wcscli –setbladeattentionledon <-i blade_index | -a> [-h]
+-i – Blade index, the number of blades (1-24)
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 36
+
+SW: CM CLI
+
+4.10 SetBladeAttentionLEDOn
+
+-a – Gets information for all blades
+-h – Help, display the correct syntax
+
+Sample usage:
+To turn the blade attention LED for blade 1 ON, use the following command:
+wcscli# wcscli –setbladeattentionledon –i 1
+Sample output:
+OK
+4.11 SetBladeAttentionLEDOff
+Description:
+This command turns the blade attention LED Off. The purpose of this attention LED is to indicate that
+this blade needs attention.
+The blade attention LED is used to help service technicians find the blade during repair. Users can also
+flag a service requirement by turning ON this LED. Operators/users must ensure that the blade
+attention LED is turned OFF after service is complete.
+Syntax:
+wcscli –setbladeattentionledoff <-i blade_index | -a> [-h]
+-i – Blade index, the number of blades (1-24)
+-a – Gets information for all blades
+-h – Help, display the correct syntax
+
+Sample usage:
+To turn the blade attention LED for blade 1 OFF, use the following command:
+wcscli# wcscli –setbladeattentionledoff –i 1
+Sample output:
+OK
+
+Description:
+This command reads the log from a blade. The blade log (system event log) contains information
+about events/warnings/alerts pertaining to that blade like thermal throttling of blades due to
+overheating, etc.
+Syntax:
+wcscli –readbladelog <-i blade_index> [-n entries_count] [-h]
+-i – Blade index, the number of blades (1-24)
+-n – How many of the most recent entries to report. This is an optional parameter. Default is return
+up to 300 entries.
+-h – Help, display the correct syntax
+
+Sample usage:
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 37
+
+SW: CM CLI
+
+4.12 ReadBladeLog
+
+To read the blade log for blade 1, use the following command:
+wcscli# wcscli –readbladelog –i 1
+Sample output:
+#
+| EventTime
+|
+|
+|
+|
+|
+
+2012-08-23T14:35:21|
+2012-08-23T16:11:08|
+2012-08-23T18:35:21|
+2012-08-23T19:35:21|
+2012-08-23T20:35:21|
+
+|
+
+EventDescription
+
+Sensor_SpecificDrive_Slot2433328Assertion111
+DiscreteTemperature187257Desertion3
+Sensor_SpecificDrive_Slot2463328Assertion111
+Sensor_SpecificDrive_Slot2433328Assertion111
+Sensor_SpecificDrive_Slot2433328Assertion111
+
+4.13 ClearBladeLog
+Description:
+This command clears the log from a blade.
+Syntax:
+wcscli –clearbladelog <-i blade_index> [-h]
+-i – Blade index, the number of blades (1-24)
+-h – Help, display the correct syntax
+
+Sample usage:
+To clear the blade log for blade 1, use the following command:
+wcscli# wcscli –clearbladelog –i 1
+Sample output:
+OK
+4.14 SetBladePowerLimit
+Description:
+This command sets the power limit for a blade.
+The power limit can be set for a variety of reasons including energy savings and under provisioning
+(consolidate more servers under a power hierarchy).
+
+Syntax:
+wcscli –setbladepowerlimit <-i blade_index | -a> <-l power_limit> [-h]
+-i – Blade index, the number of blades (1-24)
+-a – Perform action for all blades
+-l – Blade power limit, in W
+-h – Help, display the correct syntax
+
+Sample usage:
+To set the power limit for blade 1 to 750 W, use the following command:
+wcscli# wcscli –setbladepowerlimit –i 1 –l 750
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 38
+
+SW: CM CLI
+
+The minimum and maximum power limits are specified in the Chassis Manager app.config file.
+
+Sample output:
+Blade 1 power limit: 750 Watts
+4.15 SetBladePowerLimitOn
+Description:
+This command activates the power limit for a blade, and enables power throttling.
+Syntax:
+wcscli –setbladepowerlimiton <-i blade_index | -a> [-h]
+-i – Blade index, the number of blades (1-24)
+-a – Perform action for all blades
+-h – Help, display the correct syntax
+Sample usage:
+To activates the power limit for blade 1, use the following command:
+wcscli# wcscli –setbladepowerlimiton –i 1
+Sample output:
+Blade 1: ON
+4.16 SetBladePowerLimitOff
+Description:
+This command deactivates the power limit for a blade, and disables power throttling.
+Syntax:
+wcscli –setbladepowerlimitoff <-i blade_index | -a> [-h]
+-i – Blade index, the number of blades (1-24)
+-a – Perform action for all blades
+-h – Help, display the correct syntax
+
+Sample usage:
+To deactivates the power limit for blade 1, use the following command:
+wcscli# wcscli –setbladepowerlimitoff –i 1
+SW: CM CLI
+
+Sample output:
+Blade 1: OFF
+4.17 GetBladePowerLimit
+Description:
+This command gets the power limit for a blade.
+Syntax:
+wcscli –getbladepowerlimit <-i blade_index | -a> [-h]
+-i – Blade index, the number of blades (1-24)
+-a – Perform action for all blades
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 39
+
+-h – Help, display the correct syntax
+
+Sample usage:
+To get the power limit for blade 1, use the following command:
+wcscli# wcscli –getbladepowerlimit –i 1
+Sample output:
+Blade 1 power limit 750 Watts
+4.18 GetBladePowerReading
+Description:
+This command gets the power reading for a blade. The command can be used for monitoring and or
+other power control mechanism (refer to the SetBladePowerLimit command).
+Syntax:
+wcscli –getbladepowerreading <-i blade_index | -a> [-h]
+-i – Blade index, the number of blades (1-24)
+-a – Perform action for all blades
+-h – Help, display the correct syntax
+
+Sample usage:
+To get the power reading for blade 1, use the following command:
+wcscli# wcscli –getbladepowerreading –i 1
+Sample output:
+Blade 1 power reading: 67 Watts
+4.19 GetNextBoot
+Description:
+This command gets the pending boot order to be applied the next time the blade boots.
+Once the boot order is applied, GetNextBoot will return the default value of NoOverRide.
+
+SW: CM CLI
+
+Syntax:
+wcscli –getnextboot <-i blade_index> [-h]
+-i – Blade index, the number of blades (1-24)
+-h – Help, display the correct syntax
+
+Sample usage:
+To get the next boot device type for blade 1, use the following command:
+wcscli# wcscli –getnextboot –i 1
+Sample output:
+Command Success: Next boot is ForceDefaultHdd
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 40
+
+4.20 SetNextBoot
+Description:
+This command sets the device boot type of the start boot device during the subsequent reboot for a
+blade. A soft power cycle (setbladeactivepowercycle or setbladeoff, then setbladeon) after setting the
+boot options is required for the boot setting to take effect.
+Syntax:
+wcscli -setnextboot <-i blade_index> <-t boot_type> <-m mode>
+<-p is_persistent> [-n boot_instance] [-h]
+A soft power cycle (setbladeactivepowercycle or setbladeoff,
+then setbladeon) after setting the boot options is required
+for the boot setting to take effect.
+blade_index - the target blade number. Typically 1-24
+-t - boot_type : 1. NoOverRide, 2. ForcePxe, 3. ForceDefaultHdd,
+4. ForceIntoBiosSetup, 5.
+ForceFloppyOrRemovable
+-m - 0 - legacy, 1 - UEFI
+-p - 0: one-time boot override.
+1: request BIOS update to this boot option after the
+soft power cycle. This boot option must be enabled
+in the BIOS boot order for the persistence to work.
+-n - instance number of the boot device. (Eg. 0 or 1 for NIC
+if there are two NICs).
+Optional parameter. Default is 0 if not specified.
+0 - no specific device instance requested
+1-15: external device instance 1-15
+17-31: internal device instance 1-15
+Other values are reserved.
+-h - help; display the correct syntax
+
+SW: CM CLI
+
+Sample usage:
+To set the boot device for blade 1, use the following command:
+wcscli# wcscli –setnextboot –i 1 –t 3 -m 0 –p 0
+Sample output:
+Command Success: Next boot is ForceDefaultHdd
+4.21 GetBladeAssetInfo
+Description:
+This command gets the FRU information of the specified blade.
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 41
+
+Syntax:
+wcscli –getbladeassetinfo <-i blade_index> [-h]
+-i – Blade index (1-24)
+-h – Help, display the correct syntax
+
+Sample usage:
+To get the asset (FRU) information for blade 1, use the following command:
+wcscli# wcscli –getbladeassetinfo –i 1
+Sample output:
+-------------------------------------Blade Chassis Info Area
+-------------------------------------Chassis Part Number = X898637-001
+Chassis Serial Number = QTFCLJ4150005
+Chassis Custom Field 1 = 2.0
+Chassis System Integrator Code = A
+-------------------------------------Blade Board Info Area
+-------------------------------------Board Manufacturer Name = Microsoft
+Board Manufacturer Date = 4/8/2014 8:18:00 AM
+Board Product Name = C1030
+Board Serial Number = ALJ41300232
+Board Part Number = X898568-001
+Board Fru File Id = FRU v0.06
+--------------------------------------
+
+SW: CM CLI
+
+Blade Product Info Area
+-------------------------------------Product Manufacturer Name = Microsoft
+Product Product Name = C1030
+Product Part/Model Number = X892646-001
+Product Version = 2.0
+Product Serial Number = QTFCLJ4150005
+PD Product Asset Tag = N/A
+PD Product Fru File Id = 0
+Product Manufacturer Code = 2
+PD Product Build = A-1
+-------------------------------------Multi Record Info Area
+-------------------------------------Manufacturer =
+Custom Fields
+
+4.22 SetBladeAssetInfo
+Description:
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 42
+
+This command is used to edit the Multi Record Area FRU information of the specified blade.
+Syntax:
+wcscli –setbladeassetinfo <-i blade_index> <-p payload> [-h]
+-i – Blade index (1-24)
+-p – data to be written to Chassis Manager FRU Multi Record Area
+-h – Help, display the correct syntax
+
+Note:
+For payload, user can enter it as multiple fields (each representing a Multi Record FRU field), each
+separated by comma. As part of the specification, the user can only enter maximum 2 fields, where
+each field can be of maximum 56 bytes (characters) length.
+Sample usage:
+To set the asset (FRU) information for blade 1, use the following command:
+wcscli# wcscli –setbladeassetinfo –i 1 -p TEST
+Sample output:
+Command Success: Blade 1 Blade’s FRU has been written successfully
+4.23 GetPDBAssetInfo
+Description:
+This command gets the FRU information of the PDB.
+Syntax:
+wcscli –getpdbassetinfo [-h]
+-h – Help, display the correct syntax
+
+SW: CM CLI
+
+Sample usage:
+To get the asset (FRU) information for the PDB, use the following command:
+wcscli# wcscli –getpdbassetinfo
+Sample output:
+-------------------------------------Power Distribution Board (PDB) Chassis Info Area
+-------------------------------------Chassis Part Number =
+Chassis Serial Number =
+Chassis Custom Field 1 = 2.0
+Chassis System Integrator Code =
+-------------------------------------Power Distribution Board (PDB) Board Info Area
+-------------------------------------Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 43
+
+Board Manufacturer Name = Microsoft
+Board Manufacturer Date = 1/1/1996 12:00:00 AM
+Board Product Name = E1020
+Board Serial Number = 22586T100564470
+Board Part Number = X892258-001
+Board Fru File Id = 1.0
+-------------------------------------Power Distribution Board (PDB) Product Info Area
+-------------------------------------Product Manufacturer Name = Microsoft
+Product Product Name = E1020
+Product Part/Model Number = X892258-001
+Product Version = 2.0
+Product Serial Number = 22586T100564470A
+PD Product Asset Tag =
+PD Product Fru File Id = 1.0
+Product Manufacturer Code = A
+Product Custom Field 2 = N/A
+PD Product Build = B-1
+-------------------------------------Power Distribution Board (PDB) Multi Record Info Area
+-------------------------------------Manufacturer =
+Custom Fields
+
+4.24 SetPDBAssetInfo
+Description:
+This command is used to edit the Multi Record Area FRU information of the specified blade.
+Syntax:
+wcscli –setpdbassetinfo <-p payload> [-h]
+-p – data to be written to PDB FRU Multi Record Area
+
+SW: CM CLI
+
+-h – Help, display the correct syntax
+
+Sample usage:
+To set the asset (FRU) information for PDB, use the following command:
+wcscli# wcscli –setpdbassetinfo -p TEST
+Note:
+For payload, user can enter it as multiple fields (each representing a Multi Record FRU field), each
+separated by comma. As part of the specification, the user can only enter maximum 2 fields, where
+each field can be of maximum 56 bytes (characters) length.
+Sample output:
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 44
+
+PDB's FRU has been written successfully
+4.25 GetBladeBIOSPostCode
+Description:
+This command gets the post code for the blade with specified blade id.
+Syntax:
+wcscli -getbladebiospostcode <-i blade_index> [-h]
+blade_index - the target blade number. Typically 1-24
+-h - help; display the correct syntax
+Sample usage:
+Wcscli # wcscli –getbladebiospostcode –i 1
+
+4.30 SetBladeDataSafeOn
+Description:
+This command sets datasafe blade on.
+Sample usage:
+wcscli -setbladedatasafeon <-i blade_index | -a> [-h]
+blade_index - the target blade number. Typically 1-24
+-a - all connected blades
+-h - help; display the correct syntax
+4.31 SetBladeDataSafeOff
+Description:
+SW: CM CLI
+
+This command sets datasafe blade off.
+Sample usage:
+wcscli -setbladedatasafeoff <-i blade_index | -a> [-h]
+blade_index - the target blade number. Typically 1-24
+-a - all connected blades
+-h - help; display the correct syntax
+4.32 SetDataSafePowerOn
+Description:
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 45
+
+This command sets datasafe power on.
+Sample usage:
+wcscli -setdatasafepoweron <-i blade_index | -a> [-h]
+blade_index - the target blade number. Typically 1-24
+-a - all connected blades
+-h - help; display the correct syntax
+4.33 SetDataSafePowerOff
+Description:
+This command sets datasafe power off.
+Sample usage:
+wcscli -setdatasafepoweroff <-i blade_index | -a> [-h]
+blade_index - the target blade number. Typically 1-24
+-a - all connected blades
+-h - help; display the correct syntax
+4.34 SetBladeDataSafeActivePowerCycle
+Description:
+This command sets datasafe power cycle.
+Sample usage:
+wcscli -setbladedatasafeactivepowercycle <-i blade_index | -a> [-h]
+blade_index - the target blade number. Typically 1-24
+-a - all connected blades
+-h - help; display the correct syntax
+4.35 GetBladeDataSafePowerState
+Description:
+SW: CM CLI
+
+This command gets the blade datasafe power state.
+Sample usage:
+wcscli -getbladedatasafepowerstate <-i blade_index | -a> [-h]
+blade_index - the target blade number. Typically 1-24
+-a - all connected blades
+-h - help; display the correct syntax
+4.36 GetBladeMezzPassThroughMode
+Description:
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 46
+
+This command gets pass-through mode of the Blade FPGA Mezzanine. When pass-through mode is
+enabled, it prevents FPGA logic from doing anything other than forwarding network traffic. Using the
+command requires Mezz to be attached to Tray Backplane and blade to be soft-powered ON.
+Syntax:
+wcscli –getblademezzpassthroughmode <-i bladeId> [-h]
+-i – target blade index. Typically 1-24
+-h – help, display the correct syntax
+
+Sample usage:
+To get the pass-through mode for a blade, use the following command:
+wcscli# wcscli –getblademezzpassthroughmode -i 1
+Sample output:
+Command Success: Blade 1: Pass Through Mode Enabled
+4.37 SetBladeMezzPassThroughMode
+Description:
+This command sets pass-through mode of the Blade FPGA Mezzanine. When pass-through mode is
+enabled, it prevents FPGA logic from doing anything other than forwarding network traffic. Using the
+command requires Mezz to be attached to Tray Backplane and blade to be soft-powered ON.
+Syntax:
+wcscli –setblademezzpassthroughmode <-i bladeId> <-m
+pass_through_mode_enabled> [-h]
+-i – target blade index. Typically 1-24
+-m – pass_through_mode_enabled, value can be either “true” or “false”
+-h – help, display the correct syntax
+
+Sample usage:
+To set the pass-through mode for a blade, use the following command:
+wcscli# wcscli –setblademezzpassthroughmode -i 1 –m true
+
+SW: CM CLI
+
+Sample output:
+Command Success: Pass Through Mode on Blade Tray Mezz has been successfully set
+4.38 GetBladeMezzStatus
+Description:
+This command gets the status of the Blade FPGA Mezzanine. This status information is retrieved from
+the FPGA I2C controller. In addition, the command provides I2C GPIO status bytes via I2C device
+PCA9535. Using the command requires the Mezz to be attached to Tray Backplane and the blade to
+be soft-powered ON.
+The Boolean fields (ie “Pcie Lane 0 Up”) correspond to each bit of the FPGA byte. The Status output
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 47
+
+string is structured as the following: “0x<FpgaHex><GpioHex0><GpioHex1>” where <FpgaHex> is the
+hex value of the Fpga I2C status byte, <GpioHex0> and <GpioHex1> correspond to the I2C GPIO hex
+values of P0 and P1, respectively. If the I2C GPIO status bytes are not provided or not supported, the
+Status output string is structured as “0x<FpgaHex>”.
+Syntax:
+wcscli –getblademezzstatus <-i bladeId> [-h]
+-i – target blade index. Typically 1-24
+-h – help, display the correct syntax
+
+Sample usage:
+To set the pass-through mode for a blade, use the following command:
+wcscli# wcscli –getblademezzstatus -i 1
+Sample output:
+Command Success:
+Blade Mezz Status
+-------------------------------------Pcie Lane 0 Up = true
+Pcie Lane 1 Up = true
+Network Link 0 Up = true
+Network Link 0 Tx Activity = true
+Network Link 0 Rx Activity = true
+Network Link 1 Up = true
+Network Link 1 Tx Activity = true
+Network Link 1 Rx Activity = true
+Status = 0x03002E
+--------------------------------------
+
+Description:
+GetBladeBiosConfiguration API returns the following information corresponding to the
+blade’s BIOS configuration,
+1. BiosConfiguration currentConfig
+‘currentConfig’ specifies the Bios configuration setting that is currently
+active in the blade.
+2. BiosConfiguration chosenConfig
+‘chosenConfig’ specifies the Bios configuration setting that is chosen by the
+user (via the SetBladeBiosConfiguration API) and will be activated in the
+subsequent blade reboot operation.
+
+3. List<AvailableBiosConfiguration> availableConfigs
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 48
+
+SW: CM CLI
+
+4.39 GetBladeBiosConfiguration
+
+-
+
+‘availableConfigs’ is the list of BIOS configurations that are supported in the
+BIOS. The user can review the list and choose the appropriate configuration for
+the blade via the SetBladeBiosConfiguration API.
+
+‘BiosConfiguration’ is a 4 value tuple that uniquely identify a certain configuration in the BIOS,
+- Int majorConfig
+o Specifies the major configuration identifier (see
+-
+
+AvailableBiosConfiguration below)
+Int minorConfig
+o Specifies the minor configuration identifier (see
+AvailableBiosConfiguration below)
+
+‘AvailableBiosConfiguration’ list the available Bios configurations and provides a
+semantic association to the configuration in the form of a 3-character ‘ConfigName’.
+Example of ‘ConfigName’ are, GN1, AZ1, BN1, BN2 etc.
+
+Syntax:
+wcscli -getbladebiosconfig <-i blade_id> [-h]
+-i - blade Id
+-h - help; display the correct syntax
+
+Sample usage:
+wcscli –getbladebiosconfig –i 3
+
+Sample output:
+TBD
+
+4.40 SetBladeBiosConfiguration
+Description:
+SetBladeBiosConfiguration sets the configuration that the users expects in the
+subsequent reboot of the blade. We expect the user to use the GetBladeBiosConfiguration
+API and review the AvailableBiosConfiguration list and select the chosen configuration
+which can be set with this API.
+
+Syntax:
+SW: CM CLI
+
+wcscli -setbladebiosconfig <-i blade_id> <-j majorConfig> <-n minorConfig> [-h]
+-i - blade Id
+-j - major configuration number (refer to getBladeBiosConfig available
+configurations)
+-n - minor configuration number (refer to getBladeBiosConfig available
+configurations)
+-h - help; display the correct syntax
+
+Sample usage:
+wcscli –setbladebiosconfig –i 3 –j 1 –n 0
+
+Sample output:
+TBD
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 49
+
+4.41 GetBladeMezzAssetInfo
+Description:
+This command gets the FRU information of the Blade FPGA Mezzanine.
+Syntax:
+wcscli -getBladeMezzAssetInfo <-i blade_index>] [-h]
+blade_index - the target blade number. Typically 1-24
+-h - help; display the correct syntax
+
+Sample usage:
+To get the FRU information for a blade FPGA mezzanine, use the following command:
+wcscli# wcscli –getblademezzassetinfo -i 1
+Sample output:
+Command Success:
+Blade Product Info Area
+-------------------------------------Product Manufacturer Name = Microsoft
+Product Product Name = PPFPGA
+Product Part/Model Number = X900563-001
+Product Version = 2.0
+Product Serial Number = RLJ50503376
+PD Product Asset Tag = 0000000000
+--------------------------------------
+
+SW: CM CLI
+
+4.41 SetBladeTpmPhysicalPresence
+Description:
+This command sets the TPM physical presence for blade.
+Syntax:
+wcscli -setbladetpmphysicalpresence <-i blade_index> <-p presence> [-h]
+blade_index - the target blade number. Typically 1-24
+-p - presence [true or false, 1 or 0]
+-h - help; display the correct syntax
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 50
+
+Sample usage:
+To set the TPM physical presence for blade, use the following command:
+wcscli# wcscli –setbladetpmphysicalpresence -i 1 –p true
+Sample output:
+Command Success: Blade: 1 Success
+
+4.41 GetBladeTpmPhysicalPresence
+Description:
+This command gets the TPM physical presence for blade.
+Syntax:
+wcscli -getbladetpmphysicalpresence <-i blade_index> [-h]
+blade_index - the target blade number. Typically 1-24
+-h - help; display the correct syntax
+
+Sample usage:
+To get the TPM physical presence for blade, use the following command:
+wcscli# wcscli –getbladetpmphysicalpresence -i 1
+Sample output:
+Command Success: Blade: 1 Physical Presence Enabled: True
+
+5 Chassis Manager Management Commands
+•
+
+SetChassisAttentionLEDOn
+
+•
+
+SetChassisAttentionLEDOff
+
+•
+
+GetChassisAttentionLEDStatus
+
+•
+
+ReadChassisLog
+
+•
+
+ClearChassisLog
+
+•
+
+GetACSocketPowerState
+
+•
+
+SetACSocketPowerStateON
+
+•
+
+SetACSocketPowerStateOFF
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+SW: CM CLI
+
+Table 5 describes the following WCS system CLI Chassis Manager management commands.
+
+Page | 51
+
+•
+
+AddChassisControllerUser
+
+ChangeChassisControllerUserPassword
+ChangeChassisControllerUserRole
+RemoveChassisControllerUser
+GetChassisManagerAssetInfo
+SetChassisManagerAssetInfo
+ScanDevice
+ChassisManagerRestart
+ChassisManagerSoftRestart
+Table 5. CLI Chassis manager Management Commands
+
+5.1 SetChassisAttentionLEDOn
+Description:
+This command turns the Chassis attention LED On. The purpose of this attention LED is to indicate
+that this chassis manager needs attention.
+The chassis attention LED is used to direct service technicians to the correct chassis during repair.
+Users can also flag a service requirement by turning ON this LED. When possible, repairs will also be
+self-directed by the chassis management system. Operators/users must ensure that the Chassis
+Attention LED is turned OFF after service is complete.
+Syntax:
+wcscli –setchassisattentionledon [-h]
+-h – Help, display the correct syntax
+
+SW: CM CLI
+
+Sample usage:
+To turn the chassis attention LED ON, use the following command:
+wcscli# wcscli –setchassisattentionledon
+Sample output:
+OK
+5.2 SetChassisAttentionLEDOff
+Description:
+This command turns the Chassis attention LED Off. The purpose of this attention LED is to indicate
+that this chassis manager needs attention.
+The chassis attention LED is used to direct service technicians to the correct chassis during repair.
+Users can also flag a service requirement by turning ON this LED. When possible, repairs will also be
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 52
+
+self-directed by the chassis management system. Operators/users must ensure that the Chassis
+Attention LED is turned OFF after service is complete.
+Syntax:
+wcscli –setchassisattentionledoff [-h]
+-h – Help, display the correct syntax
+
+Sample usage:
+To turn the chassis attention LED OFF, use the following command:
+wcscli# wcscli –setchassisattentionledoff
+Sample output:
+OK
+5.3 GetChassisAttentionLEDStatus
+Description:
+This command gets the status of the chassis attention LED (whether ON or OFF).
+The chassis attention LED is used to direct service technicians to the correct chassis during repair.
+Users can also flag a service requirement by turning ON this LED. When possible, repairs will also be
+self-directed by the chassis management system. Operators/users must ensure that the Chassis
+Attention LED is turned OFF after service is complete.
+Syntax:
+wcscli –getchassisattentionledstatus [-h]
+-h – Help, display the correct syntax
+
+Sample usage:
+To get the status of the chassis attention LED, use the following command:
+wcscli# wcscli –getchassisattentionledstatus
+Sample output:
+Chassis LED: OFF
+
+Description:
+This command reads the chassis log.
+The chassis log contains information about various alerts/warning messages associated with devices
+connected to the chassis manager (for example, blade overheating or fan/PSU failure).
+The chassis log also contains user audit information, such as timestamp/activity performed by that
+user.
+Syntax:
+wcscli -readchassislog [-s startDate] [-e endDate] [-h]
+-s - Optional start date for the log entries (format: YYYY:MM:DD)
+-e - Optional end date for the log entries (format: YYYY:MM:DD)
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 53
+
+SW: CM CLI
+
+5.4 ReadChassisLog
+
+-h - help; display the correct syntax
+
+Sample usage:
+To get the chassis user log, use the following command:
+wcscli# wcscli –readchassislog
+
+Sample output:
+== Chassis Controller Log ==
+Timestamp
+
+| Entry
+
+10/3/2012 3:22:56 PM
+| WCS\WcsCmAdmin,Invoked
+GetChassisInfo(True,True,True)
+10/3/2012 3:22:57 PM
+1)
+
+| WCS\WcsCmAdmin,Invoked GetBladeState(bladeid:
+
+10/3/2012 3:22:57 PM
+2)
+
+| WCS\WcsCmAdmin,Invoked GetBladeState(bladeid:
+
+10/3/2012 3:22:57 PM
+3)
+
+| WCS\WcsCmAdmin,Invoked GetBladeState(bladeid:
+
+10/3/2012 3:22:58 PM
+| WCS\WcsCmAdmin,Invoked
+GetChassisNetworkProperties()
+10/3/2012 3:23:45 PM
+1)
+
+| WCS\WcsCmAdmin,Invoked ReadBladelog(bladeId:
+
+5.5 ClearChassisLog
+Description:
+This command clears the chassis log.
+To comply with size restrictions on Chassis Manager storage space, users are expected to periodically
+clear the consumed log entries.
+SW: CM CLI
+
+Syntax:
+wcscli –clearchassislog [-h]
+-h – Help, display the correct syntax
+
+Sample usage:
+To clear the chassis user log, use the following command:
+wcscli# wcscli –clearchassislog
+Sample output:
+OK
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 54
+
+5.6 GetACSocketPowerState
+Description:
+This command gets the status of chassis AC sockets (TOR switches).
+The AC socket power state refers to active power state of the COM ports (and therefore to the power
+state of the device connected to the port) on the Chassis Manager. For example, the TOR switch is
+connected to COM1 (port number 1). The power ON/OFF commands for the AC sockets makes it
+possible to remotely power-reset the device and also for enabling/disabling purpose.
+Syntax:
+wcscli –getacsocketpowerstate <-p port_no> [-h]
+-p – Port number of interest
+-h – Help, display the correct syntax
+
+Sample usage:
+To get the status of the chassis AC sockets for port 2, use the following command:
+wcscli# wcscli –getacsocketpowerstate –p 2
+Sample output:
+ON
+5.7 SetACSocketPowerStateOn
+Description:
+This command turns the chassis AC sockets (TOR switches) ON.
+The AC socket power state refers to active power state of the COM ports (and therefore to the power
+state of the device connected to the port) on the Chassis Manager. For example, the TOR switch is
+connected to COM1 (port number 1). The power ON/OFF commands for the AC sockets makes it
+possible to remotely power-reset the device and also for enabling/disabling purpose.
+Syntax:
+wcscli –setacsocketpowerstateon <-p port_no> [-h]
+-p – Port number of interest
+-h – Help, display the correct syntax
+SW: CM CLI
+
+Sample usage:
+To turn ON the chassis AC sockets for port 1, use the following command:
+wcscli# wcscli –setacsocketpowerstateon –p 1
+Sample output:
+OK
+5.8 SetACSocketPowerStateOff
+Description:
+This command turns the chassis AC sockets (TOR switches) OFF.
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 55
+
+The AC socket power state refers to active power state of the COM ports (and therefore to the power
+state of the device connected to the port) on the Chassis Manager. For example, the TOR switch is
+connected to COM1 (port number 1). The power ON/OFF commands for the AC sockets makes it
+possible to remotely power-reset the device and also for enabling/disabling purpose.
+Syntax:
+wcscli –setacsocketpowerstateoff <-p port_no> [-h]
+-p – Port number of interest
+-h – Help, display the correct syntax
+
+Sample usage:
+To turn OFF the chassis AC sockets for port 1, use the following command:
+wcscli# wcscli –setacsocketpowerstateoff –p 1
+Sample output:
+OK
+5.9 AddChassisControllerUser
+Description:
+This command adds a new chassis controller user with specified password and WCS security role for
+accessing the Chassis Manager command-line interface. The role should be Admin, Operator, or User.
+Each role has access to a specific set of APIs.
+Syntax:
+wcscli –adduser <–u username> <-p password> <-a|-o|-r> [-h]
+-u username – Username for the new user
+-p password – Password for the new user
+Select one of the WCS security roles for the user (mandatory):
+-a – Admin privilege
+-o – Operator privilege
+-r– User privilege
+-h – Help, display the correct syntax
+
+SW: CM CLI
+
+Sample usage:
+To add a user with admin privileges, use the following command:
+wcscli# wcscli –adduser –u myname –p pass!123 -a
+Sample output:
+OK
+5.10 ChangeChassisControllerUserPassword
+Description:
+This command changes the password for an existing user in the chassis controller.
+Syntax:
+wcscli –changeuserpwd <–u username> <-p newpassword> [-h]
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 56
+
+-u username – Username for which the password will be changed
+-p newpassword – new password for the user
+-h – Help, display the correct syntax
+
+Sample usage:
+To add a user with admin privileges, use the following command:
+wcscli# wcscli –changeuserpwd –u myname –p pa##!143
+Sample output:
+OK
+5.11 ChangeChassisControllerUserRole
+Description:
+This command changes the WCS security role for an existing user in the chassis controller.
+Note that the user will be removed from other WCS security roles and added to the new role
+specified. Users can belong to only one security role.
+Syntax:
+wcscli –changeuserrole <–u username> <-a|-o|-r> [-h]
+-u username – Username for the new user
+Select one of the WCS security roles for the user (mandatory):
+-a – Admin privilege
+-o – Operator privilege
+-r – User privilege
+-h – Help, display the correct syntax
+
+Sample usage:
+To change the user role to operator, use the following command:
+wcscli# wcscli -changeuserrole –u myname –o
+Sample output:
+OK
+5.12 RemoveChassisControllerUser
+SW: CM CLI
+
+Description:
+This command removes an existing user from the chassis controller.
+Syntax:
+wcscli –removeuser <–u username>[-h]
+-u username – Username for the new user
+-h – Help, display the correct syntax
+
+Sample usage:
+To remove a user, use the following command:
+wcscli# wcscli -removeuser –u myname
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 57
+
+Sample output:
+OK
+5.13 GetChassisManagerAssetInfo
+Description:
+This command gets the FRU information of the chassis manager.
+Syntax:
+wcscli –getchassismanagerassetinfo[-h]
+-h – Help, display the correct syntax
+
+Sample usage:
+To get the asset (FRU) information for the chassis manager, use the following command:
+wcscli# wcscli –getchassismanagerassetinfo
+Sample output:
+-------------------------------------Chassis Manager Chassis Info Area
+-------------------------------------Chassis Part Number = X873021-001
+Chassis Serial Number = 0000000000000000
+Chassis Custom Field 1 = 2.0
+Chassis System Integrator Code = A
+-------------------------------------Chassis Manager Board Info Area
+--------------------------------------
+
+SW: CM CLI
+
+Board Manufacturer Name = Microsoft
+Board Manufacturer Date = 3/3/2014 12:52:00 AM
+Board Product Name = E1000
+Board Serial Number = NH840800124
+Board Part Number = X873064-001
+Board Fru File Id = FRU v0.06
+-------------------------------------Chassis Manager Product Info Area
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 58
+
+-------------------------------------Product Manufacturer Name = Microsoft
+Product Product Name = E1000
+Product Part/Model Number = X873023-001
+Product Version = A
+Product Serial Number = NH840800124
+PD Product Asset Tag = 5892018
+PD Product Fru File Id = 0
+Product Manufacturer Code = A
+Product Custom Field 2 = 0x79FBE96E177C0010B6142C600C98DF5A
+PD Product Build = A
+-------------------------------------Chassis Manager Multi Record Info Area
+-------------------------------------Manufacturer = 0x000137
+Custom Fields
+
+5.14 SetChassisManagerAssetInfo
+Description:
+This command is used to edit the Multi Record Area FRU information of the chassis manager.
+Syntax:
+wcscli –setchassismanagerassetinfo <-p payload> [-h]
+SW: CM CLI
+
+-p – data to be written to Chassis Manager FRU Multi Record Area
+-h – Help, display the correct syntax
+
+Note:
+For payload, user can enter it as multiple fields (each representing a Multi Record FRU field), each
+separated by comma. As part of the specification, the user can only enter maximum 2 fields, where
+each field can be of maximum 56 bytes (characters) length.
+Sample usage:
+To set the asset (FRU) information for the chassis manager, use the following command:
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 59
+
+wcscli#
+
+wcscli –setchassismanagerassetinfo -p TEST
+
+Sample output:
+Chassis Manager's FRU has been written successfully
+5.14 ScanDevice
+Description:
+This command scans chassis manager device and displays following device settings:
+o Windows firewall enabled/disabled
+o windows updates enabled/disabled
+o EMS enabled/disabled,
+o Boot Status Policy
+o Chassis Manager certificate installed
+o List of Services installed
+o List of Users
+o User groups available
+o Chassis Manager service properties – version, config settings
+o Chassis Manager OS properties – version, release date
+o Wcscli properties – version
+o Chassis Manager BIOS version
+o Chassis Manager windows build version
+Syntax:
+wcscli –scandevice [-h]
+-h – Help, display the correct syntax
+
+Sample usage:
+To set the asset (FRU) information for the chassis manager, use the following command:
+wcscli# wcscli –scandevice
+Sample output:
+Chassis Manager device settings
+
+SW: CM CLI
+
+5.15ChassisManagerRestart
+Description:
+Syntax:
+wcscli –chassismanagerrestart [-h]
+-h – Help, display the correct syntax
+
+Sample usage:
+wcscli# wcscli –chassismanagerrestart
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 60
+
+Sample output:
+Command Success: Command Completed.
+5.16 ChassisManagerSoftRestart
+Description:
+Syntax:
+wcscli –chassismanagersoftrestart [-h]
+-h – Help, display the correct syntax
+
+Sample usage:
+wcscli# wcscli –chassismanagersoftrestart
+Sample output:
+Command Success: Command Completed.
+
+6 Blade and Serial Console Session Commands
+Table 46 describes the following WCS system CLI blade and serial console session commands:
+StartBladeSerialSession
+StopBladeSerialSession
+StartPortSerialSession
+StopPortSerialSession
+EstablishCmConnection
+TerminateCmConnection
+
+SW: CM CLI
+
+•
+•
+•
+•
+•
+•
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 61
+
+Table 6. CLI Chassis manager Management Commands
+
+6.1 StartBladeSerialSession
+Description:
+This command is used to start serial session to a blade. The command will open a Serial-Clientterminal for the serial session.
+Users might want to open a serial session to a blade for debugging purposes, to view blade boot
+messages, or for executing BIOS commands. A VT100 console will be provided that will continuously
+poll the blade for any serial session data. Any user command entered using the VT100 console will be
+sent to the blade.
+Note that this session might close unexpectedly if there is a simultaneous IPMI command issued to
+any of the chassis blades or because of inactivity of more than five minutes.
+In order to avoid the user screen from being overlapped with the incoming content from the serial
+session, it’s recommended to clear the screen first before establishing a serial session with a blade.
+Use Ctrl-X to exit from the serial session.
+Syntax:
+wcscli -startbladeserialsession <-i blade_index>
+[-s session_timeout_in_secs] [-h]
+blade_index - the target blade number. Typically 1-24
+-s - Session timeout in secs. Maximum is 3600 seconds (60
+minutes)
+-h - help; display the correct syntax
+Use Ctrl-X to exit from the serial session.
+
+Sample usage:
+To start a serial session to the blade, use the following command:
+wcscli# wcscli –startbladeserialsession -i blade_index
+Sample Output:
+This opens a VT100 session for that blade.
+6.2 StopBladeSerialSession
+SW: CM CLI
+
+Description:
+This command is used to force the termination of an active serial session to a blade.
+Syntax:
+wcscli -stopbladeserialsession <-i blade_index> [-h]
+blade_index - the number of the blade. Typically 1-24
+-h - help; display the correct syntax
+Sample usage:
+To stop a serial session to a blade, use the following command:
+wcscli# wcscli –stopbladeserialsession –i blade_index
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 62
+
+Sample Output:
+
+SW: CM CLI
+
+The serial console session to the given blade will be terminated and control returns to WCSCLI
+prompt.
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 63
+
+6.3 StartPortSerialSession
+Description:
+This command is used to open a serial port console terminal to serial devices that are connected to
+the chassis manager (for example, Top of Rack (TOR) network switches). Device timeout can be
+specified as input, if not specified, default timeout value of 100ms from service config will be used.
+Ports 1 (COM1) and 2 (COM2) connections from the Chassis Manager are supported. Ports 5 or 6 can
+also be used if the WCSCLI service is stopped on those ports.
+In order to avoid the user screen from being overlapped with the incoming content from the serial
+session, it is recommended that the screen is cleared first before establishing a serial session.
+Use Ctrl-X to exit from the serial session.
+Syntax:
+wcscli -startPortSerialSession <-i Port_index>
+[-d device_timeout_in_millisecs]
+[-r baud_rate
+(75,110,300,1200,2400,4800,9600,19200,38400,57600,115200)] [h]
+-i - Port number. The number of the COM port the device is
+connected to. Enter 1 for COM1, 2 for COM2.
+5 or 6 can also be used if the WCSCLI service is stopped
+on COM5 or COM6.
+-d - Device timeout in milliseconds. Default is 0.
+-r - Baud rate. Default is 9600.
+-h - help; display the correct syntax
+Use Ctrl-X to exit from the serial session.
+
+Sample usage:
+To to start serial port consolel, use the following command:
+wcscli# wcscli –startportserialsession -i port_index –d 100
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+SW: CM CLI
+
+Sample output:
+This opens VT100 session for the serial port console.
+
+Page | 64
+
+6.4 StopPortSerialSession
+Description:
+Stop all existing sessions on given port.
+Syntax:
+wcscli -stopportserialsession <-i Port_index> [-h]
+-i Port number
+-h - Help; display the correct syntax
+Sample usage:
+To to start serial port consolel, use the following command:
+wcscli# wcscli –stopportserialsession -i port_number
+
+SW: CM CLI
+
+Sample output:
+All existing sessions ended.
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 65
+
+6.5 EstablishCmConnection
+Description:
+Create a connection to the chassis manager service and logs user into Windows on the Chassis
+Manager.
+Make sure ‘local echo’ is enabled when connection to CM is established using this command.
+Otherwise, the commands typed by the user won’t be visible on the terminal.
+Syntax:
+wcscli -establishcmconnection <-u username> <-x password>
+[-m host_name]
+[-p port] [-s SSL_option]
+[-b batchfileName] [-v] [-h]
+-u - username to connect to CM service. Use domain\username
+if not using local domain
+-x - password to connect to CM service
+-m - host_name - Specify host name for Chassis Manager
+(Optional. Default is localhost.
+For serial connection, localhost is assumed.)
+-p - port - Specify a valid Port to connect to for Chassis
+Manager
+(Optional. Default is 8000)
+-s - Select Chassis Manager (CM)'s SSL Encryption mode
+(Optional. 0: disabled/ 1 (default): enabled)
+Enter 0 if CM is not configured to use SSL encrytion
+(SSL disabled in CM)
+Enter 1 if CM requires SSl Encryption (SSL enabled in CM)
+-b - Optional batch file option (not supported in serial mode).
+-v - Get CLI version information
+SW: CM CLI
+
+-h - help
+
+Sample usage:
+To establish a connection to the chassis manager, use the following command:
+wcscli# wcscli –establishcmconnection -p 8000 -s 0 -u username -x
+password
+Sample output:
+Connection to CM succeeded..
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 66
+
+6.6 TerminateCmConnection
+Description:
+Terminate a connection to the chassis manager service.
+Syntax:
+wcscli terminatecmconnection [-h]
+-h help
+
+Sample usage:
+To terminate a connection to the chassis manager, use the following command:
+wcscli# wcscli –terminatecmconnection
+Sample output:
+Connection to CM terminated successfully.
+
+7 CLI Over Serial (WCSCLI+)
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+
+StartChassisManager
+StopChassisManager
+GetChassisManagerStatus
+EnableChassisManagerSsl
+DisableChassisManagerSsl
+GetNetworkProperties (getnic)
+SetNetworkProperties (setnic)
+Clear
+SetLocalUpdate
+GetLocalUpdateStatus
+
+Note that these commands are available in WCSCLI Serial mode only. Otherwise, all these commands
+will fail with the following console message:
+Command only supported in serial wcscli client mode..
+In order to run these commands, the user needs to enter account credentials using the
+EstablishCmConnection command first.
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 67
+
+SW: CM CLI
+
+Table 47 describes the following WCS system CLI over Serial console session commands:
+
+Table 7. CLI over Serial (WCSCLI+) Commands
+
+7.1 StartChassisManager
+Description:
+This command is used to start serial Windows chassis manager service.
+Syntax:
+wcscli -startchassismanager [-h]
+
+-h - help; display the correct syntax
+Sample usage:
+To start the Windows chassis manager service, use the following command:
+wcscli# wcscli –startchassismanager
+
+SW: CM CLI
+
+Sample Output:
+chassis manager successfully started.
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 68
+
+7.2 StopChassisManager
+Description:
+This command is used to stop an existing Windows chassis manager service.
+Syntax:
+wcscli -stopchassismanager [-h]
+-h - Help; display the correct syntax
+Sample usage:
+To stop Windows chassis manager service, use the following command:
+wcscli# wcscli –stopchassismanager
+Sample output:
+chassis manager service successfully stopped.
+7.3 GetChassisManagerStatus
+Description:
+Get the status of Windows chassis manager service.
+Syntax:
+wcscli -getchassismanagerstatus [-h]
+-h - Help; display the correct syntax
+Sample usage:
+To get the status of chassis manager service, use the following command:
+wcscli# wcscli –getchassismanagerstatus
+
+SW: CM CLI
+
+Sample output:
+chassismanager service status: Running
+OK
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 69
+
+7.4 EnableChassisManagerSsl
+Description:
+Enable SSL for the chassis manager service.
+Syntax:
+wcscli -enablechassismanagerssl [-h]
+-h - Help; display the correct syntax
+Sample usage:
+To enable SSL for the chassis manager service, use the following command:
+wcscli# wcscli –enablechassismanagerssl
+Sample output:
+Successfully enabled SSL in the chassismanager service.
+You will need to establish connection to the CM again via establishCmConnection command to run
+any commands..
+7.5 DisableChassisManagerSsl
+Description:
+Disable SSL for the chassis manager service.
+Syntax:
+wcscli -disablechassismanagerssl [-h]
+-h - Help; display the correct syntax
+Sample usage:
+To disable SSL for the chassis manager service, use the following command:
+wcscli# wcscli –disablechassismanagerssl
+Sample output:
+Successfully disabled SSL in the chassismanager service.
+You will need to establish connection to the CM again via establishCmConnection command to run
+any commands..
+SW: CM CLI
+
+7.5 GetNetworkProperties (getnic)
+Description:
+This command gets the chassis controller network properties.
+Syntax:
+wcscli –getnic[-h]
+Note that when reading the NIC settings, in DHCP mode, all old NIC settings for the subnet mask,
+gateway IP and DNS servers will be returned by Windows through WMI.
+-h – Help, display the correct syntax
+
+Sample usage:
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 70
+
+To get the network configuration details for the chassis, use the following command:
+wcscli# wcscli -getnic
+Sample output:
+N/W Interface 0:
+Index
+Description
+Connection
+ServiceName
+MAC Address
+IP Enabled
+DHCP Enabled
+DHCP Server
+IP Address
+fe80::8533:7d05:79b4:8895}
+Subnet Mask
+Gateway Address
+DNS Servers
+DNS Hostname
+DNS Domain
+WINS Primary
+WINS Secondary
+Completion Code
+
+: 10
+: Intel(R) 82574L Gigabit Network
+:
+:
+:
+:
+:
+:
+
+e1iexpress
+08:9E:01:6C:24:1B
+True
+False
+
+:
+:
+:
+:
+:
+:
+:
+:
+
+{255.255.0.0, 64}
+{124.55.22.33}
+
+{192.168.150.56,
+
+CMPVT10
+
+Success
+
+7.6 SetNetworkProperties (setnic)
+
+Syntax:
+wcscli -setnic <-a IP addr source DHCP/STATIC -Required!>
+[-i IP address (Required for Static IP)]
+[-m subnetmask (Required for Static IP)]
+[-g gateway] [-p primary DNS] [-d secondary DNS]
+[-t network interface number]
+[-h]
+-a - IP addr source DHCP/Static
+-i - IP address of the chassis controller (Required for Static
+IP.
+Not used for DHCP.)
+-m - subnet mask of the chassis controller (Required for Static
+IP.
+Not used for DHCP.)
+-g - gateway of the chassis controller (Optional for Static IP.
+Not used for DHCP.)
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 71
+
+SW: CM CLI
+
+Description:
+This command sets the chassis controller network properties (only available over serial wcscli client).
+
+Note that the gateway IP can be cleared by switching to
+DHCP and then back to static IP.
+-p - primary DNS server address for the chassis controller
+(Optional)
+-d - secondary DNS server address for the chassis controller
+(Optional.
+Only valid if primary DNS is also specified.)
+-t - network interface controller number to configure
+(0-index. Optional). Default to 0 if not specified
+-h - help; display the correct syntax
+
+Sample usage:
+To set the network configuration for the chassis, use the following command:
+wcscli# wcscli -setnic -m 255.255.0.0 -i 10.160.148.220 -p
+10.160.148.220 -d 127.0.0.1 -a static -t 0
+Sample output:
+The command will execute successfully, and there will be intermittent connection loss to chassis
+manager because of the network cofig. update.
+7.7 Clear
+Description:
+This command allows user to clear previously entered commands from history. Also clears the PuTTY
+client screen.
+Syntax:
+wcscli -clear [-h]
+-h - Help; display the correct syntax
+
+Sample output:
+Clear command history cache and clears the display screen on client window, displaying the CLI
+prompt.
+
+7.8 SetLocalUpdate
+Description:
+This command updates Chassis Manager firmware ( Chassis Manager service, WCSCLI, BIOS) locally
+and can also be used to execute a custom script. Command requires specifying the TFTP package
+location that contains the firmware to be updated. This command will be used for the case when
+Chassis Manager service is not reachable.
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 72
+
+SW: CM CLI
+
+Sample usage:
+To clear command history, use the following command:
+wcscli# wcscli –clear
+
+Update is invoked using this command, in-between status of update can be monitored using
+GetFirmwareUpdateStatus command.
+If there is already an update in progress the completion status returns “In-progress”, indicating that.
+Syntax:
+wcscli -setlocalupdate <-f filePath> [-h]
+-f - path to firmware image file
+-h - help; display the correct syntax
+Sample usage:
+To update the secondary controller on PSU 1, execute the following command:
+wcscli# wcscli –setlocalupdate –f tftp://wcstftp/test.zip
+Sample output:
+Command Success : Set Local Update: Invoked
+7.9 GetLocalUpdateStatus
+Description:
+This command gets the Chassis Manager firmware update status started locally, progress stage of the
+firmware update. This command will be used when the Chassis Manager service is not reachable and
+Update service API is called directly.
+Syntax:
+wcscli -getlocalupdatetatus [-h]
+-h - help; display the correct syntax
+Sample usage:
+To get the firmware update status started locally, execute the following command:
+wcscli# wcscli –getlocalupdatestatus
+SW: CM CLI
+
+Sample output:
+Command Success: Local Update Status : UpdatedWcscli
+
+8 Auxiliary Devices
+The WCS Chassis Manager have requirements to be able to natively write/read the serial port in a
+request/response protocol. Modbus protocol defines a message structure that controllers will
+recognize and use. It describes the process a controller uses to request access to another devices,
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 73
+
+how it will response to requests from the other devices, and how errors will be detected and
+reported. Modbus protocol establishes a common format for the layout and contents of message
+fields.
+Hence, we are implementing Modbus support for monitor auxiliary devices such as UPS over serial
+connection RS232 Modbus RTU.
+This section describes how current Chassis Manager will updated to support monitoring auxiliary
+devices over RS232.
+
+8.1 GetAuxDeviceType
+syntax:
+Usage: wcscli -getauxdevicetype <-I deviceId> [-h]
+-i - device Id
+-h - help; display the correct syntax
+
+Sample usage:
+wcscli - getauxdevicetype -i 1
+
+Completion Code
+
+: Success
+
+---------Aux Device Type Information----------Address: 3564 Data: AS1437137314
+
+Name: SerialNumber
+
+Address: 3532 Data: Smart-UPS 1500
+
+Name: UPSModel
+
+Address: 3548 Data: SMT1500RMI2U
+
+Name: UPSPartNu
+
+Address: 3596 Data: APCUPS
+
+SW: CM CLI
+
+mber
+Name: ProductName
+
+8.2 GetAuxDeviceStatus
+syntax:
+Usage: wcscli - getauxdevicestatus <-I deviceId> [-h]
+-i - device Id
+-h - help; display the correct syntax
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 74
+
+Sample usage:
+wcscli – getauxdevicestatus -i 1
+Completion Code
+
+: Success
+
+---------Aux Device Type Information----------Address: 3564 Data: AS1437137314
+
+Name: SerialNumber
+
+Address: 3532 Data: Smart-UPS 1500
+
+Name: UPSModel
+
+Address: 3548 Data: SMT1500RMI2U
+
+Name: UPSPartNu
+
+mber
+Address: 3596 Data: APCUPS
+
+Name: ProductName
+
+8.3 SetAuxDeviceInfo
+syntax:
+Usage: wcscli - setauxdeviceInfo <-I aux_device_Id> <-d address> <-p payload> <-h help>
+-i - device Id
+-d address
+-p payload
+-h - help; display the correct syntax
+
+Sample usage:
+wcscli – setauxdeviceInfo -i 1 –d 61543 –p 1
+
+SW: CM CLI
+
+Sample output:
+OK
+
+9 Power Alert driven Power Capping
+9.1 setbladepoweralertpolicy
+Description:
+SetBladePowerAlertPolicy command captures the blade behavior upon receiving a power alert
+signal (Refer to the SetChassisPowerAlertPolicy command for finding when the power alert
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 75
+
+signal is sent to the blade). The blade action is primarily captured in to two aspects,
+action immediately followed by the power alert signal (<-e blade_alert_action> parameter
+below) and the action during anytime followed by the power alert signal ([-r
+
+blade_remediation_action] parameter below).
+<-e blade_alert_action> specifies the action that needs to be taken immediately following
+and it can be one of the following,
+
+-
+
+DoNothing: No action is taken (no capping)
+Throttle: Enforce a power limit on the blade specified using the “<-p power_limit>” parameter
+subsequent to receciving the power alert signal.
+
+-
+
+FastThrottle: This option allows for fast response time when enforcing power
+limit. This is achieved by performance an agile and more aggressive form of
+capping (CPU PROCHOT) for a duration specified using the “[-f fast_throttle_duration]”
+parameter immediately after receiving the power alert signal. The default value of
+“[-f fast_throttle_duration]” is 20ms and any longer duration may have performance
+consequence. Use this option with caution.
+
+“[-r blade_remediation_action]” specified the action that can be performed anytime after a
+power alert is received by the blade.
+
+-
+
+DoNothing: this specifies no action needs to be performed
+
+-
+
+RearmOnly: re-arm the blade for future reception of power alert signal (leave the
+power limit untouched)
+
+RemoveCapAndRearm: this removes the set power limit (see above) and re-arm the
+blade for future reception of power alert signal
+
+“[-d auto_remove_delay]” specified whether to remove the set power limit automatically
+after a certain delay from the power alert event/signal. Delay from 1 to 250 seconds is
+supported.
+
+Usage: wcscli -setbladepoweralertpolicy <-i blade_id> <-e blade_alert_action> <-p power_limit>
+[-r blade_remediation_action] [-f fast_throttle_duration] [-d auto_remove_delay] [-h]
+-i - blade Id
+-e - blade alert action, 0: do nothing, 1: throttle, 2: fast throttle
+-p - power limit in watts
+-r - blade remediation action (optional), 0: do nothing, 1: remove limit and rearm alert, 2: rearm
+alert
+-f - fast throttle duration in milliseconds
+(optional - default is 20ms. If not sure, do not provide this parameter.)
+-d - auto remove power limit delay in second, use value between 1 to 250 seconds
+(optional: when not provided, autoRemove feature is disabled.)
+-h - help; display the correct syntax
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 76
+
+SW: CM CLI
+
+Syntax:
+
+Sample usage:
+wcscli -setbladepoweralertpolicy -i 1 -p 200 -e 2 -r 1 -f 20
+
+Sample output:
+Command Success
+
+9.2 getbladepoweralertpolicy
+Description:
+Displays the different blade parameters associated with power alert driven capping
+Syntax:
+Usage: wcscli -getbladepoweralertpolicy <-i blade_id> [-h]
+-i - blade Id
+-h - help; display the correct syntax
+Sample usage:
+wcscli -getbladepoweralertpolicy -i 1
+
+Sample output:
+
+SW: CM CLI
+
+Blade ID
+:1
+BladePowerDrawnInWatts
+: 268
+IsBladePowerAlertLimitEnabled
+: False
+IsBladePowerAlertLimitActive
+: False
+BladePowerAlertLimitInWatts
+: 200
+BladeAlertAction
+: FastThrottle
+FastThrottleDurationInMsecs
+: 20
+AutoRemovePowerLimitDelayInSecs : 0
+Completion Code
+: Success
+
+9.3 setchassispoweralertpolicy
+Description:
+SetChassisPowerAlertPolicy set the policy in the chassis on when to trigger the power
+alert event (which in turn trigger blade power capping – see SetBladePowerAlertPolicy
+command above).
+This is done by setting a chassis-level power limit, specified using the “<-p
+power_limit>” parameter. The chassis will send “power alert event/signal” to all blades
+once the “<-p power_limit>” is reached at the chassis level. We achieve this by setting
+ALERT limit on the chassis PSUs/power-supply-units (typically 4 to 6 PSUs per chassis).
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 77
+
+Note that the number of PSUs per chassis should be reflected in the “NumPsus” XML
+configuration parameter in the .config chassis manager service file. Further note that
+the PSUs need to be populated from slot-1 in sequence (without any blank slots in between
+populated PSUs) for correct working of this API.
+“<-e chassis_alert_policy>” value of “0- disable power alert” will disable the alert
+event on the power supplies and a value of “1- enable power alert” will enable the alert
+event on the power supplies.
+Note that, both the SetChassisPowerAlertPolicy and the SetBladePowerAlertPolicy commands
+should be used in conjunction for enforcing and removal of chassis power limit. Also, the
+distribution of the chassis-level “<-p power_limit>” (in the SetChassisPowerAlertPolicy
+command) among the blades will be based on the set blade-level “<-p power_limit>” (in the
+SetBladePowerAlertPolicy command).
+
+Syntax:
+Usage: wcscli -setchassispoweralertpolicy <-e chassis_alert_policy> <-p power_limit> [-h]
+-e chassis alert policy, 0- disable power alert, 1- enable power alert
+-p power limit in watts
+-h - help; display the correct syntax
+
+Sample usage:
+wcscli -setchassispoweralertpolicy –e 1 –p 5000
+
+Sample output:
+Command Success
+
+PSU ID
+PsuPowerDrawnInWatts
+IsPsuPowerAlertLimitEnabled
+IsPsuPowerAlertLimitActive
+PsuPowerAlertLimitInWatts
+Completion Code
+
+: 2158
+: False
+: False
+: 7020
+:6
+SW: CM CLI
+
+ChassisPowerDrawnInWatts
+IsChassisPowerAlertEnabled
+IsChassisPowerAlertActive
+ChassisPowerAlertLimitInWatts
+NumPsusAportioningAlert
+
+:1
+: 366
+: False
+: False
+: 1176
+: Success
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 78
+
+9.4 getchassispoweralertpolicy
+Description:
+Retrieves all chassis-level power alert settings, including the PSU power and alert events.
+syntax:
+Usage: wcscli -getchassispoweralertpolicy [-h]
+-h - help; display the correct syntax
+Sample usage:
+wcscli -getchassispoweralertpolicy
+
+Sample output:
+Command Success
+ChassisPowerDrawnInWatts
+IsChassisPowerAlertEnabled
+IsChassisPowerAlertActive
+ChassisPowerAlertLimitInWatts
+NumPsusAportioningAlert
+PSU ID
+PsuPowerDrawnInWatts
+IsPsuPowerAlertLimitEnabled
+IsPsuPowerAlertLimitActive
+PsuPowerAlertLimitInWatts
+Completion Code
+
+: 2158
+: False
+: False
+: 7020
+:6
+
+:1
+: 366
+: False
+: False
+: 1176
+: Success
+
+Description:
+Retrives the percentage time spent in throttling and the various power capping entities (static, dynamic
+power alert based, and aggressive/PROCHOT). This is typically the 1 second current average value .
+syntax:
+Usage: wcscli -getbladethrottlingstatistics <-i blade_id> [-h]
+-i - blade Id
+-h - help; display the correct syntax
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 79
+
+SW: CM CLI
+
+9.5 getbladethrottlingstatistics
+
+Sample usage:
+wcscli -getbladethrottlingstatistics -i 1
+
+Sample output:
+Blade ID
+BladePowerDrawnInWatts
+BladePercentageThrottling
+IsBladePowerAlertLimitActive
+BladePowerAlertLimitInWatts
+IsBladeStaticPowerLimitActive
+BladeStaticPowerLimitInWatts
+IsBladeProchotActive
+Completion Code
+
+:1
+: 269
+:0
+: False
+: 32767
+: False
+: 500
+: False
+: Success
+
+10 PuTTY Settings for serial connection
+Recommended and supported tool for CLI via serial connection is PuTTY. This section describes the
+settings required for PuTTY:
+
+SW: CM CLI
+
+1.) Set the assigned COM port Baud Rate to (115200) , as shown below. Note: COM port
+designations on your configuration may differ from this.
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 80
+
+SW: CM CLI
+
+2.) Set Terminal settings to be Local echo - Force off and Local line editing – Force off. This allows
+the application to do echo and line editing.
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 81
+
+SW: CM CLI
+
+3.) Select Implicit CR in LF setting for correctly displaying command output.
+
+4.) Set the Keyboard to VT100+ and Backspace to be ‘Control-? (127)’.
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 82
+
+SW: CM CLI
+
+5.) Set the window size to default 80 characters, and select forbid resizing option. This allows the
+PuTTY session output to match Command Console output.
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 83
+
+SW: CM CLI
+
+6.) Save these settings to be loaded for future use, and open the connection.
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 84
+
+11 Service Install
+1. Create two folders under the C: drive. The folders can be named something like “WcsCliCOM5”
+and “WcsCliCOM6”.
+2. Copy the new WcsCli binaries under each of the two created folders in step 1.
+Inside each of these directories, there is a file of type Config called “WcsCli.exe”. Make sure you
+change the “COMPortName” key’s value to the desired COM port to which the service attaches
+in that config. file. For example, for WcsCliCOM5 folder, update the WcsCli.exe config. file by
+changing the COMPortName to COM5.
+3. Open a CMD prompt as “Administrator”.
+4. Navigate to each of the the two newly created folders.
+5. Run “C:\Windows\Microsoft.NET\Framework\v4.0.30319\InstallUtil.exe WcsCli.exe”.
+6. Run “Net start WCSCLI<COMPortName>.”
+7. Run “Services.msc” which will show the list of services and their statuses. You should see
+WcsCliCOM5 and WcsCliCOM6 listed as services. Also, you can refer to an installation log
+“WcsCli.InstallLog” that will get created under the same folder where the binaries reside.
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 85
+
+SW: CM CLI
+
+This section describes the various steps (see below) required to install the WcsCli service:
+
+8. Verify that the services are correctly installed and running. You can do that by checking for an
+existing service by running the following command in a CMD prompt:
+“sc qc <Service Name>”; where Service Name are ‘WcsCliCOM5’ and ‘WcsCliCOM6’
+For example, “sc qc WcsCliCOM5”
+
+12 Appendix: Commonly Used of Acronyms
+This section provides definitions of acronyms used in the WCS system specifications.
+ACPI – advanced configuration and power
+interface
+AHCI – advanced host controller interface
+AHJ – authority having jurisdiction
+ANSI – American National Standards Institute
+API – application programming interface
+
+DHCP – dynamic host configuration protocol
+DIMM – dual inline memory module
+DPC - DIMMs per memory channel
+DRAM – Dynamic Random Access Memory
+
+DSR – data set ready
+DTR – data terminal ready
+
+ASHRAE – American Society of Heating,
+Refrigerating and Air Conditioning Engineers
+
+ECC – error-correcting code
+
+ASIC – application-specific integrated circuit
+
+EEPROM - electrically erasable programmable
+read-only memory
+
+BCD – binary-coded decimal
+BIOS – basic input/output system
+BMC – baseboard management controller
+
+EIA – Electronic Industries Alliance
+EMC – electromagnetic compatibility
+EMI – electromagnetic interference
+FRU – field replaceable unit
+
+CM – Chassis Manager
+
+FTP – file transfer protocol
+
+CMOS – complementary metal–oxide–
+semiconductor
+
+GPIO – general purpose input output
+
+COLO – co-location
+
+HBI – high business intelligence
+
+CTS – clear to send
+
+HCK – Windows Hardware Certification Kit
+
+DCMI – Data Center Manageability Interface
+
+HMD – hardware monitoring device
+
+DDR3 – double data rate type 3
+
+HT – hyperthreading
+
+SW: CM CLI
+
+CFM – cubic feet per minute (measure of
+volume flow rate)
+
+GUID – globally unique identifier
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 86
+
+IBC – international building code
+IDE – integrated development environment
+IEC - International Electrotechnical Commission
+
+OSHA - Occupational Safety & Health
+Administration
+OTS – off the shelf
+PCB – printed circuit board
+
+IOC – I/O controller
+
+PCIe – peripheral component interconnect
+express
+
+IPMI – intelligent platform management
+interface
+
+PCH – platform control hub
+
+IPsec – IP security
+ITPAC – IT pre-assembled components
+JBOD – “just a bunch of disks”
+KCS – keyboard controller style
+L2 – layer 2
+LAN – local area network
+LFF – large form factor
+LPC – low pin count
+LS – least significant
+LUN – logical unit number
+MAC – media access control
+MDC – modular data center containers
+MLC – multi-level call
+MTBF – mean time between failures
+MUX - multiplexer
+NIC – network interface card
+NUMA – non-uniform memory access
+OOB – out of band
+
+PDB – power distribution backplane
+PDU – power distribution unit
+Ph-ph – phase to phase
+Ph-N – phase to neutral
+PNP – plug and play
+POST – power-on self-test
+PSU – power supply unit
+PWM – pulse-width modulation
+PXE – preboot execution environment
+QDR – quad data rate
+QFN – quad flat package no-lead
+QPI – Intel QuickPath Interconnect
+QSFP – Quad small form-factor pluggable
+RAID – redundant array of independent disks
+REST - representational state transfer
+RM – Rack Manager
+RMA – remote management agent
+ROC – RAID-on-chip controller
+RSS – receive-side scaling
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 87
+
+SW: CM CLI
+
+I2C – inter-integrated circuit
+
+RTS – request to send
+
+SSD – solid-state drive
+
+RU – rack unit
+
+TB – tray backplane
+
+RxD – received data
+
+TDP – thermal design power
+
+SAS – serial-attached small computer system
+interface (SCSI)
+
+TM – tray midplane
+
+SATA – serial AT attachment
+SCK – serial clock
+SCSI – small computer system interface
+SDA – serial data signal
+
+TOR – top of rack
+TPM – trusted platform module
+TxD – transmit data
+U – rack unit
+
+SDR – sensor data record
+
+UART – universal asynchronous
+receiver/transmitter
+
+SFF – small form factor
+
+UEFI – unified extensible firmware interface
+
+SFP - small form-factor pluggable
+
+UL – Underwriters Laboratories
+
+SMBUS – systems management bus
+
+UPS – uninterrupted power supply
+
+SMBIOS – systems management BIOS
+
+Vpp – voltage peak to peak
+
+SOL – serial over LAN
+
+WMI –Windows Management Interface
+
+SW: CM CLI
+
+SPI – serial peripheral interface
+
+Windows Cloud Server System Specification: Software—Chassis Manager CLI
+
+Page | 88
+
+

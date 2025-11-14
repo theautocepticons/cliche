@@ -716,3 +716,68 @@ input[type="password"]:focus {
 		width: 60%;
 	}
 }
+
+/* Gen 6+ Command Styles */
+
+.gen6-action-btn {
+	padding: 8px 16px;
+	font-size: 14px;
+	font-weight: 500;
+	border: 1px solid var(--border);
+	background-color: var(--bg-secondary);
+	color: var(--text-secondary);
+	border-radius: 6px;
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+
+.gen6-action-btn:hover {
+	background-color: var(--bg-tertiary);
+	border-color: var(--accent);
+}
+
+.gen6-action-btn.active {
+	background-color: var(--accent);
+	color: white;
+	border-color: var(--accent);
+}
+
+.gen6-param-group {
+	margin-bottom: 12px;
+}
+
+.gen6-param-input,
+.gen6-flag-input {
+	width: 100%;
+	padding: 8px 12px;
+	font-size: 14px;
+	border: 1px solid var(--border);
+	border-radius: 6px;
+	background-color: var(--bg-secondary);
+	color: var(--text-primary);
+	transition: border-color 0.2s ease;
+}
+
+.gen6-param-input:focus,
+.gen6-flag-input:focus {
+	outline: none;
+	border-color: var(--accent);
+}
+
+.gen6-flag-group {
+	margin-bottom: 12px;
+	padding: 8px;
+	background-color: var(--bg-tertiary);
+	border-radius: 6px;
+}
+
+.gen6-flag-group input[type="checkbox"] {
+	cursor: pointer;
+}
+
+.gen6-params-section h4 {
+	font-size: 13px;
+	color: var(--text-secondary);
+	margin-bottom: 8px;
+	font-weight: 600;
+}

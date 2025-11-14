@@ -422,16 +422,381 @@
 			</div>
 
 			<div class="tab-content" data-generation="gen6">
-			<div class="command">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Gen 6+ Placeholder Command</h2>
-				<div style="margin-bottom: 12px; padding: 12px; background-color: var(--bg-tertiary); border-radius: 8px; font-size: 13px; color: var(--text-secondary);">
-					This is a placeholder command for Gen 6+ devices. Actual commands will be added here.
+
+			<!-- Network Commands Card -->
+			<div class="command gen6-network-card">
+				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Network Commands</h2>
+
+				<!-- Action Selector -->
+				<div style="margin-bottom: 16px;">
+					<div style="display: flex; gap: 8px;">
+						<button class="gen6-action-btn active" data-action="show">Show</button>
+						<button class="gen6-action-btn" data-action="set">Set</button>
+					</div>
 				</div>
+
+				<!-- Command Dropdown -->
+				<div style="margin-bottom: 16px;">
+					<label style="display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px;">Select Command:</label>
+					<select id="gen6-network-command" style="width: 100%; padding: 8px 12px; font-size: 14px; border: 1px solid var(--border); border-radius: 6px; background-color: var(--bg-secondary); color: var(--text-primary); cursor: pointer;">
+						<option value="">Select a command...</option>
+					</select>
+				</div>
+
+				<!-- Parameters Container -->
+				<div id="gen6-params-container" style="margin-bottom: 16px;">
+					<!-- Parameters will be dynamically inserted here -->
+				</div>
+
+				<!-- Command Display -->
 				<div class="command-header">
-					<input type="text" class="command-display" readonly value="-gen6placeholder">
-					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+					<input type="text" id="gen6-network-command-display" class="command-display" readonly value="">
+					<button class="copy-btn" onclick="copyGen6Command(this)">Copy</button>
 				</div>
 			</div>
+
+			<!-- Manager Commands Section -->
+			<div style="margin: 32px 0 20px 0; padding-bottom: 12px; border-bottom: 2px solid var(--border);">
+				<h2 style="font-size: 20px; font-weight: 700; color: var(--text-primary); margin: 0;">Manager Commands</h2>
+			</div>
+
+			<!-- Manager Info & Health Card -->
+			<div id="gen6-manager-info-card" class="command gen6-manager-info-card">
+				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Info & Health</h2>
+
+				<!-- Action Selector -->
+				<div style="margin-bottom: 16px;">
+					<div style="display: flex; gap: 8px;">
+						<button class="gen6-action-btn active" data-action="show">Show</button>
+						<button class="gen6-action-btn" data-action="set">Set</button>
+					</div>
+				</div>
+
+				<!-- Command Dropdown -->
+				<div style="margin-bottom: 16px;">
+					<label style="display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px;">Select Command:</label>
+					<select id="gen6-manager-info-command" style="width: 100%; padding: 8px 12px; font-size: 14px; border: 1px solid var(--border); border-radius: 6px; background-color: var(--bg-secondary); color: var(--text-primary); cursor: pointer;">
+						<option value="">Select a command...</option>
+					</select>
+				</div>
+
+				<!-- Parameters Container -->
+				<div id="gen6-manager-info-params-container" style="margin-bottom: 16px;">
+					<!-- Parameters will be dynamically inserted here -->
+				</div>
+
+				<!-- Command Display -->
+				<div class="command-header">
+					<input type="text" id="gen6-manager-info-command-display" class="command-display" readonly value="">
+					<button class="copy-btn" onclick="copyGen6Command(this)">Copy</button>
+				</div>
+			</div>
+
+			<!-- Manager Power Card -->
+			<div id="gen6-manager-power-card" class="command gen6-manager-power-card">
+				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Power</h2>
+
+				<!-- Action Selector -->
+				<div style="margin-bottom: 16px;">
+					<div style="display: flex; gap: 8px;">
+						<button class="gen6-action-btn active" data-action="show">Show</button>
+						<button class="gen6-action-btn" data-action="set">Set</button>
+					</div>
+				</div>
+
+				<div style="margin-bottom: 16px;">
+					<label style="display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px;">Select Command:</label>
+					<select id="gen6-manager-power-command" style="width: 100%; padding: 8px 12px; font-size: 14px; border: 1px solid var(--border); border-radius: 6px; background-color: var(--bg-secondary); color: var(--text-primary); cursor: pointer;">
+						<option value="">Select a command...</option>
+					</select>
+				</div>
+				<div id="gen6-manager-power-params-container" style="margin-bottom: 16px;"></div>
+				<div class="command-header">
+					<input type="text" id="gen6-manager-power-command-display" class="command-display" readonly value="">
+					<button class="copy-btn" onclick="copyGen6Command(this)">Copy</button>
+				</div>
+			</div>
+
+			<!-- Manager Logging Card -->
+			<div id="gen6-manager-logging-card" class="command gen6-manager-logging-card">
+				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Logging</h2>
+
+				<!-- Action Selector -->
+				<div style="margin-bottom: 16px;">
+					<div style="display: flex; gap: 8px;">
+						<button class="gen6-action-btn active" data-action="show">Show</button>
+						<button class="gen6-action-btn" data-action="set">Set</button>
+					</div>
+				</div>
+
+				<div style="margin-bottom: 16px;">
+					<label style="display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px;">Select Command:</label>
+					<select id="gen6-manager-logging-command" style="width: 100%; padding: 8px 12px; font-size: 14px; border: 1px solid var(--border); border-radius: 6px; background-color: var(--bg-secondary); color: var(--text-primary); cursor: pointer;">
+						<option value="">Select a command...</option>
+					</select>
+				</div>
+				<div id="gen6-manager-logging-params-container" style="margin-bottom: 16px;"></div>
+				<div class="command-header">
+					<input type="text" id="gen6-manager-logging-command-display" class="command-display" readonly value="">
+					<button class="copy-btn" onclick="copyGen6Command(this)">Copy</button>
+				</div>
+			</div>
+
+			<!-- Manager Network & Services Card -->
+			<div id="gen6-manager-network-card" class="command gen6-manager-network-card">
+				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Network & Services</h2>
+
+				<!-- Action Selector -->
+				<div style="margin-bottom: 16px;">
+					<div style="display: flex; gap: 8px;">
+						<button class="gen6-action-btn active" data-action="show">Show</button>
+						<button class="gen6-action-btn" data-action="set">Set</button>
+					</div>
+				</div>
+
+				<div style="margin-bottom: 16px;">
+					<label style="display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px;">Select Command:</label>
+					<select id="gen6-manager-network-command" style="width: 100%; padding: 8px 12px; font-size: 14px; border: 1px solid var(--border); border-radius: 6px; background-color: var(--bg-secondary); color: var(--text-primary); cursor: pointer;">
+						<option value="">Select a command...</option>
+					</select>
+				</div>
+				<div id="gen6-manager-network-params-container" style="margin-bottom: 16px;"></div>
+				<div class="command-header">
+					<input type="text" id="gen6-manager-network-command-display" class="command-display" readonly value="">
+					<button class="copy-btn" onclick="copyGen6Command(this)">Copy</button>
+				</div>
+			</div>
+
+			<!-- Manager Configuration Card -->
+			<div id="gen6-manager-config-card" class="command gen6-manager-config-card">
+				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Configuration</h2>
+
+				<!-- Action Selector -->
+				<div style="margin-bottom: 16px;">
+					<div style="display: flex; gap: 8px;">
+						<button class="gen6-action-btn active" data-action="show">Show</button>
+						<button class="gen6-action-btn" data-action="set">Set</button>
+					</div>
+				</div>
+
+				<div style="margin-bottom: 16px;">
+					<label style="display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px;">Select Command:</label>
+					<select id="gen6-manager-config-command" style="width: 100%; padding: 8px 12px; font-size: 14px; border: 1px solid var(--border); border-radius: 6px; background-color: var(--bg-secondary); color: var(--text-primary); cursor: pointer;">
+						<option value="">Select a command...</option>
+					</select>
+				</div>
+				<div id="gen6-manager-config-params-container" style="margin-bottom: 16px;"></div>
+				<div class="command-header">
+					<input type="text" id="gen6-manager-config-command-display" class="command-display" readonly value="">
+					<button class="copy-btn" onclick="copyGen6Command(this)">Copy</button>
+				</div>
+			</div>
+
+			<!-- Manager Security (Cerberus) Card -->
+			<div id="gen6-manager-cerberus-card" class="command gen6-manager-cerberus-card">
+				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Security (Cerberus)</h2>
+
+				<!-- Action Selector -->
+				<div style="margin-bottom: 16px;">
+					<div style="display: flex; gap: 8px;">
+						<button class="gen6-action-btn active" data-action="show">Show</button>
+						<button class="gen6-action-btn" data-action="set">Set</button>
+					</div>
+				</div>
+
+				<div style="margin-bottom: 16px;">
+					<label style="display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px;">Select Command:</label>
+					<select id="gen6-manager-cerberus-command" style="width: 100%; padding: 8px 12px; font-size: 14px; border: 1px solid var(--border); border-radius: 6px; background-color: var(--bg-secondary); color: var(--text-primary); cursor: pointer;">
+						<option value="">Select a command...</option>
+					</select>
+				</div>
+				<div id="gen6-manager-cerberus-params-container" style="margin-bottom: 16px;"></div>
+				<div class="command-header">
+					<input type="text" id="gen6-manager-cerberus-command-display" class="command-display" readonly value="">
+					<button class="copy-btn" onclick="copyGen6Command(this)">Copy</button>
+				</div>
+			</div>
+
+			<!-- Manager Firmware & System Card -->
+			<div id="gen6-manager-system-card" class="command gen6-manager-system-card">
+				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Firmware & System</h2>
+
+				<!-- Action Selector -->
+				<div style="margin-bottom: 16px;">
+					<div style="display: flex; gap: 8px;">
+						<button class="gen6-action-btn active" data-action="show">Show</button>
+						<button class="gen6-action-btn" data-action="set">Set</button>
+					</div>
+				</div>
+
+				<div style="margin-bottom: 16px;">
+					<label style="display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px;">Select Command:</label>
+					<select id="gen6-manager-system-command" style="width: 100%; padding: 8px 12px; font-size: 14px; border: 1px solid var(--border); border-radius: 6px; background-color: var(--bg-secondary); color: var(--text-primary); cursor: pointer;">
+						<option value="">Select a command...</option>
+					</select>
+				</div>
+				<div id="gen6-manager-system-params-container" style="margin-bottom: 16px;"></div>
+				<div class="command-header">
+					<input type="text" id="gen6-manager-system-command-display" class="command-display" readonly value="">
+					<button class="copy-btn" onclick="copyGen6Command(this)">Copy</button>
+				</div>
+			</div>
+
+			<!-- Server Commands Section -->
+			<div style="margin: 32px 0 20px 0; padding-bottom: 12px; border-bottom: 2px solid var(--border);">
+				<h2 style="font-size: 20px; font-weight: 700; color: var(--text-primary); margin: 0;">Server Commands</h2>
+			</div>
+
+			<!-- System Info & General Card -->
+			<div id="gen6-system-info-card" class="command gen6-system-info-card">
+				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Info & General</h2>
+
+				<!-- Action Selector -->
+				<div style="margin-bottom: 16px;">
+					<div style="display: flex; gap: 8px;">
+						<button class="gen6-action-btn active" data-action="show">Show</button>
+						<button class="gen6-action-btn" data-action="set">Set</button>
+					</div>
+				</div>
+
+				<div style="margin-bottom: 16px;">
+					<label style="display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px;">Select Command:</label>
+					<select id="gen6-system-info-command" style="width: 100%; padding: 8px 12px; font-size: 14px; border: 1px solid var(--border); border-radius: 6px; background-color: var(--bg-secondary); color: var(--text-primary); cursor: pointer;">
+						<option value="">Select a command...</option>
+					</select>
+				</div>
+				<div id="gen6-system-info-params-container" style="margin-bottom: 16px;"></div>
+				<div class="command-header">
+					<input type="text" id="gen6-system-info-command-display" class="command-display" readonly value="">
+					<button class="copy-btn" onclick="copyGen6Command(this)">Copy</button>
+				</div>
+			</div>
+
+			<!-- System Power Card -->
+			<div id="gen6-system-power-card" class="command gen6-system-power-card">
+				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Power</h2>
+
+				<!-- Action Selector -->
+				<div style="margin-bottom: 16px;">
+					<div style="display: flex; gap: 8px;">
+						<button class="gen6-action-btn active" data-action="show">Show</button>
+						<button class="gen6-action-btn" data-action="set">Set</button>
+					</div>
+				</div>
+
+				<div style="margin-bottom: 16px;">
+					<label style="display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px;">Select Command:</label>
+					<select id="gen6-system-power-command" style="width: 100%; padding: 8px 12px; font-size: 14px; border: 1px solid var(--border); border-radius: 6px; background-color: var(--bg-secondary); color: var(--text-primary); cursor: pointer;">
+						<option value="">Select a command...</option>
+					</select>
+				</div>
+				<div id="gen6-system-power-params-container" style="margin-bottom: 16px;"></div>
+				<div class="command-header">
+					<input type="text" id="gen6-system-power-command-display" class="command-display" readonly value="">
+					<button class="copy-btn" onclick="copyGen6Command(this)">Copy</button>
+				</div>
+			</div>
+
+			<!-- System FPGA Card -->
+			<div id="gen6-system-fpga-card" class="command gen6-system-fpga-card">
+				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">FPGA</h2>
+
+				<!-- Action Selector -->
+				<div style="margin-bottom: 16px;">
+					<div style="display: flex; gap: 8px;">
+						<button class="gen6-action-btn active" data-action="show">Show</button>
+						<button class="gen6-action-btn" data-action="set">Set</button>
+					</div>
+				</div>
+
+				<div style="margin-bottom: 16px;">
+					<label style="display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px;">Select Command:</label>
+					<select id="gen6-system-fpga-command" style="width: 100%; padding: 8px 12px; font-size: 14px; border: 1px solid var(--border); border-radius: 6px; background-color: var(--bg-secondary); color: var(--text-primary); cursor: pointer;">
+						<option value="">Select a command...</option>
+					</select>
+				</div>
+				<div id="gen6-system-fpga-params-container" style="margin-bottom: 16px;"></div>
+				<div class="command-header">
+					<input type="text" id="gen6-system-fpga-command-display" class="command-display" readonly value="">
+					<button class="copy-btn" onclick="copyGen6Command(this)">Copy</button>
+				</div>
+			</div>
+
+			<!-- System Boot & BIOS Card -->
+			<div id="gen6-system-boot-card" class="command gen6-system-boot-card">
+				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Boot & BIOS</h2>
+
+				<!-- Action Selector -->
+				<div style="margin-bottom: 16px;">
+					<div style="display: flex; gap: 8px;">
+						<button class="gen6-action-btn active" data-action="show">Show</button>
+						<button class="gen6-action-btn" data-action="set">Set</button>
+					</div>
+				</div>
+
+				<div style="margin-bottom: 16px;">
+					<label style="display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px;">Select Command:</label>
+					<select id="gen6-system-boot-command" style="width: 100%; padding: 8px 12px; font-size: 14px; border: 1px solid var(--border); border-radius: 6px; background-color: var(--bg-secondary); color: var(--text-primary); cursor: pointer;">
+						<option value="">Select a command...</option>
+					</select>
+				</div>
+				<div id="gen6-system-boot-params-container" style="margin-bottom: 16px;"></div>
+				<div class="command-header">
+					<input type="text" id="gen6-system-boot-command-display" class="command-display" readonly value="">
+					<button class="copy-btn" onclick="copyGen6Command(this)">Copy</button>
+				</div>
+			</div>
+
+			<!-- System Storage & Devices Card -->
+			<div id="gen6-system-storage-card" class="command gen6-system-storage-card">
+				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Storage & Devices</h2>
+
+				<!-- Action Selector -->
+				<div style="margin-bottom: 16px;">
+					<div style="display: flex; gap: 8px;">
+						<button class="gen6-action-btn active" data-action="show">Show</button>
+						<button class="gen6-action-btn" data-action="set">Set</button>
+					</div>
+				</div>
+
+				<div style="margin-bottom: 16px;">
+					<label style="display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px;">Select Command:</label>
+					<select id="gen6-system-storage-command" style="width: 100%; padding: 8px 12px; font-size: 14px; border: 1px solid var(--border); border-radius: 6px; background-color: var(--bg-secondary); color: var(--text-primary); cursor: pointer;">
+						<option value="">Select a command...</option>
+					</select>
+				</div>
+				<div id="gen6-system-storage-params-container" style="margin-bottom: 16px;"></div>
+				<div class="command-header">
+					<input type="text" id="gen6-system-storage-command-display" class="command-display" readonly value="">
+					<button class="copy-btn" onclick="copyGen6Command(this)">Copy</button>
+				</div>
+			</div>
+
+			<!-- System Cerberus Card -->
+			<div id="gen6-system-cerberus-card" class="command gen6-system-cerberus-card">
+				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Cerberus</h2>
+
+				<!-- Action Selector -->
+				<div style="margin-bottom: 16px;">
+					<div style="display: flex; gap: 8px;">
+						<button class="gen6-action-btn active" data-action="show">Show</button>
+						<button class="gen6-action-btn" data-action="set">Set</button>
+					</div>
+				</div>
+
+				<div style="margin-bottom: 16px;">
+					<label style="display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px;">Select Command:</label>
+					<select id="gen6-system-cerberus-command" style="width: 100%; padding: 8px 12px; font-size: 14px; border: 1px solid var(--border); border-radius: 6px; background-color: var(--bg-secondary); color: var(--text-primary); cursor: pointer;">
+						<option value="">Select a command...</option>
+					</select>
+				</div>
+				<div id="gen6-system-cerberus-params-container" style="margin-bottom: 16px;"></div>
+				<div class="command-header">
+					<input type="text" id="gen6-system-cerberus-command-display" class="command-display" readonly value="">
+					<button class="copy-btn" onclick="copyGen6Command(this)">Copy</button>
+				</div>
+			</div>
+
 			</div>
 
 			<div class="tab-content" data-generation="sac">
@@ -443,5 +808,6 @@
 	</div>
 
 	<script src="./scripts/wcs.js"></script>
+	<script src="./scripts/gen6.js"></script>
 </body>
 </html>
