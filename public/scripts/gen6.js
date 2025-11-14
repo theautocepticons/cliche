@@ -2192,8 +2192,20 @@ function updateGen6GlobalIndex() {
 	});
 }
 
-// Initialize when DOM is ready
-document.addEventListener('DOMContentLoaded', function() {
+// Track if gen6 has been initialized
+let gen6Initialized = false;
+
+// Initialize gen6 tab - called when tab is first activated
+function initializeGen6Tab() {
+	// Prevent re-initialization
+	if (gen6Initialized) return;
+
+	// Check if gen6 tab content is visible
+	const gen6TabContent = document.querySelector('.tab-content[data-generation="gen6"]');
+	if (!gen6TabContent || gen6TabContent.classList.contains('hidden')) {
+		return; // Don't initialize if tab is not visible
+	}
+
 	// Check if gen6 network commands container exists
 	if (document.querySelector('.gen6-network-card')) {
 		initGen6NetworkCommands();
@@ -2253,5 +2265,19 @@ document.addEventListener('DOMContentLoaded', function() {
 	if (globalIndexInput) {
 		globalIndexInput.addEventListener('input', updateGen6GlobalIndex);
 		globalIndexInput.addEventListener('change', updateGen6GlobalIndex);
+	}
+
+	// Mark as initialized
+	gen6Initialized = true;
+}
+
+// Initialize when DOM is ready - only if gen6 tab is initially active
+document.addEventListener('DOMContentLoaded', function() {
+	// Get active tab from localStorage or default
+	const activeTab = localStorage.getItem('activeTab') || 'gen5';
+
+	// Only initialize if gen6 is the active tab on page load
+	if (activeTab === 'gen6') {
+		initializeGen6Tab();
 	}
 });

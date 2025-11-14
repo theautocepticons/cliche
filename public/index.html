@@ -800,6 +800,254 @@
 			</div>
 
 			<div class="tab-content" data-generation="sac">
+
+			<div class="command">
+				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Channel Management</h2>
+				<div class="command-header">
+					<input type="text" class="command-display" readonly value="ch -?">
+					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+				</div>
+			</div>
+
+			<div class="command">
+				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Create Command Prompt Channel</h2>
+				<div class="command-header">
+					<input type="text" class="command-display" readonly value="cmd">
+					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+				</div>
+			</div>
+
+			<div class="command">
+				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Dump Kernel Log</h2>
+				<div class="command-header">
+					<input type="text" class="command-display" readonly value="d">
+					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+				</div>
+			</div>
+
+			<div class="command">
+				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Toggle Process Info Detail</h2>
+				<div class="command-header">
+					<input type="text" class="command-display" readonly value="f">
+					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+				</div>
+			</div>
+
+			<div class="command">
+				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Help</h2>
+				<div class="command-header">
+					<input type="text" class="command-display" readonly value="?">
+					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+				</div>
+				<div class="command-header">
+					<input type="text" class="command-display" readonly value="help">
+					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+				</div>
+			</div>
+
+			<div class="command">
+				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">List IP Networks</h2>
+				<div class="command-header">
+					<input type="text" class="command-display" readonly value="i">
+					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+				</div>
+			</div>
+
+			<div class="command" data-command="sac-setip">
+				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Set IP Address</h2>
+				<div style="margin-bottom: 12px; padding: 12px; background-color: var(--bg-tertiary); border-radius: 8px; font-size: 13px; color: var(--text-secondary);">
+					Set IP address, subnet, and gateway for an IP network number.
+				</div>
+				<div class="command-header">
+					<input type="text" class="command-display" readonly value="i">
+					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+				</div>
+				<div class="command-options grid-4">
+					<div class="option-group">
+						<label>Network #</label>
+						<input type="text" placeholder="0" data-param="network">
+					</div>
+					<div class="option-group">
+						<label>IP Address</label>
+						<input type="text" placeholder="192.168.1.100" data-param="ip">
+					</div>
+					<div class="option-group">
+						<label>Subnet Mask</label>
+						<input type="text" placeholder="255.255.255.0" data-param="subnet">
+					</div>
+					<div class="option-group">
+						<label>Gateway</label>
+						<input type="text" placeholder="192.168.1.1" data-param="gateway">
+					</div>
+				</div>
+			</div>
+
+			<div class="command">
+				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Display Windows nPartition ID</h2>
+				<div class="command-header">
+					<input type="text" class="command-display" readonly value="id">
+					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+				</div>
+			</div>
+
+			<div class="command" data-command="sac-kill">
+				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Kill Process</h2>
+				<div style="margin-bottom: 12px; padding: 12px; background-color: var(--bg-tertiary); border-radius: 8px; font-size: 13px; color: var(--text-secondary);">
+					Kill the given process by Process ID (PID).
+				</div>
+				<div class="command-header">
+					<input type="text" class="command-display" readonly value="k">
+					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+				</div>
+				<div class="command-options">
+					<div class="option-group">
+						<label>Process ID (PID)</label>
+						<input type="text" placeholder="1234" data-param="pid">
+					</div>
+				</div>
+			</div>
+
+			<div class="command" data-command="sac-lower">
+				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Lower Process Priority</h2>
+				<div style="margin-bottom: 12px; padding: 12px; background-color: var(--bg-tertiary); border-radius: 8px; font-size: 13px; color: var(--text-secondary);">
+					Lower the priority of a process to the lowest possible level.
+				</div>
+				<div class="command-header">
+					<input type="text" class="command-display" readonly value="l">
+					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+				</div>
+				<div class="command-options">
+					<div class="option-group">
+						<label>Process ID (PID)</label>
+						<input type="text" placeholder="1234" data-param="pid">
+					</div>
+				</div>
+			</div>
+
+			<div class="command">
+				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Lock Command Prompt Access</h2>
+				<div class="command-header">
+					<input type="text" class="command-display" readonly value="lock">
+					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+				</div>
+			</div>
+
+			<div class="command" data-command="sac-memory">
+				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Limit Process Memory</h2>
+				<div style="margin-bottom: 12px; padding: 12px; background-color: var(--bg-tertiary); border-radius: 8px; font-size: 13px; color: var(--text-secondary);">
+					Limit the memory usage of a process to the specified MB.
+				</div>
+				<div class="command-header">
+					<input type="text" class="command-display" readonly value="m">
+					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+				</div>
+				<div class="command-options">
+					<div class="option-group">
+						<label>Process ID (PID)</label>
+						<input type="text" placeholder="1234" data-param="pid">
+					</div>
+					<div class="option-group">
+						<label>Memory Limit (MB)</label>
+						<input type="text" placeholder="512" data-param="mb">
+					</div>
+				</div>
+			</div>
+
+			<div class="command">
+				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Toggle Paging</h2>
+				<div class="command-header">
+					<input type="text" class="command-display" readonly value="p">
+					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+				</div>
+			</div>
+
+			<div class="command" data-command="sac-raise">
+				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Raise Process Priority</h2>
+				<div style="margin-bottom: 12px; padding: 12px; background-color: var(--bg-tertiary); border-radius: 8px; font-size: 13px; color: var(--text-secondary);">
+					Raise the priority of a process by one level.
+				</div>
+				<div class="command-header">
+					<input type="text" class="command-display" readonly value="r">
+					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+				</div>
+				<div class="command-options">
+					<div class="option-group">
+						<label>Process ID (PID)</label>
+						<input type="text" placeholder="1234" data-param="pid">
+					</div>
+				</div>
+			</div>
+
+			<div class="command">
+				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Display Time and Date</h2>
+				<div class="command-header">
+					<input type="text" class="command-display" readonly value="s">
+					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+				</div>
+			</div>
+
+			<div class="command" data-command="sac-settime">
+				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Set Time and Date</h2>
+				<div style="margin-bottom: 12px; padding: 12px; background-color: var(--bg-tertiary); border-radius: 8px; font-size: 13px; color: var(--text-secondary);">
+					Set the current time and date (24 hour clock used).
+				</div>
+				<div class="command-header">
+					<input type="text" class="command-display" readonly value="s">
+					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+				</div>
+				<div class="command-options">
+					<div class="option-group">
+						<label>Date (mm/dd/yyyy)</label>
+						<input type="text" placeholder="12/31/2025" data-param="date">
+					</div>
+					<div class="option-group">
+						<label>Time (hh:mm)</label>
+						<input type="text" placeholder="14:30" data-param="time">
+					</div>
+				</div>
+			</div>
+
+			<div class="command">
+				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Display Process List (tlist)</h2>
+				<div class="command-header">
+					<input type="text" class="command-display" readonly value="t">
+					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+				</div>
+			</div>
+
+			<div class="command">
+				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Restart System</h2>
+				<div style="margin-bottom: 12px; padding: 12px; background-color: var(--bg-tertiary); border-radius: 8px; font-size: 13px; color: var(--text-secondary);">
+					<strong>Warning:</strong> Restart the system immediately.
+				</div>
+				<div class="command-header">
+					<input type="text" class="command-display" readonly value="restart">
+					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+				</div>
+			</div>
+
+			<div class="command">
+				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Shutdown System</h2>
+				<div style="margin-bottom: 12px; padding: 12px; background-color: var(--bg-tertiary); border-radius: 8px; font-size: 13px; color: var(--text-secondary);">
+					<strong>Warning:</strong> Shutdown the system immediately. This puts the nPartition in a shutdown for reconfig (inactive) state. To boot the nPartition (make it active), use the BO command at the service processor Command menu.
+				</div>
+				<div class="command-header">
+					<input type="text" class="command-display" readonly value="shutdown">
+					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+				</div>
+			</div>
+
+			<div class="command">
+				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Crash Windows System</h2>
+				<div style="margin-bottom: 12px; padding: 12px; background-color: var(--bg-tertiary); border-radius: 8px; font-size: 13px; color: var(--text-secondary);">
+					<strong>Warning:</strong> Crash the Windows system running on the nPartition. You must have crash dump enabled.
+				</div>
+				<div class="command-header">
+					<input type="text" class="command-display" readonly value="crashdump">
+					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+				</div>
+			</div>
+
 			</div>
 
 			<div class="tab-content" data-generation="fru">
@@ -810,5 +1058,6 @@
 	<script src="./scripts/main.js"></script>
 	<script src="./scripts/wcs.js"></script>
 	<script src="./scripts/gen6.js"></script>
+	<script src="./scripts/sac.js"></script>
 </body>
 </html>

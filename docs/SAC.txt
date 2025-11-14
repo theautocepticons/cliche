@@ -1,0 +1,21 @@
+ch					Channel management commands. Use ch -? for more help.
+cmd					Create a Command Prompt channel.
+d					Dump the current kernel log.
+f					Toggle detailed or abbreviated tlist (Windows process) info.
+? or help			Display command help.
+i					List all IP network numbers and their IP addresses.
+i # ip sub gate		Set IP address, subnet, and gateway for an IP network number.
+id					Display the Windows nPartition identification information.
+k pid				Kill the given process.
+l pid				Lower the priority of a process to the lowest possible.
+lock				Lock access to Command Prompt channels.
+m pid MB-allow		Limit the memory usage of a process to MB-allow.
+p					Toggle paging the display.
+r pid				Raise the priority of a process by one.
+s					Display the current time and date (24 hour clock used).
+s mm/dd/yyyy hh:mm	Set the current time and date (24 hour clock used).
+t					Display tlist info (a list of Windows processes running on the nPartition).
+restart				Restart the system immediately.
+shutdown			Shutdown the system immediately. This puts the nPartition in a shutdown for reconfig (inactive) state.
+					To boot the nPartition (make it active), use the BO command at the service processor Command menu.
+crashdump			Crash the Windows system running on the nPartition. You must have crash dump enabled.

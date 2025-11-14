@@ -231,11 +231,13 @@ input[type="password"]:focus {
 
 /* Tab content containers */
 .tab-content {
-	will-change: transform, opacity;
+	opacity: 1;
+	transition: opacity 0.2s ease-in-out;
 }
 
 .tab-content.hidden {
 	display: none;
+	opacity: 0;
 }
 
 /* Ensure smooth animations on all devices */

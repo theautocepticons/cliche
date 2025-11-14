@@ -17,11 +17,6 @@ function switchTab(tabId) {
 	const previousTab = activeTab;
 	if (tabId === previousTab) return;
 
-	// Calculate direction based on tab order
-	const previousIndex = tabOrder.indexOf(previousTab);
-	const newIndex = tabOrder.indexOf(tabId);
-	const direction = newIndex > previousIndex ? 'right' : 'left';
-
 	activeTab = tabId;
 
 	// Update active button
@@ -30,8 +25,16 @@ function switchTab(tabId) {
 	});
 	document.querySelector(`.tab-btn[data-tab="${tabId}"]`).classList.add('active');
 
-	// Filter commands based on active tab with animation
-	filterCommandsByTab(direction);
+	// Show/hide tabs
+	filterCommandsByTab();
+
+	// Initialize gen6 tab if switching to it (lazy initialization)
+	if (tabId === 'gen6' && typeof initializeGen6Tab === 'function') {
+		// Wait for tab to be visible before initializing
+		setTimeout(() => {
+			initializeGen6Tab();
+		}, 50);
+	}
 
 	// Reapply search if there's an active search term
 	const searchInput = document.getElementById('searchInput');
@@ -43,61 +46,18 @@ function switchTab(tabId) {
 	localStorage.setItem('activeTab', tabId);
 }
 
-function filterCommandsByTab(direction) {
+function filterCommandsByTab() {
 	const tabContents = document.querySelectorAll('.tab-content');
-	const mainContent = document.querySelector('.main-content');
 
-	if (!direction) {
-		// No animation - just show/hide (for initial load)
-		tabContents.forEach(tabContent => {
-			const generation = tabContent.getAttribute('data-generation');
-			if (generation === activeTab) {
-				tabContent.classList.remove('hidden');
-			} else {
-				tabContent.classList.add('hidden');
-			}
-		});
-		return;
-	}
-
-	// Container-based smooth transition
-	const tabContentsArray = Array.from(tabContents);
-	const oldContainer = tabContentsArray.find(tab => !tab.classList.contains('hidden'));
-	const newContainer = tabContentsArray.find(tab => tab.getAttribute('data-generation') === activeTab);
-
-	if (!oldContainer || !newContainer) return;
-
-	// Save current height to prevent container collapse
-	const currentHeight = mainContent.offsetHeight;
-	mainContent.style.minHeight = `${currentHeight}px`;
-
-	// Force a reflow to ensure minHeight is applied before animations start
-	void mainContent.offsetHeight;
-
-	// Clean up any existing animation classes
-	tabContentsArray.forEach(tabContent => {
-		tabContent.classList.remove('slide-in-left', 'slide-in-right', 'slide-out-left', 'slide-out-right');
+	// Simple show/hide with fade effect
+	tabContents.forEach(tabContent => {
+		const generation = tabContent.getAttribute('data-generation');
+		if (generation === activeTab) {
+			tabContent.classList.remove('hidden');
+		} else {
+			tabContent.classList.add('hidden');
+		}
 	});
-
-	// Slide out old container
-	const slideOutClass = direction === 'right' ? 'slide-out-left' : 'slide-out-right';
-	oldContainer.classList.add(slideOutClass);
-
-	// Slide in new container
-	const slideInClass = direction === 'right' ? 'slide-in-right' : 'slide-in-left';
-	newContainer.classList.remove('hidden');
-	newContainer.classList.add(slideInClass);
-
-	// Clean up after animation completes
-	const animationDuration = 400;
-	setTimeout(() => {
-		oldContainer.classList.add('hidden');
-		oldContainer.classList.remove(slideOutClass);
-		newContainer.classList.remove(slideInClass);
-
-		// Release the height constraint after animation
-		mainContent.style.minHeight = '';
-	}, animationDuration);
 }
 
 function initTabSwitching() {
