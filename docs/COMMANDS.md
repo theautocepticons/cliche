@@ -1,576 +1,2130 @@
-# RSCM CLI COMMANDS REFERENCE
+# RSCM CLI Command Reference
 
-This document provides a condensed reference of all RSCM CLI command syntax organized by category.
+**Rack-Secure Control Module (R-SCM) Command-Line Interface** for managing Microsoft Open Cloud Server (OCS) systems.
 
----
-
-## 1. NETWORK COMMANDS
-
-### Show Commands
-- `show network` - Shows physical interfaces list
-- `show network interface -i <interface>` - Shows specific interface details (eth0, eth1)
-- `show network ping -a <address> [-c count] [-w timeout]` - Test network connectivity to host
-- `show network traceroute [-u] -a <address>` - Discovers route to remote host
-- `show network route` - Display current management network and gateway [Not Supported]
-
-### Set Commands
-- `set network static -i <interface> -a <address> -s <subnet> [-g gateway] [-b broadcast] [-v {6}]` - Set static IP configuration
-- `set network dhcp -i <interface> [-v {6}] [-g gateway]` - Set DHCP configuration
-- `set network enable -i <interface>` - Enable network interface
-- `set network disable -i <interface>` - Disable network interface
-- `set network route -g <gateway> -n <subnet> [-v {6}]` - Set static route [Not Supported]
+**Access Methods**: Serial (UART), SSH (Ethernet)
+**Interface Types**: RESTful Web API (automated), CLI (manual management)
 
 ---
 
-## 2. MANAGER COMMANDS
-
-### Show Commands - General
-- `show manager info [-s] [-p] [-m]` - Shows manager components info (servers, PSUs, manager)
-- `show manager health [-s] [-p] [-m]` - Shows health status for servers, PSUs, memory, temperature
-- `show manager version` - Shows manager version information
-- `show manager relay` - Gets power status of manager [Not Supported]
-- `show manager led` - Gets manager LED status (ON/OFF)
-- `show manager port state -i <port-id>` - Gets port state [Not Supported]
-- `show manager port presence -i <port-id>` - Shows port presence [Not Supported]
-- `show manager port pairing -i <port-id>` - Shows power control pairing [Not Supported]
-- `show manager port inventory -i <port-id>` - Shows port inventory [Not Supported]
-- `show manager log [-b starttime] [-e endtime] [-s startid] [-f endid] [-l loglevel] [-c component] [-i deviceid] [-p portid]` - Prints rack manager telemetry log
-- `show manager logread -f <filename> [-g grepstr] [-l numlines]` - Prints system log contents
-- `show manager inventory` - Shows manager inventory details
-- `show manager scandevice` - Displays rack manager system information
-- `show manager fru` - Gets FRU information of R-SCM board
-- `show manager tftp status` - Gets TFTP server status [Not Supported]
-- `show manager nfs status` - Gets NFS server status
-- `show manager time` - Displays manager system time and date in UTC
-- `show manager type` - Displays manager type
-- `show manager menu` - Shows recovery menu status (enabled/disabled)
-- `show manager portmap` - Shows port mapping details for RSCM connections
-
-### Show Commands - Power
-- `show manager powermeter alert` - Shows rack alert policy
-- `show manager powermeter limit` - Shows rack power limit policy
-- `show manager powermeter throttletype` - Shows powershelf throttle mode
-- `show manager powermeter reading` - Shows rack power readings
-- `show manager powermeter multipolicy active` - Shows active requestor multi-policy config
-- `show manager powermeter multipolicy single -i <requestor-id>` - Shows single requestor multi-policy config
-- `show manager powermeter multipolicy all` - Shows all requestors multi-policy config
-- `show manager powermeter version` - Shows manager PRU version [Not Supported]
-- `show manager powermeter calibration` - Shows calibration values [Not Supported]
-- `show manager power reading` - Shows manager power reading
-- `show manager power status` - Shows manager power status
-
-### Show Commands - NTP & Network Services
-- `show manager ntp status` - Shows NTP service status
-- `show manager ntp server` - Shows time server used by NTP service
-- `show manager ssh status` - Displays SSH cipher security configuration level
-
-### Show Commands - Throttle & Sessions
-- `show manager throttle local` - Shows rack manager throttle control status [Not Supported]
-- `show manager throttle count [debug]` - Shows rack manager throttle count
-- `show manager throttle row` - Shows row manager throttle control status [Not Supported]
-- `show manager throttle force` - Indicates if throttle signal is active and enabled
-- `show manager recovery -i <port-id>` - Shows row manager boot strap status [Not Supported]
-- `show manager session list` - Shows active manager SSH sessions
-- `show manager tftp list` - Lists files under TFTP location
-
-### Show Commands - Firmware & Updates
-- `show manager fwupdate status` - Shows most recent firmware update status
-- `show manager fwupdate list` - Lists available Rack Manager firmware packages for recovery
-
-### Show Commands - Configuration & Monitoring
-- `show manager pubsub config` - Displays PubSub settings (Brokers, Topic, SSL)
-- `show manager userconfigs [-k key] [-g grepstr]` - Displays user configuration parameter settings
-- `show manager serialstats -i <interval>` - Runs serial terminal statistics
-- `show manager serialcheck -l <loop>` - Runs serial terminal health check
-- `show manager healthmonitor log` - Displays logs collected by RM health monitoring
-- `show manager iptables profiles` - Displays list of configurable profiles
-- `show manager iptables rules [-v {4,6}] [-a] [profile]` - Displays iptables rules
-- `show manager rsyslog` - Displays current external server for rsyslog streaming
-- `show manager loglevel` - Shows loglevel of ocsevent.log
-
-### Set Commands - LED & Log
-- `set manager led on` - Turns manager LED ON
-- `set manager led off` - Turns manager LED OFF
-- `set manager log export` - Exports system and Rack Manager logs [Future]
-- `set manager log clear` - Clears all log entries
-- `set manager fru -b <board> -f <filename> -s <size>` - Updates manager FRU information
-- `set manager gca refresh` - Refreshes GCA cache
-- `set manager power faults` - Clears manager power faults
-
-### Set Commands - Power Management
-- `set manager powermeter alert -e <policy> -d <dcthrottle> -p <powerlimit>` - Sets rack power alert policy
-- `set manager powermeter limit -p <powerlimit>` - Sets rack power limit
-- `set manager powermeter multipolicy -i <requestor-id> -a <rack-alert> -t <dc-throttle> -l <rack-limit> -p <blade-limit> -e <alert-action> -f <throttle-duration> -d <remove-delay> [-r remediation]` - Sets multi-policy power configuration
-- `set manager powermeter max` - Clears rack max power
-- `set manager powermeter faults` - Clears rack power faults
-- `set manager powermeter calibration -f <filename>` - Sets calibration values [Not Supported]
-
-### Set Commands - Network Services
-- `set manager tftp start` - Starts TFTP server [Not Supported]
-- `set manager tftp stop` - Stops TFTP server [Not Supported]
-- `set manager tftp get -s <server> -f <filename>` - Gets file from TFTP server
-- `set manager tftp put -s <server> -l <localfile> -f <remotefile> -t <type>` - Puts file to TFTP server
-- `set manager tftp delete -f <filename>` - Deletes file from TFTP
-- `set manager sftp get -s <server> -f <filename> -u <username>` - Gets file from SFTP server
-- `set manager sftp put -s <server> -f <filename> -t <type> -u <username>` - Puts file to SFTP server
-- `set manager nfs start` - Starts NFS server
-- `set manager nfs stop` - Stops NFS server
-- `set manager nfs enable` - Enables NFS server
-- `set manager nfs disable` - Disables NFS server
-
-### Set Commands - NTP & Time
-- `set manager ntp start` - Starts NTP service
-- `set manager ntp stop` - Stops NTP service
-- `set manager ntp restart` - Restarts NTP service
-- `set manager ntp enable` - Enables NTP service
-- `set manager ntp disable` - Disables NTP service
-- `set manager ntp server -s <server-ip>` - Sets NTP time server
-- `set manager time -m <month> -d <day> -y <year> -H <hour> -M <minute> -S <second>` - Sets manager system time
-- `set manager hostname -n <hostname>` - Sets manager hostname
-
-### Set Commands - Throttle
-- `set manager throttle local {bypass|enable} -e {0|1}` - Sets local throttle [Not Supported]
-- `set manager throttle count clear` - Clears throttle count and reset time
-- `set manager throttle row {bypass|enable} -e {0|1}` - Sets row throttle [Not Supported]
-- `set manager throttle force enable {on|off}` - Enables/disables throttle signal
-
-### Set Commands - System & Configuration
-- `set manager recovery on [-i port-id]` - Enables recovery [Not Supported]
-- `set manager recovery off [-i port-id]` - Disables recovery [Not Supported]
-- `set manager session kill -s <session-id>` - Kills active SSH session
-- `set manager menu on` - Enables recovery menu
-- `set manager menu off` - Disables recovery menu
-- `set manager fwupdate -f <filename>` - Updates manager firmware
-- `set manager defaults` - Resets manager to defaults
-- `set manager pubsub -l <brokers> -t <topic> -s <ssl>` - Adds/updates PubSub configs
-- `set manager userconfigs -k <keyname> -v <value>` - Sets userconfig key to value
-- `set manager powercycle` - AC power cycles the RSCM
-- `set manager loglevel -l {0|1|2|3}` - Changes loglevel of ocsevent.log
-- `set manager rsyslog -s <server>` - Sets external server for rsyslog streaming
-
-### Set Commands - Firewall
-- `set manager iptables add <profile> -s <source> [-v {4|6}]` - Adds iptables rule
-- `set manager iptables bulkadd -s <filepath>` - Bulk adds iptables rules
-- `set manager iptables delete <profile> -s <source> [-v {4|6}]` - Deletes iptables rule
-- `set manager iptables enable <profile>` - Enables iptables profile
-- `set manager iptables disable <profile>` - Disables iptables profile
-- `set manager iptables restore` - Restores iptables to default
+## Table of Contents
+1. [Network Commands](#1-network-commands)
+2. [Manager Commands](#2-manager-commands)
+3. [System/Server Commands](#3-systemserver-commands)
+4. [User Commands](#4-user-commands)
+5. [Powershelf Commands](#5-powershelf-commands)
+6. [CDU Commands](#6-cdu-commands)
+7. [Cerberus Commands (Manager)](#7-cerberus-commands-manager)
+8. [CPLD Commands (Manager)](#8-cpld-commands-manager)
+9. [Inter-Rack Commands](#9-inter-rack-commands)
+10. [Smart IT Rack Commands](#10-smart-it-rack-commands)
+11. [PCU Commands](#11-pcu-commands)
+12. [NVSwitch Commands](#12-nvswitch-commands)
+13. [Help Commands](#13-help-commands)
+14. [MTE Commands](#14-mte-commands)
 
 ---
 
-## 3. SYSTEM/SERVER COMMANDS
+## 1. Network Commands
 
-### Show Commands - General
-- `show system info -i <server-id>` - Shows system information (serial number, version)
-- `show system health -i <server-id> [-p]` - Gets health information including PCIe
-- `show system fru -i <server-id> [-f fru-id]` - Gets FRU information
-- `show system state -i <server-id>` - Gets ON/OFF state and datasave status
-- `show system presence -i <server-id>` - Shows system physical presence
-- `show system default power -i <server-id>` - Gets default power state (ON/OFF)
-- `show system type -i <server-id>` - Shows system type
-- `show system led -i <server-id>` - Shows system LED state
+### show network
+Display all physical network interfaces.
 
-### Show Commands - Power
-- `show system power limit -i <server-id>` - Shows power limit for server
-- `show system power reading -i <server-id>` - Gets power reading for server
-- `show system power alert -i <server-id>` - Gets power alert policy
-- `show system power throttle -i <server-id>` - Gets throttling statistics
+| Flag | Description |
+|------|-------------|
+| `-h` | Help |
 
-### Show Commands - FPGA
-- `show system fpga health -i <server-id>` - Gets system FPGA health
-- `show system fpga temp -i <server-id>` - Gets system FPGA temperature in Celsius
-- `show system fpga i2cversion -i <server-id>` - Gets system FPGA I2C version
-- `show system fpga assetinfo -i <server-id>` - Gets system FPGA asset information
+### show network interface
+Display specific interface details (IPv4/IPv6, MAC address, status).
 
-### Show Commands - Boot & BIOS
-- `show system boot -i <server-id> [-b {0|1}]` - Gets pending boot order
-- `show system log read -i <server-id>` - Reads server event log
-- `show system bios config -i <server-id>` - Gets server BIOS configuration
-- `show system bios code -i <server-id>` - Gets post code for server
-- `show system bios update -i <server-id>` - Shows BIOS firmware update status
-- `show system bmc update -i <server-id> [-c region]` - Shows BMC firmware update status
-- `show system cpld update -i <server-id> [-s index]` - Shows CPLD firmware update status
-- `show system cpld2 update -i <server-id> [-s index]` - Shows CPLD2 firmware update status
-- `show system scmcpld update -i <server-id> [-t {0|1|2}] [-s index]` - Shows SCM CPLD firmware update status
-- `show system globalcpld update -i <server-id>` - Shows Global CPLD firmware update status
-- `show system pcieswitch update -i <server-id>` - Shows PCIe switch firmware update status
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <interface>` | Yes | Interface name (eth0, eth1) |
+| `-h` | No | Help |
 
-### Show Commands - Storage & Devices
-- `show system tpm presence -i <server-id>` - Checks if TPM physical presence is set
-- `show system nvme -i <server-id>` - Shows NVMe status
-- `show system datasafe policy -i <server-id>` - Shows datasafe (NVDIMM, PCIe) policy settings
-- `show system datasafe trigger -i <server-id>` - Shows datasafe trigger status
-- `show system file list -i <server-id> [-d directory]` - Lists files available for transfer
+### show network ping
+Test network connectivity to remote host.
 
-### Show Commands - Cerberus
-- `show system cerberus version -i <server-id> [-t {0|1}] [-b {0|1}] [-c index]` - Reads platform/SoC Cerberus version
-- `show system cerberus pfm version -i <server-id> [-b {0|1}] [-p {0|1}] [-r {0|1}] [-c index]` - Reads PFM version
-- `show system cerberus pfm id -i <server-id> [-b {0|1}] [-p {0|1}] [-r {0|1}] [-c index]` - Reads PFM ID
-- `show system cerberus log {debug|tcg} -i <server-id> [-b {0|1}] [-c index]` - Reads Cerberus debug/TCG log
-- `show system cerberus fpga version -i <server-id> -b {1} -t {1}` - Lists Cyclone-V FPGA version
-- `show system user list -i <server-id>` - Lists all users in server BMC
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-a <address>` | Yes | Destination IP address or hostname |
+| `-c <count>` | No | Number of ping packets to send |
+| `-w <timeout>` | No | Timeout in seconds |
+| `-h` | No | Help |
 
-### Show Commands - GPU/MCU (C44AD only)
-- `show system gpu update -i <server-id> -s <index>` - Shows GPU firmware update status [C44AD only]
-- `show system mcu update -i <server-id> -s <index>` - Shows MCU firmware update status [C44AD only]
+### show network traceroute
+Discover route to remote host.
 
-### Set Commands - Power Control
-- `set system on -i <server-id> [-b {0|1}]` - Soft powers server ON
-- `set system off -i <server-id> [-b {0|1}]` - Soft powers server OFF
-- `set system reset -i <server-id> [-b {0|1}]` - Power cycles or soft resets server
-- `set system led on -i <server-id>` - Turns server UID LED ON
-- `set system led off -i <server-id>` - Turns server UID LED OFF
-- `set system default power on -i <server-id>` - Sets default power state to ON
-- `set system default power off -i <server-id>` - Sets default power state to OFF
-- `set system vreset -i <server-id>` - Virtual resets BMC (Gen 11+)
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-a <address>` | Yes | Destination IP address or hostname |
+| `-u` | No | Use UDP instead of ICMP |
+| `-h` | No | Help |
 
-### Set Commands - Power Management
-- `set system power alert -i <server-id> -p <powerlimit> -e <alert-action> -f <throttle-duration> -d <remove-delay> [-r remediation]` - Sets power alert policy
-- `set system power limit value -i <server-id> -l <power-limit>` - Sets power limit
-- `set system power limit on -i <server-id>` - Activates power limit and enables throttling
-- `set system power limit off -i <server-id>` - Deactivates power limit and disables throttling
+### show network route
+Display current management network routing table. **[Not Supported]**
 
-### Set Commands - Boot Configuration
-- `set system boot -i <server-id> -t <boot-type> [-b {0|1}] [-m boot-mode] [-p persistent]` - Sets boot device type
+### set network static
+Configure static IP address for network interface.
 
-### Set Commands - BIOS & Firmware
-- `set system log clear -i <server-id>` - Clears server logs
-- `set system bios config -i <server-id> -j <major> -n <minor>` - Sets BIOS configuration
-- `set system bios update -i <server-id> -f <file> [-c {1|2}] [-a]` - Updates server BIOS firmware
-- `set system bmc update -i <server-id> -f <file> [-c region] [-a]` - Updates server BMC firmware
-- `set system cpld update -i <server-id> -f <file> [-s index] [-a]` - Updates server CPLD firmware
-- `set system cpld2 update -i <server-id> -f <file> [-s index] [-a]` - Updates server CPLD2 firmware
-- `set system scmcpld update -i <server-id> -f <file> [-a] [-t {0|1|2}] [-s index]` - Updates SCM CPLD firmware
-- `set system globalcpld update -i <server-id> -f <file> [-a]` - Updates Global CPLD firmware
-- `set system pcieswitch update -i <server-id> -f <file>` - Updates PCIe switch firmware
-- `set system gpu update -i <server-id> -f <file> -s <index> [-a]` - Updates GPU firmware [C44AD only]
-- `set system mcu update -i <server-id> -f <file> -s <index> [-a]` - Updates MCU firmware [C44AD only]
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <interface>` | Yes | Interface name (eth0, eth1) |
+| `-a <address>` | Yes | Static IP address |
+| `-s <subnet>` | Yes | Subnet mask or prefix length |
+| `-g <gateway>` | No | Default gateway IP address |
+| `-b <broadcast>` | No | Broadcast address |
+| `-v 6` | No | Use IPv6 instead of IPv4 |
+| `-h` | No | Help |
 
-### Set Commands - Storage & Files
-- `set system tpm presence -i <server-id> -p <presence>` - Sets TPM physical presence
-- `set system remotedrive mount -i <server-id> -n <image-name> [-b {0|1}] [-m {1|2}]` - Mounts ISO image as boot drive
-- `set system remotedrive unmount -i <server-id> [-b {0|1}] [-m {1|2}]` - Unmounts ISO image
-- `set system file delete -i <server-id> -f <filename> [-d directory]` - Deletes file from server
-- `set system file get -i <server-id> -f <filename> [-d directory]` - Gets file from server to RM
-- `set system file put -i <server-id> -f <filename> [-d directory]` - Puts file to server from RM
+### set network dhcp
+Enable DHCP for network interface.
 
-### Set Commands - Cerberus
-- `set system cerberus update -i <server-id> -b <device-id> -f <file> [-c index] [-m impactful] [-t tokenfile]` - Updates Cerberus firmware
-- `set system cerberus pfm update -i <server-id> -b <device-id> -p <port-id> -f <file> [-a {0|1}] [-c index]` - Updates Cerberus PFM
-- `set system soc update {fip|nitro} -i <server-id> -p <port-id> -f <file>` - Updates SoC FIP/Nitro firmware
-- `set system cerberus clear debug -i <server-id> -b <device-id> [-c index]` - Clears Cerberus debug/TCG log
-- `set system user password -i <server-id> -u <username> -p <password>` - Sets BMC user password
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <interface>` | Yes | Interface name (eth0, eth1) |
+| `-v 6` | No | Use DHCPv6 instead of DHCPv4 |
+| `-g <gateway>` | No | Default gateway IP address |
+| `-h` | No | Help |
 
-### Serial Commands
-- `start serial session -i <server-id> [-b {0|1}] [-f] [-p portid]` - Starts serial session to server
-- `stop serial session -i <server-id> [-b {0|1}] [-p portid]` - Stops serial session to server
+### set network interface enable
+Enable network interface.
 
-### JTAG Commands
-- `set system jtag start -i <server-id>` - Starts JTAG/ITP server on BMC
-- `set system jtag stop -i <server-id>` - Stops JTAG/ITP server on BMC
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <interface>` | Yes | Interface name to enable |
+| `-h` | No | Help |
+
+### set network interface disable
+Disable network interface.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <interface>` | Yes | Interface name to disable |
+| `-h` | No | Help |
+
+### set network route
+Set static route. **[Not Supported]**
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-g <gateway>` | Yes | Gateway IP address |
+| `-n <subnet>` | Yes | Network subnet |
+| `-v 6` | No | Use IPv6 |
+| `-h` | No | Help |
 
 ---
 
-## 4. USER COMMANDS
+## 2. Manager Commands
 
-### Show Commands
-- `show user info [-t {users|roles}] [-u username]` - Shows user information and roles
+### General Information
 
-### Set Commands
-- `set user add -u <username> -p <password> -r {admin|operator|user}` - Adds new user
-- `set user update -t {password|role} -u <username> [-p password] [-r role]` - Updates user password or role
-- `set user delete -u <username>` - Removes existing user
+#### show manager info
+Display manager component status (servers, PSUs, manager info).
+
+| Flag | Description |
+|------|-------------|
+| `-s` | Show server information |
+| `-p` | Show power supply information |
+| `-m` | Show manager information |
+| `-h` | Help |
+
+#### show manager health
+Display health status (servers, PSU, memory, temperature).
+
+| Flag | Description |
+|------|-------------|
+| `-s` | Show server health |
+| `-p` | Show PSU health |
+| `-m` | Show memory health |
+| `-h` | Help |
+
+#### show manager version
+Display manager version information (package, rootfs, U-Boot, kernel, devicetree).
+
+#### show manager relay
+Get power status of manager. **[Not Supported]**
+
+#### show manager led
+Get manager LED status (ON/OFF).
+
+#### show manager port state
+Get port state and datasafe status. **[Not Supported]**
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <port-id>` | Yes | Port number (1-48) |
+
+#### show manager port presence
+Show port presence detection. **[Not Supported]**
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <port-id>` | Yes | Port number |
+
+#### show manager port pairing
+Show power control pairing configuration. **[Not Supported]**
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <port-id>` | Yes | Port number |
+
+#### show manager port inventory
+Show port inventory (chassis/expander). **[Not Supported]**
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <port-id>` | Yes | Port number |
+
+#### show manager inventory
+Display manager inventory details.
+
+#### show manager scandevice
+Display rack manager system information and device scan.
+
+#### show manager fru
+Get FRU information of R-SCM board.
+
+#### show manager portmap
+Display port mapping details for RSCM connections.
+
+#### show manager type
+Display manager type.
+
+#### show manager menu
+Show recovery menu status (enabled/disabled).
+
+#### show manager time
+Display manager system time and date in UTC.
+
+### Logging
+
+#### show manager log
+Print rack manager telemetry log with filtering options.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-b <starttime>` | No | Start time filter (YYYY-MM-DD HH:MM:SS) |
+| `-e <endtime>` | No | End time filter (YYYY-MM-DD HH:MM:SS) |
+| `-s <startid>` | No | Start log entry ID |
+| `-f <endid>` | No | End log entry ID |
+| `-l <loglevel>` | No | Log level filter (0-3) |
+| `-c <component>` | No | Component name filter |
+| `-i <deviceid>` | No | Device ID filter |
+| `-p <portid>` | No | Port ID filter |
+
+#### show manager logread
+Print system log file contents.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-f <filename>` | Yes | Log filename to read |
+| `-g <grepstr>` | No | Grep pattern to filter |
+| `-l <numlines>` | No | Number of lines to display |
+
+#### show manager loglevel
+Show log level of ocsevent.log.
+
+#### set manager log clear
+Clear all log entries.
+
+#### set manager loglevel
+Change log level of ocsevent.log.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-l <level>` | Yes | Log level (0=Error, 1=Warning, 2=Info, 3=Debug) |
+
+### Power Management
+
+#### show manager powermeter alert
+Show rack alert policy configuration.
+
+#### show manager powermeter limit
+Show rack power limit policy.
+
+#### show manager powermeter throttletype
+Show powershelf throttle mode.
+
+#### show manager powermeter reading
+Show rack power readings (voltage, current, power).
+
+#### show manager powermeter multipolicy active
+Show active requestor multi-policy power configuration.
+
+#### show manager powermeter multipolicy single
+Show single requestor multi-policy configuration.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <requestor-id>` | Yes | Requestor ID |
+
+#### show manager powermeter multipolicy all
+Show all requestors multi-policy configuration.
+
+#### show manager powermeter version
+Show manager power meter version. **[Not Supported]**
+
+#### show manager powermeter calibration
+Show power meter calibration values. **[Not Supported]**
+
+#### show manager power reading
+Show manager power reading.
+
+#### show manager power status
+Show manager power status.
+
+#### set manager powermeter alert
+Set rack power alert policy.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-e <policy>` | Yes | Alert policy (0=disable, 1=enable) |
+| `-d <dcthrottle>` | Yes | DC throttle value |
+| `-p <powerlimit>` | Yes | Power limit in watts |
+
+#### set manager powermeter limit
+Set rack power limit.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-p <powerlimit>` | Yes | Power limit in watts |
+
+#### set manager powermeter multipolicy
+Configure multi-policy power management.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <requestor-id>` | Yes | Requestor ID |
+| `-a <rack-alert>` | Yes | Rack alert enable (0/1) |
+| `-t <dc-throttle>` | Yes | DC throttle value |
+| `-l <rack-limit>` | Yes | Rack power limit in watts |
+| `-p <blade-limit>` | Yes | Blade power limit in watts |
+| `-e <alert-action>` | Yes | Alert action type |
+| `-f <throttle-duration>` | Yes | Throttle duration in ms |
+| `-d <remove-delay>` | Yes | Remove delay in seconds |
+| `-r <remediation>` | No | Remediation action |
+
+#### set manager powermeter clearmax
+Clear rack maximum power reading.
+
+#### set manager powermeter clearfaults
+Clear rack power faults.
+
+#### set manager powermeter calibration
+Set power meter calibration values. **[Not Supported]**
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-f <filename>` | Yes | Calibration file path |
+
+#### set manager power faults
+Clear manager power faults.
+
+### Network Services
+
+#### show manager tftp status
+Get TFTP server status. **[Not Supported]**
+
+#### show manager tftp list
+List files available under TFTP location.
+
+#### show manager nfs status
+Get NFS server status.
+
+#### show manager ssh status
+Display SSH cipher security configuration level.
+
+#### set manager tftp start
+Start TFTP server. **[Not Supported]**
+
+#### set manager tftp stop
+Stop TFTP server. **[Not Supported]**
+
+#### set manager tftp get
+Get file from TFTP server.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-s <server>` | Yes | TFTP server IP address |
+| `-f <filename>` | Yes | File name to retrieve |
+
+#### set manager tftp put
+Put file to TFTP server.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-s <server>` | Yes | TFTP server IP address |
+| `-l <localfile>` | Yes | Local file path |
+| `-f <remotefile>` | Yes | Remote file name |
+| `-t <type>` | Yes | File type |
+
+#### set manager tftp delete
+Delete file from TFTP storage.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-f <filename>` | Yes | File name to delete |
+
+#### set manager sftp get
+Get file from SFTP server.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-s <server>` | Yes | SFTP server IP address |
+| `-f <filename>` | Yes | File name to retrieve |
+| `-u <username>` | Yes | SFTP username |
+
+#### set manager sftp put
+Put file to SFTP server.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-s <server>` | Yes | SFTP server IP address |
+| `-f <filename>` | Yes | File name to upload |
+| `-t <type>` | Yes | File type |
+| `-u <username>` | Yes | SFTP username |
+
+#### set manager nfs start
+Start NFS server.
+
+#### set manager nfs stop
+Stop NFS server.
+
+#### set manager nfs enable
+Enable NFS server auto-start.
+
+#### set manager nfs disable
+Disable NFS server auto-start.
+
+### NTP & Time
+
+#### show manager ntp status
+Show NTP service status.
+
+#### show manager ntp server
+Show NTP time server configuration.
+
+#### set manager ntp start
+Start NTP service.
+
+#### set manager ntp stop
+Stop NTP service.
+
+#### set manager ntp restart
+Restart NTP service.
+
+#### set manager ntp enable
+Enable NTP service auto-start.
+
+#### set manager ntp disable
+Disable NTP service auto-start.
+
+#### set manager ntp server
+Configure NTP time server.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-s <server-ip>` | Yes | NTP server IP address |
+
+#### set manager time
+Set manager system time and date.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-m <month>` | Yes | Month (1-12) |
+| `-d <day>` | Yes | Day (1-31) |
+| `-y <year>` | Yes | Year (YYYY) |
+| `-H <hour>` | Yes | Hour (0-23) |
+| `-M <minute>` | Yes | Minute (0-59) |
+| `-S <second>` | Yes | Second (0-59) |
+
+#### set manager hostname
+Set manager hostname.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-n <hostname>` | Yes | Hostname string |
+
+### Throttle Control
+
+#### show manager throttle local
+Show rack manager throttle control status. **[Not Supported]**
+
+#### show manager throttle count
+Show rack manager throttle count.
+
+#### show manager throttle count debug
+Show rack manager throttle count with debug information.
+
+#### show manager throttle row
+Show row manager throttle control status. **[Not Supported]**
+
+#### show manager throttle force
+Indicate if throttle signal is active and enabled.
+
+#### set manager throttle local
+Set local throttle mode. **[Not Supported]**
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-e <0\|1>` | Yes | Enable (1) or disable (0) |
+
+#### set manager throttle count
+Set throttle count configuration.
+
+#### set manager throttle count clear
+Clear throttle count and reset time.
+
+#### set manager throttle row
+Set row throttle mode. **[Not Supported]**
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-e <0\|1>` | Yes | Enable (1) or disable (0) |
+
+#### set manager throttle force enable
+Enable or disable forced throttle signal.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| (on\|off) | Yes | Turn throttle on or off |
+
+### Sessions & Recovery
+
+#### show manager recovery
+Show row manager bootstrap status. **[Not Supported]**
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <port-id>` | Yes | Port ID |
+
+#### show manager session list
+Show active manager SSH sessions.
+
+#### set manager recovery on
+Enable recovery mode. **[Not Supported]**
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <port-id>` | No | Port ID |
+
+#### set manager recovery off
+Disable recovery mode. **[Not Supported]**
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <port-id>` | No | Port ID |
+
+#### set manager session kill
+Kill active SSH session.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-s <session-id>` | Yes | Session ID to terminate |
+
+### Firmware & Updates
+
+#### show manager fwupdate status
+Show most recent firmware update status.
+
+#### show manager fwupdate list
+List available rack manager firmware packages for recovery.
+
+#### set manager fwupdate
+Update manager firmware.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-f <filename>` | Yes | Firmware package file path |
+
+### LED & FRU
+
+#### show manager led
+Get manager LED status (ON/OFF).
+
+#### set manager led on
+Turn manager LED ON.
+
+#### set manager led off
+Turn manager LED OFF.
+
+#### show manager fru
+Get FRU information of R-SCM board.
+
+#### set manager fru
+Update manager FRU information.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-b <board>` | Yes | Board identifier |
+| `-f <filename>` | Yes | FRU data file |
+| `-s <size>` | Yes | Data size in bytes |
+
+### Configuration & Monitoring
+
+#### show manager pubsub config
+Display PubSub settings (brokers, topic, SSL).
+
+#### show manager userconfigs
+Display user configuration parameter settings.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-k <key>` | No | Specific configuration key |
+| `-g <grepstr>` | No | Grep pattern to filter |
+
+#### show manager serialstats
+Run serial terminal statistics.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <interval>` | Yes | Sampling interval in seconds |
+
+#### show manager serialcheck
+Run serial terminal health check.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-l <loop>` | Yes | Number of check loops |
+
+#### show manager healthmonitor log
+Display logs collected by RM health monitoring.
+
+#### show manager iptables profiles
+Display list of configurable firewall profiles.
+
+#### show manager iptables rules
+Display iptables firewall rules.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-v <4\|6>` | No | IP version (4=IPv4, 6=IPv6) |
+| `-a` | No | Show all rules |
+| `<profile>` | No | Specific profile name |
+
+#### show manager rsyslog
+Display current external server for rsyslog streaming.
+
+#### set manager pubsub config
+Configure PubSub settings.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-l <brokers>` | Yes | Broker list (comma-separated) |
+| `-t <topic>` | Yes | Topic name |
+| `-s <ssl>` | Yes | SSL enable (0/1) |
+
+#### set manager userconfigs
+Set user configuration parameter.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-k <keyname>` | Yes | Configuration key name |
+| `-v <value>` | Yes | Configuration value |
+
+#### set manager iptables add
+Add iptables firewall rule.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `<profile>` | Yes | Profile name |
+| `-s <source>` | Yes | Source IP address/range |
+| `-v <4\|6>` | No | IP version (default: 4) |
+
+#### set manager iptables bulkadd
+Bulk add iptables rules from file.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-s <filepath>` | Yes | File path containing rules |
+
+#### set manager iptables delete
+Delete iptables firewall rule.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `<profile>` | Yes | Profile name |
+| `-s <source>` | Yes | Source IP address/range |
+| `-v <4\|6>` | No | IP version (default: 4) |
+
+#### set manager iptables enable
+Enable iptables firewall profile.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `<profile>` | Yes | Profile name to enable |
+
+#### set manager iptables disable
+Disable iptables firewall profile.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `<profile>` | Yes | Profile name to disable |
+
+#### set manager iptables restore
+Restore iptables to default configuration.
+
+#### set manager rsyslog
+Configure external server for rsyslog streaming.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-s <server>` | Yes | Rsyslog server IP address |
+
+### System Control
+
+#### set manager gca refresh
+Refresh GCA (Global Chassis Arbiter) cache.
+
+#### set manager menu on
+Enable recovery menu.
+
+#### set manager menu off
+Disable recovery menu.
+
+#### set manager defaults
+Reset manager to default settings.
+
+#### set manager powercycle
+AC power cycle the RSCM.
 
 ---
 
-## 5. POWERSHELF COMMANDS
+## 3. System/Server Commands
 
-### PSU Commands - Show
-- `show powershelf psu info [-s psu-id] [-f forceread] [-p {0|1|2}]` - Shows PSU info (manufacturer, model, version, readings)
-- `show powershelf psu battery -i <psu-id>` - Shows PSU battery presence [RESERVED]
-- `show powershelf psu update [-s psu-id] [-f forceread]` - Shows PSU firmware update status
-- `show powershelf psu version [-s psu-id] [-f forceread]` - Shows PSU firmware version
-- `show powershelf psu limits [-s psu-id] [-f forceread]` - Shows PSU alert limits
-- `show powershelf psu reading [-s psu-id] [-f forceread]` - Shows PSU parameters (voltage, current, temp, fan, power)
-- `show powershelf psu faulthistory [-s psu-id] [-f forceread]` - Shows recent failure history log
-- `show powershelf psu eventlog [-s psu-id] [-f forceread]` - Shows recent 5 event logs
-- `show powershelf psu state [-s psu-id] [-f forceread]` - Shows PSU state (presence, AC status, alert)
-- `show powershelf psu report [-s psu-id]` - Shows PSU table with all PSU information
-- `show powershelf psu slot config` - Shows Powershelf PSU slot configuration
-- `show powershelf fru` - Gets FRU information of powershelf
+### General Information
 
-### PSU Commands - Set
-- `set powershelf psu alertmask {enable|disable} [-s psu-id] -d <direction> -t <parameter>` - Sets PSU alert masks [Not Used]
-- `set powershelf psu limit` - Sets PSU alert limits
-- `set powershelf psu clear [-s psu-id] [-p {0|1|2}]` - Clears PSU faults
-- `set powershelf psu battery -i <psu-id>` - Runs battery health test [Not Used]
-- `set powershelf psu update -s <psu-id> [-f file] [-r force]` - Updates PSU firmware
-- `set powershelf psu raw -s <psu-id> -c <raw-command> [-r rx-length] [-p pec-enable]` - Sends raw PMBUS commands
-- `set powershelf psu recovery -s <psu-id> [-f file]` - Recovers PSU firmware
-- `set powershelf psu slot config` - Sets Powershelf PSU slot configuration
+#### show system info
+Display server information (serial number, version).
 
-### C13 Commands
-- `show powershelf c13 reading [-c c13-id]` - Shows C13 power reading
-- `show powershelf c13 status [-c c13-id]` - Shows C13 status (on/off)
-- `show powershelf c13 muxaddr [-c c13-id]` - Shows I2C address of C13 MUX
-- `show powershelf c13 fru [-i c13-id]` - Gets FRU information of C13 modules
-- `set powershelf c13 on -c <c13-id>` - Switches on C13
-- `set powershelf c13 off -c <c13-id>` - Switches off C13
-- `set powershelf c13 muxaddr -a <mux-addr>` - Sets I2C address of C13 MUX
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+
+#### show system health
+Get server health information including PCIe.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+| `-p` | No | Include PCIe information |
+
+#### show system fru
+Get FRU information for server.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+| `-f <fru-id>` | No | Specific FRU ID |
+
+#### show system state
+Get server ON/OFF state and datasafe status.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+
+#### show system presence
+Show server physical presence detection.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+
+#### show system default power
+Get default power state (ON/OFF) for server.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+
+#### show system type
+Show server type/platform.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+
+#### show system led
+Show server LED state.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+
+### Power Management
+
+#### show system power limit
+Show power limit configuration for server.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+
+#### show system power reading
+Get current power consumption for server.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+
+#### show system power alert
+Get power alert policy configuration.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+
+#### show system power throttle
+Get power throttling statistics.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+
+#### set system power alert
+Configure power alert policy for server.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+| `-p <powerlimit>` | Yes | Power limit in watts |
+| `-e <alert-action>` | Yes | Alert action (0=none, 1=throttle, 2=fast throttle) |
+| `-f <throttle-duration>` | Yes | Fast throttle duration in ms |
+| `-d <remove-delay>` | Yes | Auto remove delay in seconds |
+| `-r <remediation>` | No | Remediation action |
+
+#### set system power limit value
+Set power limit for server.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+| `-l <power-limit>` | Yes | Power limit in watts |
+
+#### set system power limit on
+Activate power limit and enable throttling.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+
+#### set system power limit off
+Deactivate power limit and disable throttling.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+
+### Power Control
+
+#### set system on
+Soft power server ON (supply power to chipset).
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+| `-b <0\|1>` | No | Device ID (0=Host, 1=SoC) |
+
+#### set system off
+Soft power server OFF (remove power from chipset).
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+| `-b <0\|1>` | No | Device ID (0=Host, 1=SoC) |
+
+#### set system reset
+Power cycle or soft reset server.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+| `-b <0\|1>` | No | Device ID (0=Host, 1=SoC) |
+
+#### set system vreset
+Virtual reset BMC (Gen 11+).
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+
+#### set system led on
+Turn server UID LED ON.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+
+#### set system led off
+Turn server UID LED OFF.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+
+#### set system default power on
+Set default power state to ON.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+
+#### set system default power off
+Set default power state to OFF.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+
+### FPGA
+
+#### show system fpga health
+Get system FPGA health status.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+
+#### show system fpga temp
+Get system FPGA temperature in Celsius.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+
+#### show system fpga i2cversion
+Get system FPGA I2C version.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+
+#### show system fpga assetinfo
+Get system FPGA asset information.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+
+### Boot & BIOS
+
+#### show system boot
+Get pending boot order for next boot.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+| `-b <0\|1>` | No | Device ID (0=Host, 1=SoC) |
+
+#### show system bios config
+Get server BIOS configuration.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+
+#### show system bios code
+Get BIOS POST code for server.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+
+#### set system boot
+Set boot device type for next boot.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+| `-t <boot-type>` | Yes | Boot type (none, pxe, disk, bios, remotedrive, emmc, usb, netunlock) |
+| `-b <0\|1>` | No | Device ID (0=Host, 1=SoC) |
+| `-m <boot-mode>` | No | Boot mode (0=Legacy, 1=UEFI) |
+| `-p <persistent>` | No | Persistent boot (0=one-time, 1=persistent) |
+
+#### set system bios config
+Set BIOS configuration for next reboot.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+| `-j <major>` | Yes | Major configuration number |
+| `-n <minor>` | Yes | Minor configuration number |
+
+### Logs
+
+#### show system log read
+Read server event log (SEL).
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+
+#### set system log clear
+Clear server logs.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+
+### Firmware Updates
+
+#### show system bios update
+Show BIOS firmware update status.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+
+#### show system bmc update
+Show BMC firmware update status.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+| `-c <region>` | No | Flash region |
+
+#### show system cpld update
+Show CPLD firmware update status.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+| `-s <index>` | No | CPLD index |
+
+#### show system cpld2 update
+Show CPLD2 firmware update status.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+| `-s <index>` | No | CPLD2 index |
+
+#### show system scmcpld update
+Show SCM CPLD firmware update status.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+| `-t <0\|1\|2>` | No | Type (0=bootloader, 1=Image_A, 2=Image_B) |
+| `-s <index>` | No | CPLD index |
+
+#### show system globalcpld update
+Show Global CPLD firmware update status.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+
+#### show system pcieswitch update
+Show PCIe switch firmware update status.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+
+#### set system bios update
+Update server BIOS firmware.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+| `-f <file>` | Yes | Firmware file path |
+| `-c <1\|2>` | No | Flash region (1=Primary, 2=Secondary) |
+| `-a` | No | Async mode (don't wait for completion) |
+
+#### set system bmc update
+Update server BMC firmware.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+| `-f <file>` | Yes | Firmware file path |
+| `-c <region>` | No | Flash region |
+| `-a` | No | Async mode |
+
+#### set system cpld update
+Update server CPLD firmware.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+| `-f <file>` | Yes | Firmware file path |
+| `-s <index>` | No | CPLD index |
+| `-a` | No | Async mode |
+
+#### set system cpld2 update
+Update server CPLD2 firmware.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+| `-f <file>` | Yes | Firmware file path |
+| `-s <index>` | No | CPLD2 index |
+| `-a` | No | Async mode |
+
+#### set system scmcpld update
+Update SCM CPLD firmware.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+| `-f <file>` | Yes | Firmware file path |
+| `-a` | No | Async mode |
+| `-t <0\|1\|2>` | No | Type (0=bootloader, 1=Image_A, 2=Image_B) |
+| `-s <index>` | No | CPLD index |
+
+#### set system globalcpld update
+Update Global CPLD firmware.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+| `-f <file>` | Yes | Firmware file path |
+| `-a` | No | Async mode |
+
+#### set system pcieswitch update
+Update PCIe switch firmware.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+| `-f <file>` | Yes | Firmware file path |
+
+#### show system gpu update
+Show GPU firmware update status. **[C44AD only]**
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+| `-s <index>` | Yes | GPU index |
+
+#### show system mcu update
+Show MCU firmware update status. **[C44AD only]**
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+| `-s <index>` | Yes | MCU index |
+
+#### set system gpu update
+Update GPU firmware. **[C44AD only]**
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+| `-f <file>` | Yes | Firmware file path |
+| `-s <index>` | Yes | GPU index |
+| `-a` | No | Async mode |
+
+#### set system mcu update
+Update MCU firmware. **[C44AD only]**
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+| `-f <file>` | Yes | Firmware file path |
+| `-s <index>` | Yes | MCU index |
+| `-a` | No | Async mode |
+
+### Storage & Devices
+
+#### show system tpm presence
+Check if TPM physical presence is set.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+
+#### show system nvme
+Show NVMe device status.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+
+#### show system datasafe policy
+Show datasafe (NVDIMM, PCIe) policy settings.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+
+#### show system datasafe trigger
+Show datasafe trigger status.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+
+#### set system tpm presence
+Set TPM physical presence.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+| `-p <presence>` | Yes | Presence flag (0/1 or true/false) |
+
+### Remote Drive
+
+#### set system remotedrive mount
+Mount ISO image as boot drive.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+| `-n <image-name>` | Yes | ISO image file name |
+| `-b <0\|1>` | No | Device ID (0=Host, 1=SoC) |
+| `-m <1\|2>` | No | Mount type (1=HD, 2=CD) |
+
+#### set system remotedrive unmount
+Unmount remote ISO image.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+| `-b <0\|1>` | No | Device ID (0=Host, 1=SoC) |
+| `-m <1\|2>` | No | Mount type (1=HD, 2=CD) |
+
+### File Management
+
+#### show system file list
+List files available for transfer.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+| `-d <directory>` | No | Directory path |
+
+#### set system file delete
+Delete file from server.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+| `-f <filename>` | Yes | File name to delete |
+| `-d <directory>` | No | Directory path |
+
+#### set system file get
+Get file from server to RM.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+| `-f <filename>` | Yes | File name to retrieve |
+| `-d <directory>` | No | Directory path |
+
+#### set system file put
+Put file to server from RM.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+| `-f <filename>` | Yes | File name to upload |
+| `-d <directory>` | No | Directory path |
+
+### Cerberus (System)
+
+#### show system cerberus version
+Read platform/SoC Cerberus version.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+| `-t <0\|1>` | No | Type (0=Platform, 1=SoC) |
+| `-b <0\|1>` | No | Device ID |
+| `-c <index>` | No | Component index |
+
+#### show system cerberus pfm version
+Read Cerberus PFM version.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+| `-b <0\|1>` | No | Device ID |
+| `-p <0\|1>` | No | Port ID |
+| `-r <0\|1>` | No | Region |
+| `-c <index>` | No | Component index |
+
+#### show system cerberus pfm id
+Read Cerberus PFM ID.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+| `-b <0\|1>` | No | Device ID |
+| `-p <0\|1>` | No | Port ID |
+| `-r <0\|1>` | No | Region |
+| `-c <index>` | No | Component index |
+
+#### show system cerberus log
+Read Cerberus debug or TCG log.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `debug\|tcg` | Yes | Log type |
+| `-i <server-id>` | Yes | Server ID (1-48) |
+| `-b <0\|1>` | No | Device ID |
+| `-c <index>` | No | Component index |
+
+#### show system cerberus fpga version
+List Cyclone-V FPGA version.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+| `-b 1` | Yes | Must be 1 for FPGA |
+| `-t 1` | Yes | Must be 1 for FPGA |
+
+#### set system cerberus update
+Update Cerberus firmware.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+| `-b <device-id>` | Yes | Device ID (0=Platform, 1=SoC-CMC, 2=SoC-OMC, 3x=MCTP) |
+| `-f <file>` | Yes | Firmware file path |
+| `-c <index>` | No | Component index |
+| `-m <impactful>` | No | Impactful update flag |
+| `-t <tokenfile>` | No | Token file path |
+
+#### set system cerberus pfm update
+Update Cerberus PFM.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+| `-b <device-id>` | Yes | Device ID |
+| `-p <port-id>` | Yes | Port ID |
+| `-f <file>` | Yes | PFM file path |
+| `-a <0\|1>` | No | Activation flag |
+| `-c <index>` | No | Component index |
+
+#### set system soc update
+Update SoC FIP/Nitro firmware.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `fip\|nitro` | Yes | Update type |
+| `-i <server-id>` | Yes | Server ID (1-48) |
+| `-p <port-id>` | Yes | Port ID |
+| `-f <file>` | Yes | Firmware file path |
+
+#### set system cerberus clear
+Clear Cerberus debug or TCG log.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `debug` | Yes | Log type to clear |
+| `-i <server-id>` | Yes | Server ID (1-48) |
+| `-b <device-id>` | Yes | Device ID |
+| `-c <index>` | No | Component index |
+
+### User Management (BMC)
+
+#### show system user list
+List all users in server BMC.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+
+#### set system user password
+Set BMC user password.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+| `-u <username>` | Yes | Username |
+| `-p <password>` | Yes | New password |
+
+### Serial Console
+
+#### start serial session
+Start serial console session to server.
+
+**Exit**: Press `Ctrl-X` to exit session
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+| `-b <0\|1>` | No | Device ID (0=Host, 1=SoC) |
+| `-f` | No | Force session start |
+| `-p <portid>` | No | Port ID |
+
+#### stop serial session
+Stop serial console session to server.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+| `-b <0\|1>` | No | Device ID (0=Host, 1=SoC) |
+| `-p <portid>` | No | Port ID |
+
+### JTAG
+
+#### set system jtag start
+Start JTAG/ITP server on BMC.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
+
+#### set system jtag stop
+Stop JTAG/ITP server on BMC.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <server-id>` | Yes | Server ID (1-48) |
 
 ---
 
-## 6. CDU (COOLING DISTRIBUTION UNIT) COMMANDS
+## 4. User Commands
 
-### Fan Commands
-- `show cdu fan alarm [-f fan-id]` - Shows fan controller alarm status
-- `show cdu fan info [-f fan-id]` - Shows fan controller device information
-- `show cdu fan fru [-f fan-id]` - Shows fan controller FRU information
-- `show cdu fan health` - Shows fan controller health status
+### show user info
+Display user information and roles.
 
-### Pump Commands
-- `show cdu pump alarm [-p pump-id]` - Shows pump controller alarm status
-- `show cdu pump info [-p pump-id]` - Shows pump controller device information
-- `show cdu pump fru [-p pump-id]` - Shows pump controller FRU information
-- `show cdu pump health` - Shows pump controller health status
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-t <users\|roles>` | No | Type to display (users or roles) |
+| `-u <username>` | No | Specific username |
 
-### Leak Detection Commands
-- `show cdu leak alarm` - Shows leak detection alarm status
-- `show cdu leak info` - Shows leak detection device information
-- `show cdu leak fru` - Shows leak detection FRU information
-- `show cdu leak health` - Shows leak detection health status
+### set user add
+Add new user to RSCM.
 
-### Sensor Commands
-- `show cdu sensor health` - Shows CDU sensor health status
-- `show cdu sensor info` - Shows CDU sensor information
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-u <username>` | Yes | Username |
+| `-p <password>` | Yes | Password |
+| `-r <role>` | Yes | Role (admin, operator, user) |
 
-### Control Commands
-- `show cdu control sensor` - Shows CDU control sensor information
-- `set cdu control sensor` - Sets CDU control sensor configuration
-- `show cdu control param` - Shows CDU control parameters
-- `set cdu control param` - Sets CDU control parameters
-- `show cdu control limits` - Shows CDU control limits
-- `set cdu control limits` - Sets CDU control limits
-- `show cdu control metrics` - Shows CDU control metrics
-- `set cdu control metrics` - Sets CDU control metrics
-- `show cdu control setpoints` - Gets CDU control setpoints
-- `set cdu control setpoints` - Sets CDU control setpoints
+### set user update
+Update user password or role.
 
-### CDU Controller Commands
-- `show cdu status` - Shows CDU status
-- `show cdu info` - Shows CDU information
-- `show cdu health` - Shows CDU health
-- `show cdu fru` - Shows CDU FRU information
-- `show cdu erroralert` - Shows CDU error alerts
-- `set cdu fwupdate` - Updates CDU firmware
-- `set cdu fwrecover` - Recovers CDU firmware
-- `set cdu sftp` - Configures CDU SFTP
-- `set cdu ntp` - Configures CDU NTP
-- `set cdu modbus` - Configures CDU Modbus
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-t <password\|role>` | Yes | Update type |
+| `-u <username>` | Yes | Username |
+| `-p <password>` | No | New password (if updating password) |
+| `-r <role>` | No | New role (if updating role) |
 
-### RPU Info Commands
-- `show cdu rackinfo` - Shows CDU rack information
-- `show cdu rpuinfo` - Shows CDU RPU information
-- `show cdu sensorgatewayinfo` - Shows CDU sensor gateway information
-- `show cdu valvegatewayinfo` - Shows CDU valve gateway information
+### set user delete
+Remove existing user.
 
-### Bootloader Commands
-- `set cdu recovery` - Sets CDU recovery mode
-- `set cdu revokekey` - Revokes CDU key
-- `set cdu boot` - Sets CDU boot configuration
-- `set cdu verify` - Verifies CDU firmware
-- `show cdu log` - Shows CDU log
-- `show cdu keys` - Shows CDU keys
-- `show cdu blstatus` - Shows CDU bootloader status
-- `show cdu attest` - Shows CDU attestation
-- `set sblcmd enter` - Enters secure bootloader command mode
-- `set sblcmd exit` - Exits secure bootloader command mode
-- `set sblcmd send` - Sends secure bootloader command
-
-### Serial Commands
-- `start cdu serial session` - Starts CDU serial session
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-u <username>` | Yes | Username to delete |
 
 ---
 
-## 7. CERBERUS COMMANDS (Manager)
+## 5. Powershelf Commands
 
-### Show Commands
-- `show manager cerberus` - Shows manager Cerberus information
-- `show manager cerberus version` - Shows manager Cerberus version
-- `show manager cerberus log` - Shows manager Cerberus log
-- `show manager cerberus pfm id` - Shows manager Cerberus PFM ID
-- `show manager cerberus pfm version` - Shows manager Cerberus PFM version
-- `show manager cerberus deviceinfo` - Shows manager Cerberus device information
-- `show manager cerberus certstate` - Shows manager Cerberus certificate state
-- `show manager cerberus pcd` - Shows manager Cerberus PCD
-- `show manager cerberus pcd platformid` - Shows manager Cerberus PCD platform ID
-- `show manager cerberus pcd versionid` - Shows manager Cerberus PCD version ID
-- `show manager cerberus utility` - Shows manager Cerberus utility
+### PSU Information
 
-### Set Commands
-- `set manager cerberus` - Sets manager Cerberus configuration
-- `set manager cerberus clear` - Clears manager Cerberus data
-- `set manager cerberus update` - Updates manager Cerberus firmware
-- `set manager cerberus pfm update` - Updates manager Cerberus PFM
-- `set manager cerberus cmd` - Sends manager Cerberus command
-- `set manager cerberus pcd update` - Updates manager Cerberus PCD
+#### show powershelf psu info
+Show PSU information (manufacturer, model, version, readings).
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-s <psu-id>` | No | Specific PSU ID (1-18) |
+| `-f <forceread>` | No | Force read from hardware |
+| `-p <0\|1\|2>` | No | Display mode |
+
+#### show powershelf psu battery
+Show PSU battery presence. **[RESERVED]**
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <psu-id>` | Yes | PSU ID (1-18) |
+
+#### show powershelf psu update
+Show PSU firmware update status.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-s <psu-id>` | No | Specific PSU ID |
+| `-f <forceread>` | No | Force read from hardware |
+
+#### show powershelf psu version
+Show PSU firmware version.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-s <psu-id>` | No | Specific PSU ID |
+| `-f <forceread>` | No | Force read from hardware |
+
+#### show powershelf psu limits
+Show PSU alert limits.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-s <psu-id>` | No | Specific PSU ID |
+| `-f <forceread>` | No | Force read from hardware |
+
+#### show powershelf psu reading
+Show PSU parameters (voltage, current, temperature, fan speed, power).
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-s <psu-id>` | No | Specific PSU ID |
+| `-f <forceread>` | No | Force read from hardware |
+
+#### show powershelf psu faulthistory
+Show recent PSU failure history log.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-s <psu-id>` | No | Specific PSU ID |
+| `-f <forceread>` | No | Force read from hardware |
+
+#### show powershelf psu eventlog
+Show recent 5 PSU event logs.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-s <psu-id>` | No | Specific PSU ID |
+| `-f <forceread>` | No | Force read from hardware |
+
+#### show powershelf psu state
+Show PSU state (presence, AC status, alert).
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-s <psu-id>` | No | Specific PSU ID |
+| `-f <forceread>` | No | Force read from hardware |
+
+#### show powershelf psu report
+Show PSU table with all PSU information.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-s <psu-id>` | No | Specific PSU ID |
+
+#### show powershelf psu slot config
+Show Powershelf PSU slot configuration.
+
+#### show powershelf fru
+Get FRU information of powershelf.
+
+### PSU Control
+
+#### set powershelf psu alertmask
+Set PSU alert masks. **[Not Used]**
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `enable\|disable` | Yes | Enable or disable mask |
+| `-s <psu-id>` | No | Specific PSU ID |
+| `-d <direction>` | Yes | Direction |
+| `-t <parameter>` | Yes | Parameter type |
+
+#### set powershelf psu limit
+Set PSU alert limits.
+
+#### set powershelf psu clear
+Clear PSU faults.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-s <psu-id>` | No | Specific PSU ID |
+| `-p <0\|1\|2>` | No | Clear type |
+
+#### set powershelf psu battery
+Run battery health test. **[Not Used]**
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <psu-id>` | Yes | PSU ID |
+
+#### set powershelf psu update
+Update PSU firmware.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-s <psu-id>` | Yes | PSU ID to update |
+| `-f <file>` | No | Firmware file path |
+| `-r <force>` | No | Force update |
+
+#### set powershelf psu raw
+Send raw PMBUS commands to PSU.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-s <psu-id>` | Yes | PSU ID |
+| `-c <raw-command>` | Yes | Raw PMBUS command (hex) |
+| `-r <rx-length>` | No | Expected response length |
+| `-p <pec-enable>` | No | PEC enable flag |
+
+#### set powershelf psu recovery
+Recover PSU firmware.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-s <psu-id>` | Yes | PSU ID |
+| `-f <file>` | No | Recovery firmware file |
+
+#### set powershelf psu slot config
+Set Powershelf PSU slot configuration.
+
+### C13 Outlets
+
+#### show powershelf c13 reading
+Show C13 power reading.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-c <c13-id>` | No | C13 outlet ID |
+
+#### show powershelf c13 status
+Show C13 status (on/off).
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-c <c13-id>` | No | C13 outlet ID |
+
+#### show powershelf c13 mux address
+Show I2C address of C13 MUX.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-c <c13-id>` | No | C13 outlet ID |
+
+#### show powershelf c13 fru
+Get FRU information of C13 modules.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-i <c13-id>` | No | C13 outlet ID |
+
+#### set powershelf c13 on
+Switch C13 outlet ON.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-c <c13-id>` | Yes | C13 outlet ID |
+
+#### set powershelf c13 off
+Switch C13 outlet OFF.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-c <c13-id>` | Yes | C13 outlet ID |
+
+#### set powershelf c13 mux address
+Set I2C address of C13 MUX.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-a <mux-addr>` | Yes | MUX I2C address |
 
 ---
 
-## 8. CPLD COMMANDS (Manager)
+## 6. CDU Commands
 
-### Show Commands
-- `show manager cpld` - Shows manager CPLD information
-- `show manager cpld version` - Shows manager CPLD version
-- `show manager cpld usercode` - Shows manager CPLD user code
-- `show manager cpld readauth` - Shows manager CPLD read authentication
+### Fan Controllers
 
-### Set Commands
-- `set manager cpld` - Sets manager CPLD configuration
-- `set manager cpld update` - Updates manager CPLD firmware
+#### show cdu fan alarm
+Show fan controller alarm status.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-f <fan-id>` | No | Specific fan ID |
+
+#### show cdu fan info
+Show fan controller device information.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-f <fan-id>` | No | Specific fan ID |
+
+#### show cdu fan fru
+Show fan controller FRU information.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-f <fan-id>` | No | Specific fan ID |
+
+#### show cdu fan health
+Show fan controller health status.
+
+### Pump Controllers
+
+#### show cdu pump alarm
+Show pump controller alarm status.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-p <pump-id>` | No | Specific pump ID |
+
+#### show cdu pump info
+Show pump controller device information.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-p <pump-id>` | No | Specific pump ID |
+
+#### show cdu pump fru
+Show pump controller FRU information.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-p <pump-id>` | No | Specific pump ID |
+
+#### show cdu pump health
+Show pump controller health status.
+
+### Leak Detection
+
+#### show cdu leak alarm
+Show leak detection alarm status.
+
+#### show cdu leak info
+Show leak detection device information.
+
+#### show cdu leak fru
+Show leak detection FRU information.
+
+#### show cdu leak health
+Show leak detection health status.
+
+### Sensors
+
+#### show cdu sensor health
+Show CDU sensor health status.
+
+#### show cdu sensor info
+Show CDU sensor information.
+
+### Control
+
+#### show cdu control sensor
+Show CDU control sensor information.
+
+#### set cdu control sensor
+Set CDU control sensor configuration.
+
+#### show cdu control param
+Show CDU control parameters.
+
+#### set cdu control param
+Set CDU control parameters.
+
+#### show cdu control limits
+Show CDU control limits.
+
+#### set cdu control limits
+Set CDU control limits.
+
+#### show cdu control metrics
+Show CDU control metrics.
+
+#### set cdu control metrics
+Set CDU control metrics.
+
+#### show cdu control setpoints
+Get CDU control setpoints.
+
+#### set cdu control setpoints
+Set CDU control setpoints.
+
+### CDU Controller
+
+#### show cdu status
+Show CDU controller status.
+
+#### show cdu info
+Show CDU controller information.
+
+#### show cdu health
+Show CDU controller health.
+
+#### show cdu fru
+Show CDU FRU information.
+
+#### show cdu erroralert
+Show CDU error alerts.
+
+#### show cdu rackinfo
+Show CDU rack information.
+
+#### show cdu rpuinfo
+Show CDU RPU (Remote Processing Unit) information.
+
+#### show cdu sensorgatewayinfo
+Show CDU sensor gateway information.
+
+#### show cdu valvegatewayinfo
+Show CDU valve gateway information.
+
+#### show cdu log
+Show CDU logs.
+
+#### show cdu keys
+Show CDU cryptographic keys.
+
+#### show cdu blstatus
+Show CDU bootloader status.
+
+#### show cdu attest
+Show CDU attestation information.
+
+#### set cdu fwupdate
+Update CDU firmware.
+
+#### set cdu fwrecover
+Recover CDU firmware.
+
+#### set cdu sftp
+Configure CDU SFTP settings.
+
+#### set cdu ntp
+Configure CDU NTP settings.
+
+#### set cdu modbus
+Configure CDU Modbus settings.
+
+#### set cdu recovery
+Set CDU recovery mode.
+
+#### set cdu revokekey
+Revoke CDU cryptographic key.
+
+#### set cdu boot
+Set CDU boot configuration.
+
+#### set cdu verify
+Verify CDU firmware.
+
+### Secure Bootloader
+
+#### set sblcmd enter
+Enter secure bootloader command mode.
+
+#### set sblcmd exit
+Exit secure bootloader command mode.
+
+#### set sblcmd send
+Send command to secure bootloader.
+
+### Serial
+
+#### start cdu serial session
+Start CDU serial console session.
 
 ---
 
-## 9. INTER-RACK COMMANDS
+## 7. Cerberus Commands (Manager)
 
-### Show Commands
-- `show interrack wirecheck` - Shows inter-rack wire check status
-- `show interrack zoneshutdown` - Shows inter-rack zone shutdown status
-- `show interrack zoneready` - Shows inter-rack zone ready status
+### show manager cerberus
+Show manager Cerberus status.
 
-### Set Commands
-- `set interrack wirecheck` - Sets inter-rack wire check
-- `set interrack zoneshutdown` - Sets inter-rack zone shutdown
-- `set interrack zoneready` - Sets inter-rack zone ready
-- `set interrack zoneloopreset` - Resets inter-rack zone loop
+### show manager cerberus version
+Show manager Cerberus firmware version.
 
----
+### show manager cerberus log
+Show manager Cerberus logs.
 
-## 10. SMART IT RACK COMMANDS
+### show manager cerberus pfm id
+Show manager Cerberus PFM ID.
 
-### Show Commands
-- `show smrack health` - Shows Smart IT Rack health
-- `show smrack status` - Shows Smart IT Rack status
-- `show smrack config flowrate` - Shows Smart IT Rack flow rate configuration
-- `show smrack config pressure` - Shows Smart IT Rack pressure configuration
-- `show valve fwversion` - Shows valve firmware version
-- `show valve info` - Shows valve information
+### show manager cerberus pfm version
+Show manager Cerberus PFM version.
 
-### Set Commands
-- `set smrack open` - Opens Smart IT Rack valve
-- `set smrack close` - Closes Smart IT Rack valve
-- `set smrack config flowrate` - Sets Smart IT Rack flow rate configuration
-- `set smrack config pressure` - Sets Smart IT Rack pressure configuration
-- `set smrack config reset` - Resets Smart IT Rack configuration
-- `set smrack config custom` - Sets Smart IT Rack custom configuration
-- `set smrack config addrange` - Adds range to Smart IT Rack configuration
-- `set smrack config removerange` - Removes range from Smart IT Rack configuration
-- `set smrack fwupdate` - Updates Smart IT Rack firmware
-- `set valve modbus` - Configures valve Modbus
+### show manager cerberus deviceinfo
+Show manager Cerberus device information.
 
----
+### show manager cerberus certstate
+Show manager Cerberus certificate state.
 
-## 11. PCU COMMANDS
+### show manager cerberus pcd
+Show manager Cerberus PCD (Platform Configuration Data).
 
-### Show Commands
-- `show pcu info` - Shows PCU information
-- `show pcu reading` - Shows PCU reading
-- `show pcu status` - Shows PCU status
-- `show pcu limits` - Shows PCU limits
-- `show pcu eventlog` - Shows PCU event log
-- `show pcu update` - Shows PCU update status
-- `show pcu state` - Shows PCU state
-- `show pcu chargelog` - Shows PCU charge log
+### show manager cerberus pcd platformid
+Show manager Cerberus PCD platform ID.
 
-### Set Commands
-- `set pcu raw read` - Reads raw PCU data
-- `set pcu raw write` - Writes raw PCU data
-- `set pcu limits` - Sets PCU limits
-- `set pcu update` - Updates PCU firmware
-- `set pcu fanspeed` - Sets PCU fan speed
-- `set pcu clear` - Clears PCU faults
+### show manager cerberus pcd versionid
+Show manager Cerberus PCD version ID.
+
+### show manager cerberus utility
+Show manager Cerberus utility information.
+
+### set manager cerberus
+Configure manager Cerberus settings.
+
+### set manager cerberus clear
+Clear manager Cerberus data.
+
+### set manager cerberus update
+Update manager Cerberus firmware.
+
+### set manager cerberus pfm update
+Update manager Cerberus PFM.
+
+### set manager cerberus cmd
+Send command to manager Cerberus.
+
+### set manager cerberus pcd update
+Update manager Cerberus PCD.
 
 ---
 
-## 12. NVSWITCH COMMANDS
+## 8. CPLD Commands (Manager)
 
-### Show Commands
-- `show nvswitch status` - Shows NVSwitch status
+### show manager cpld
+Show manager CPLD status.
 
-### Set Commands
-- `set nvswitch on` - Turns NVSwitch on
-- `set nvswitch off` - Turns NVSwitch off
+### show manager cpld version
+Show manager CPLD firmware version.
 
----
+### show manager cpld usercode
+Show manager CPLD usercode.
 
-## 13. HELP COMMANDS
+### show manager cpld readauth
+Show manager CPLD read authorization.
 
-### General Help
-- `help` - Shows list of command categories
-- `help show` - Shows help for show commands
-- `help set` - Shows help for set commands
-- `help start` - Shows help for start commands
-- `help stop` - Shows help for stop commands
-- `help user` - Shows help for user commands
+### set manager cpld
+Configure manager CPLD settings.
 
----
-
-## 14. MTE (MANUFACTURING TEST ENVIRONMENT) COMMANDS
-
-### MTE Utilities
-- `start mte -u <utility> [-p params] [-t times] [-d duration]` - Executes MTE utility
-- `show mte` - Shows all executing MTE utilities
-- `stop mte` - Stops all executing MTE utilities
-
-### Available MTE Utilities:
-- `ocs-gpio` - GPIO operations (setup, read, write, cleanup)
-- `ocs-fru` - FRU read/write operations
-- `ocs-mac` - MAC address read/write operations
-- `ocs-hsc` - HSC (Hot Swap Controller) operations
-- `ocs-pmic` - PMIC operations
-- `stream` - Memory streaming test
-- `sysbench` - System benchmark
-- `memtester` - Memory tester
-- `ttyS1` - Serial port 1 test
-- `ttyS2` - Serial port 2 test
-- `iperf` - Network performance test
-- `minicom` - Serial communication
-- `reboot` - System reboot
-- `date` - Date/time operations
-- `i2cdetect` - I2C bus detection
-- `i2cdump` - I2C device dump
-- `i2cset` - I2C write operation
-- `i2cget` - I2C read operation
-- `cpuinfo` - CPU information
-- `meminfo` - Memory information
-- `qspiinfo` - QSPI information
-- `mmcinfo` - MMC information
-- `ping` - Network ping test
-- `firewall` - Firewall control (on/off)
-- `lock` - Lock read/write operations
-- `cpld-key-update` - CPLD key update
-- `cpld-lock-public-key` - CPLD lock public key
-- `cpld-program-cfg1` - CPLD program configuration 1
-- `cpld-feature-row-program` - CPLD feature row program
-- `cpld-program-authdone` - CPLD program auth done
-- `turn-on-isolation-valve` - Turn on isolation valve
-- `turn-off-isolation-valve` - Turn off isolation valve
-- `read-isolation-valve-status` - Read isolation valve status
+### set manager cpld update
+Update manager CPLD firmware.
 
 ---
 
-## NOTES
+## 9. Inter-Rack Commands
 
-1. Commands marked with **[Not Supported]** are documented but not currently available in the CLI
-2. Commands marked with **[Not Used]** or **[RESERVED]** are placeholders for future functionality
-3. Commands marked with **[Future]** are planned for future releases
-4. Optional parameters are shown in square brackets: `[-option]`
-5. Required parameters are shown in angle brackets: `<parameter>`
-6. Multiple choice options are shown in curly braces: `{option1|option2}`
-7. Server IDs typically range from 1-48
-8. PSU IDs typically range from 1-18 (platform dependent)
-9. Fan/Pump IDs vary by CDU platform (14 fans/2 pumps for H7010, 32-34 fans/5 pumps for H7021/H7022)
+### show interrack wirecheck
+Show inter-rack wire check status.
+
+### show interrack zoneshutdown
+Show inter-rack zone shutdown status.
+
+### show interrack zoneready
+Show inter-rack zone ready status.
+
+### set interrack wirecheck
+Perform inter-rack wire check.
+
+### set interrack zoneshutdown
+Set inter-rack zone shutdown.
+
+### set interrack zoneready
+Set inter-rack zone ready.
+
+### set interrack zoneloopreset
+Reset inter-rack zone loop.
 
 ---
 
-Document Version: Based on RSCM CLI Specification V.0.1.28 (October 29, 2025)
+## 10. Smart IT Rack Commands
+
+### show smrack health
+Show Smart IT Rack health status.
+
+### show smrack status
+Show Smart IT Rack status.
+
+### show smrack config flowrate
+Show Smart IT Rack flow rate configuration.
+
+### show smrack config pressure
+Show Smart IT Rack pressure configuration.
+
+### show valve fwversion
+Show valve firmware version.
+
+### show valve info
+Show valve information.
+
+### set smrack open
+Open Smart IT Rack valve.
+
+### set smrack close
+Close Smart IT Rack valve.
+
+### set smrack config flowrate
+Configure Smart IT Rack flow rate.
+
+### set smrack config pressure
+Configure Smart IT Rack pressure.
+
+### set smrack config reset
+Reset Smart IT Rack configuration.
+
+### set smrack config custom
+Set Smart IT Rack custom configuration.
+
+### set smrack config addrange
+Add range to Smart IT Rack configuration.
+
+### set smrack config removerange
+Remove range from Smart IT Rack configuration.
+
+### set smrack fwupdate
+Update Smart IT Rack firmware.
+
+### set valve modbus
+Configure valve Modbus settings.
+
+---
+
+## 11. PCU Commands
+
+### show pcu info
+Show PCU (Power Cooling Unit) information.
+
+### show pcu reading
+Show PCU power and cooling readings.
+
+### show pcu status
+Show PCU status.
+
+### show pcu limits
+Show PCU limits.
+
+### show pcu eventlog
+Show PCU event log.
+
+### show pcu update
+Show PCU firmware update status.
+
+### show pcu state
+Show PCU state.
+
+### show pcu chargelog
+Show PCU battery charge log.
+
+### set pcu raw read
+Read raw data from PCU.
+
+### set pcu raw write
+Write raw data to PCU.
+
+### set pcu limits
+Set PCU limits.
+
+### set pcu update
+Update PCU firmware.
+
+### set pcu fanspeed
+Set PCU fan speed.
+
+### set pcu clear
+Clear PCU faults.
+
+---
+
+## 12. NVSwitch Commands
+
+### show nvswitch status
+Show NVSwitch status.
+
+### set nvswitch on
+Turn NVSwitch ON.
+
+### set nvswitch off
+Turn NVSwitch OFF.
+
+---
+
+## 13. Help Commands
+
+### help
+Show list of command categories.
+
+### help show
+Show help for all 'show' commands.
+
+### help set
+Show help for all 'set' commands.
+
+### help start
+Show help for all 'start' commands.
+
+### help stop
+Show help for all 'stop' commands.
+
+### help user
+Show help for user management commands.
+
+---
+
+## 14. MTE Commands
+
+Manufacturing Test Environment utilities for hardware testing and diagnostics.
+
+### start mte
+Execute MTE utility.
+
+| Flag | Required | Description |
+|------|----------|-------------|
+| `-u <utility>` | Yes | Utility name (see list below) |
+| `-p <params>` | No | Utility parameters |
+| `-t <times>` | No | Number of times to execute |
+| `-d <duration>` | No | Duration to run |
+
+### show mte
+Show all executing MTE utilities.
+
+### stop mte
+Stop all executing MTE utilities.
+
+### Available MTE Utilities
+
+| Utility | Description |
+|---------|-------------|
+| `ocs-gpio` | GPIO operations (setup, read, write, cleanup) |
+| `ocs-fru` | FRU read/write operations |
+| `ocs-mac` | MAC address read/write operations |
+| `ocs-hsc` | Hot Swap Controller operations |
+| `ocs-pmic` | PMIC operations |
+| `stream` | Memory streaming test |
+| `sysbench` | System benchmark |
+| `memtester` | Memory tester |
+| `ttyS1` | Serial port 1 test |
+| `ttyS2` | Serial port 2 test |
+| `iperf` | Network performance test |
+| `minicom` | Serial communication |
+| `reboot` | System reboot |
+| `date` | Date/time operations |
+| `i2cdetect` | I2C bus detection |
+| `i2cdump` | I2C device dump |
+| `i2cset` | I2C write operation |
+| `i2cget` | I2C read operation |
+| `cpuinfo` | CPU information |
+| `meminfo` | Memory information |
+| `qspiinfo` | QSPI information |
+| `mmcinfo` | MMC information |
+| `ping` | Network ping test |
+| `firewall` | Firewall control (on/off) |
+| `lock` | Lock read/write operations |
+| `cpld-key-update` | CPLD key update |
+| `cpld-lock-public-key` | CPLD lock public key |
+| `cpld-program-cfg1` | CPLD program configuration 1 |
+| `cpld-feature-row-program` | CPLD feature row program |
+| `cpld-program-authdone` | CPLD program auth done |
+| `turn-on-isolation-valve` | Turn on isolation valve |
+| `turn-off-isolation-valve` | Turn off isolation valve |
+| `read-isolation-valve-status` | Read isolation valve status |
+
+---
+
+## Notes
+
+1. **[Not Supported]** - Documented but not currently available
+2. **[Not Used]** / **[RESERVED]** - Placeholders for future functionality
+3. **[Future]** - Planned for future releases
+4. **[C44AD only]** - Specific to C44AD platform
+5. **Required vs Optional**:
+   - Required flags must be provided
+   - Optional flags have defaults or are context-dependent
+6. **ID Ranges**:
+   - Server IDs: 1-48 (platform dependent)
+   - PSU IDs: 1-18 (platform dependent)
+   - Fan/Pump IDs: Vary by CDU platform (14 fans/2 pumps for H7010, 32-34 fans/5 pumps for H7021/H7022)
+7. **Serial Session Exit**: Press `Ctrl-X` to exit serial sessions
+8. **Async Mode**: `-a` flag allows firmware updates to run asynchronously
+
+---
+
+**Document Version**: Based on RSCM CLI Specification V.0.1.28 (October 29, 2025)
