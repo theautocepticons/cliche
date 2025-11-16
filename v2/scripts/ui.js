@@ -52,6 +52,9 @@ export function showCommandCard(command) {
 	const cardDescription = document.getElementById('card-description');
 	const cardContent = document.getElementById('card-content');
 
+	// Store command in state
+	appState.currentCommand = command;
+
 	// Set title and description
 	cardTitle.textContent = command.name;
 	cardDescription.textContent = command.description;
