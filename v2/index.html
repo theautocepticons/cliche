@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>CLICHE v2</title>
+
+	<!-- Fonts -->
+	 <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+
+	<!-- Styles -->
+	 <link rel="stylesheet" href="fonts.css">
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+	<div class="container">
+		<!-- Header -->
+		<header>
+			<h1>CLICHE</h1>
+			<button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+				<span class="theme-icon">☀️</span>
+			</button>
+		</header>
+
+		<!-- Generation Toggle and Global Index -->
+		<div class="controls-container">
+			<div class="gen-toggle">
+				<button id="gen-legacy" class="gen-button active" data-gen="legacy">Gen &lt; 6</button>
+				<button id="gen-6plus" class="gen-button" data-gen="6plus">Gen 6+</button>
+			</div>
+
+			<div class="separator"></div>
+
+			<div class="global-index">
+				<label for="global-index-input">Blade Index:</label>
+				<input
+					type="text"
+					id="global-index-input"
+					class="global-index-input"
+					placeholder="1-24"
+					value="1"
+					autocomplete="off"
+				/>
+			</div>
+
+			<div class="separator"></div>
+
+			<div class="history-button-container">
+				<button id="history-button" class="history-button" aria-label="Command History">
+					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="history-icon">
+						<path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+					</svg>
+				</button>
+			</div>
+		</div>
+
+		<!-- Search Bar -->
+		<div class="search-container">
+			<input
+				type="text"
+				id="search-input"
+				class="search-input"
+				placeholder="Search commands..."
+				autocomplete="off"
+			/>
+			<div id="search-results" class="search-results hidden">
+				<!-- Search results will be dynamically inserted here -->
+			</div>
+		</div>
+
+		<!-- Command Card -->
+		<div id="command-card" class="command-card hidden">
+			<div class="card-header">
+				<h2 id="card-title"></h2>
+				<button id="close-card" class="close-button" aria-label="Close card">×</button>
+			</div>
+			<p id="card-description" class="card-description"></p>
+
+			<div id="card-content" class="card-content">
+				<!-- Dynamic inputs will be inserted here -->
+			</div>
+
+			<div class="command-preview-container">
+				<label for="command-preview">Command:</label>
+				<input
+					type="text"
+					id="command-preview"
+					class="command-preview"
+					readonly
+				/>
+				<button id="copy-button" class="copy-button">Copy</button>
+			</div>
+		</div>
+	</div>
+
+	<script src="scripts/main.js" type="module"></script>
+</body>
+</html>

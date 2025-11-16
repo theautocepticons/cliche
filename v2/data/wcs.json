@@ -1,0 +1,1233 @@
+{
+	"commands": [
+		{
+			"id": "getchassisinfo",
+			"name": "Get Chassis Info",
+			"base": "wcscli -getchassisinfo",
+			"description": "Get chassis component status (blades, PSUs, batteries, CM)",
+			"category": "State and Information",
+			"keywords": ["chassis", "info", "status", "blades", "psu", "battery", "component"],
+			"params": {},
+			"flags": {
+				"s": { "flag": "-s", "description": "Show blade information", "boolean": true },
+				"p": { "flag": "-p", "description": "Show PSU information", "boolean": true },
+				"c": { "flag": "-c", "description": "Show chassis manager information", "boolean": true },
+				"t": { "flag": "-t", "description": "Show battery information", "boolean": true }
+			}
+		},
+		{
+			"id": "getbladeinfo",
+			"name": "Get Blade Info",
+			"base": "wcscli -getbladeinfo",
+			"description": "Get blade information (serial, version)",
+			"category": "State and Information",
+			"keywords": ["blade", "info", "serial", "version"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index" }
+			},
+			"flags": {
+				"a": { "flag": "-a", "description": "All blades", "boolean": true }
+			}
+		},
+		{
+			"id": "getchassishealth",
+			"name": "Get Chassis Health",
+			"base": "wcscli -getchassishealth",
+			"description": "Get health status for chassis components",
+			"category": "State and Information",
+			"keywords": ["chassis", "health", "status", "blades", "psu", "fan", "battery"],
+			"params": {},
+			"flags": {
+				"b": { "flag": "-b", "description": "Show blade health", "boolean": true },
+				"p": { "flag": "-p", "description": "Show PSU health", "boolean": true },
+				"f": { "flag": "-f", "description": "Show fan health", "boolean": true },
+				"t": { "flag": "-t", "description": "Show battery health", "boolean": true }
+			}
+		},
+		{
+			"id": "getbladehealth",
+			"name": "Get Blade Health",
+			"base": "wcscli -getbladehealth",
+			"description": "Get detailed blade health (CPU, memory, disk, PCIe, sensors, FRU)",
+			"category": "State and Information",
+			"keywords": ["blade", "health", "cpu", "memory", "disk", "pcie", "sensors", "temperature", "fru"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index", "required": true }
+			},
+			"flags": {
+				"q": { "flag": "-q", "description": "Show CPU information", "boolean": true },
+				"m": { "flag": "-m", "description": "Show memory information", "boolean": true },
+				"d": { "flag": "-d", "description": "Show JBOD disk information", "boolean": true },
+				"p": { "flag": "-p", "description": "Show PCIe information", "boolean": true },
+				"s": { "flag": "-s", "description": "Show sensor information", "boolean": true },
+				"t": { "flag": "-t", "description": "Show temperature sensors", "boolean": true },
+				"f": { "flag": "-f", "description": "Show FRU information", "boolean": true }
+			}
+		},
+		{
+			"id": "getserviceversion",
+			"name": "Get Service Version",
+			"base": "wcscli -getserviceversion",
+			"description": "Get chassis manager service assembly version",
+			"category": "State and Information",
+			"keywords": ["version", "service", "chassis", "manager"]
+		},
+		{
+			"id": "updatepsufw",
+			"name": "Update PSU Firmware",
+			"base": "wcscli -updatepsufw",
+			"description": "Update PSU firmware (primary or secondary controller)",
+			"category": "State and Information",
+			"keywords": ["psu", "firmware", "update", "controller"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "psuId", "description": "Target PSU number (typically 1-6)", "required": true },
+				"f": { "flag": "-f", "placeholder": "path", "description": "Firmware image file path", "required": true },
+				"p": { "flag": "-p", "placeholder": "0|1", "description": "Controller (1=primary, 0=secondary)", "required": true }
+			},
+			"flags": {
+				"t": { "flag": "-t", "description": "Ignore PSU status faults", "boolean": true }
+			}
+		},
+		{
+			"id": "getpsufwstatus",
+			"name": "Get PSU Firmware Status",
+			"base": "wcscli -getpsufwstatus",
+			"description": "Get PSU firmware revision and update status",
+			"category": "State and Information",
+			"keywords": ["psu", "firmware", "status", "revision"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "psuId", "description": "Target PSU number" }
+			}
+		},
+		{
+			"id": "runbatteryhealthtest",
+			"name": "Run Battery Health Test",
+			"base": "wcscli -runbatteryhealthtest",
+			"description": "Run battery health test (~2 seconds)",
+			"category": "State and Information",
+			"keywords": ["battery", "health", "test"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "psuId", "description": "Target PSU", "required": true }
+			}
+		},
+		{
+			"id": "setfirmwareupdate",
+			"name": "Update Chassis Manager Firmware",
+			"base": "wcscli -setfirmwareupdate",
+			"description": "Update chassis manager firmware (CM service, WCSCLI, BIOS) or execute custom script",
+			"category": "State and Information",
+			"keywords": ["firmware", "update", "chassis", "manager", "bios", "wcscli"],
+			"params": {
+				"f": { "flag": "-f", "placeholder": "path", "description": "Firmware image file path (TFTP package)", "required": true }
+			}
+		},
+		{
+			"id": "getfirmwareupdatestatus",
+			"name": "Get Firmware Update Status",
+			"base": "wcscli -getfirmwareupdatestatus",
+			"description": "Get chassis manager firmware update status",
+			"category": "State and Information",
+			"keywords": ["firmware", "update", "status", "chassis", "manager"]
+		},
+		{
+			"id": "fandiagnostics",
+			"name": "Fan Diagnostics",
+			"base": "wcscli -fandiagnostics",
+			"description": "Run fan diagnostic to check for degradation",
+			"category": "State and Information",
+			"keywords": ["fan", "diagnostic", "degradation"]
+		},
+		{
+			"id": "fancontrollerdiagnostic",
+			"name": "Fan Controller Diagnostic",
+			"base": "wcscli -fancontrollerdiagnostic",
+			"description": "Run fan controller diagnostic",
+			"category": "State and Information",
+			"keywords": ["fan", "controller", "diagnostic"]
+		},
+		{
+			"id": "getchassisconfig",
+			"name": "Get Chassis Config",
+			"base": "wcscli -getchassisconfig",
+			"description": "Get chassis configuration",
+			"category": "State and Information",
+			"keywords": ["chassis", "config", "configuration", "get"],
+			"params": {
+				"n": { "flag": "-n", "placeholder": "name", "description": "Configuration name", "required": true }
+			}
+		},
+		{
+			"id": "updatechassisconfig",
+			"name": "Update Chassis Config",
+			"base": "wcscli -updatechassisconfig",
+			"description": "Update chassis configuration",
+			"category": "State and Information",
+			"keywords": ["chassis", "config", "configuration", "update", "set"],
+			"params": {
+				"n": { "flag": "-n", "placeholder": "name", "description": "Configuration name", "required": true },
+				"v": { "flag": "-v", "placeholder": "value", "description": "Configuration value", "required": true }
+			}
+		},
+		{
+			"id": "getchassisuserconfig",
+			"name": "Get Chassis User Config",
+			"base": "wcscli -getchassisuserconfig",
+			"description": "Get chassis user configuration",
+			"category": "State and Information",
+			"keywords": ["chassis", "user", "config", "configuration", "get"],
+			"params": {
+				"n": { "flag": "-n", "placeholder": "name", "description": "Configuration name", "required": true }
+			}
+		},
+		{
+			"id": "updatechassisuserconfig",
+			"name": "Update Chassis User Config",
+			"base": "wcscli -updatechassisuserconfig",
+			"description": "Update chassis user configuration",
+			"category": "State and Information",
+			"keywords": ["chassis", "user", "config", "configuration", "update", "set"],
+			"params": {
+				"n": { "flag": "-n", "placeholder": "name", "description": "Configuration name", "required": true },
+				"v": { "flag": "-v", "placeholder": "value", "description": "Configuration value", "required": true }
+			}
+		},
+		{
+			"id": "getallpsusfirmwarestatus",
+			"name": "Get All PSUs Firmware Status",
+			"base": "wcscli -getallpsusfirmwarestatus",
+			"description": "Get firmware status for all PSUs",
+			"category": "State and Information",
+			"keywords": ["psu", "firmware", "status", "all"]
+		},
+		{
+			"id": "resetpsu",
+			"name": "Reset PSU",
+			"base": "wcscli -resetpsu",
+			"description": "Reset PSU",
+			"category": "State and Information",
+			"keywords": ["psu", "reset"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "psuid", "description": "PSU ID", "required": true }
+			}
+		},
+		{
+			"id": "resetfancontroller",
+			"name": "Reset Fan Controller",
+			"base": "wcscli -resetfancontroller",
+			"description": "Reset fan controller",
+			"category": "State and Information",
+			"keywords": ["fan", "controller", "reset"],
+			"params": {
+				"c": { "flag": "-c", "placeholder": "controller", "description": "Controller", "required": true },
+				"s": { "flag": "-s", "placeholder": "shutdown", "description": "Shutdown", "required": true }
+			}
+		},
+		{
+			"id": "getpsufaultlogs",
+			"name": "Get PSU Fault Logs",
+			"base": "wcscli -getpsufaultlogs",
+			"description": "Get PSU fault logs",
+			"category": "State and Information",
+			"keywords": ["psu", "fault", "logs"]
+		},
+		{
+			"id": "clearpufaultlogs",
+			"name": "Clear PSU Fault Logs",
+			"base": "wcscli -clearpufaultlogs",
+			"description": "Clear PSU fault logs",
+			"category": "State and Information",
+			"keywords": ["psu", "fault", "logs", "clear"]
+		},
+		{
+			"id": "getsystemeventlogs",
+			"name": "Get System Event Logs",
+			"base": "wcscli -getsystemeventlogs",
+			"description": "Get system event logs",
+			"category": "State and Information",
+			"keywords": ["system", "event", "logs"],
+			"params": {
+				"b": { "flag": "-b", "placeholder": "bladeId", "description": "Blade ID" }
+			}
+		},
+		{
+			"id": "getmaxpwmrequirement",
+			"name": "Get Max PWM Requirement",
+			"base": "wcscli -getmaxpwmrequirement",
+			"description": "Get maximum PWM requirement",
+			"category": "State and Information",
+			"keywords": ["pwm", "requirement", "max", "maximum"]
+		},
+		{
+			"id": "setpoweron",
+			"name": "Set Power ON",
+			"base": "wcscli -setpoweron",
+			"description": "Turn AC outlet power ON for blade",
+			"category": "Blade Management - Power Control",
+			"keywords": ["power", "on", "blade", "ac", "outlet"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index" }
+			},
+			"flags": {
+				"a": { "flag": "-a", "description": "All blades", "boolean": true }
+			}
+		},
+		{
+			"id": "setpoweroff",
+			"name": "Set Power OFF",
+			"base": "wcscli -setpoweroff",
+			"description": "Turn AC outlet power OFF for blade",
+			"category": "Blade Management - Power Control",
+			"keywords": ["power", "off", "blade", "ac", "outlet"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index" }
+			},
+			"flags": {
+				"a": { "flag": "-a", "description": "All blades", "boolean": true }
+			}
+		},
+		{
+			"id": "getpowerstate",
+			"name": "Get Power State",
+			"base": "wcscli -getpowerstate",
+			"description": "Get AC outlet power state",
+			"category": "Blade Management - Power Control",
+			"keywords": ["power", "state", "blade", "ac", "outlet", "status"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index" }
+			},
+			"flags": {
+				"a": { "flag": "-a", "description": "All blades", "boolean": true }
+			}
+		},
+		{
+			"id": "setbladeon",
+			"name": "Set Blade ON",
+			"base": "wcscli -setbladeon",
+			"description": "Soft power ON blade (initialize boot process)",
+			"category": "Blade Management - Power Control",
+			"keywords": ["blade", "power", "on", "soft", "boot"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index" }
+			},
+			"flags": {
+				"a": { "flag": "-a", "description": "All connected blades", "boolean": true }
+			}
+		},
+		{
+			"id": "setbladeoff",
+			"name": "Set Blade OFF",
+			"base": "wcscli -setbladeoff",
+			"description": "Soft power OFF blade (remove chipset power)",
+			"category": "Blade Management - Power Control",
+			"keywords": ["blade", "power", "off", "soft", "chipset"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "1-48", "description": "Blade index" }
+			},
+			"flags": {
+				"a": { "flag": "-a", "description": "All connected blades", "boolean": true }
+			}
+		},
+		{
+			"id": "getbladestate",
+			"name": "Get Blade State",
+			"base": "wcscli -getbladestate",
+			"description": "Get blade ON/OFF state (chipset power)",
+			"category": "Blade Management - Power Control",
+			"keywords": ["blade", "state", "power", "chipset", "status"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index" }
+			},
+			"flags": {
+				"a": { "flag": "-a", "description": "All connected blades", "boolean": true }
+			}
+		},
+		{
+			"id": "setbladedefaultpowerstate",
+			"name": "Set Blade Default Power State",
+			"base": "wcscli -setbladedefaultpowerstate",
+			"description": "Set default power state",
+			"category": "Blade Management - Power Control",
+			"keywords": ["blade", "default", "power", "state"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index" },
+				"s": { "flag": "-s", "placeholder": "0|1", "description": "State (0=stay OFF, 1=power ON)", "required": true }
+			},
+			"flags": {
+				"a": { "flag": "-a", "description": "All connected blades", "boolean": true }
+			}
+		},
+		{
+			"id": "getbladedefaultpowerstate",
+			"name": "Get Blade Default Power State",
+			"base": "wcscli -getbladedefaultpowerstate",
+			"description": "Get default power state",
+			"category": "Blade Management - Power Control",
+			"keywords": ["blade", "default", "power", "state", "status"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index" }
+			},
+			"flags": {
+				"a": { "flag": "-a", "description": "All blades", "boolean": true }
+			}
+		},
+		{
+			"id": "setbladeactivepowercycle",
+			"name": "Set Blade Active Power Cycle",
+			"base": "wcscli -setbladeactivepowercycle",
+			"description": "Power cycle or soft reset blade",
+			"category": "Blade Management - Power Control",
+			"keywords": ["blade", "power", "cycle", "reset", "reboot"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index" },
+				"t": { "flag": "-t", "placeholder": "seconds", "description": "Power off time", "default": "0" }
+			},
+			"flags": {
+				"a": { "flag": "-a", "description": "All blades", "boolean": true }
+			}
+		},
+		{
+			"id": "setbladeattentionledon",
+			"name": "Set Blade Attention LED ON",
+			"base": "wcscli -setbladeattentionledon",
+			"description": "Turn blade attention LED ON",
+			"category": "Blade Management - LED Control",
+			"keywords": ["blade", "attention", "led", "on", "light"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index" }
+			},
+			"flags": {
+				"a": { "flag": "-a", "description": "All blades", "boolean": true }
+			}
+		},
+		{
+			"id": "setbladeattentionledoff",
+			"name": "Set Blade Attention LED OFF",
+			"base": "wcscli -setbladeattentionledoff",
+			"description": "Turn blade attention LED OFF",
+			"category": "Blade Management - LED Control",
+			"keywords": ["blade", "attention", "led", "off", "light"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index" }
+			},
+			"flags": {
+				"a": { "flag": "-a", "description": "All blades", "boolean": true }
+			}
+		},
+		{
+			"id": "readbladelog",
+			"name": "Read Blade Log",
+			"base": "wcscli -readbladelog",
+			"description": "Read blade system event log",
+			"category": "Blade Management - Logs",
+			"keywords": ["blade", "log", "read", "event", "sel"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index", "required": true },
+				"n": { "flag": "-n", "placeholder": "count", "description": "Most recent entries (default: up to 300)" }
+			}
+		},
+		{
+			"id": "clearbladelog",
+			"name": "Clear Blade Log",
+			"base": "wcscli -clearbladelog",
+			"description": "Clear blade log",
+			"category": "Blade Management - Logs",
+			"keywords": ["blade", "log", "clear", "event", "sel"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index", "required": true }
+			}
+		},
+		{
+			"id": "setbladepowerlimit",
+			"name": "Set Blade Power Limit",
+			"base": "wcscli -setbladepowerlimit",
+			"description": "Set power limit for blade",
+			"category": "Blade Management - Power Limiting",
+			"keywords": ["blade", "power", "limit", "cap", "watts"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index" },
+				"l": { "flag": "-l", "placeholder": "watts", "description": "Power limit in Watts", "required": true }
+			},
+			"flags": {
+				"a": { "flag": "-a", "description": "All blades", "boolean": true }
+			}
+		},
+		{
+			"id": "setbladepowerlimiton",
+			"name": "Set Blade Power Limit ON",
+			"base": "wcscli -setbladepowerlimiton",
+			"description": "Activate power limit (enable throttling)",
+			"category": "Blade Management - Power Limiting",
+			"keywords": ["blade", "power", "limit", "on", "activate", "throttle"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index" }
+			},
+			"flags": {
+				"a": { "flag": "-a", "description": "All blades", "boolean": true }
+			}
+		},
+		{
+			"id": "setbladepowerlimitoff",
+			"name": "Set Blade Power Limit OFF",
+			"base": "wcscli -setbladepowerlimitoff",
+			"description": "Deactivate power limit (disable throttling)",
+			"category": "Blade Management - Power Limiting",
+			"keywords": ["blade", "power", "limit", "off", "deactivate", "throttle"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index" }
+			},
+			"flags": {
+				"a": { "flag": "-a", "description": "All blades", "boolean": true }
+			}
+		},
+		{
+			"id": "getbladepowerlimit",
+			"name": "Get Blade Power Limit",
+			"base": "wcscli -getbladepowerlimit",
+			"description": "Get power limit",
+			"category": "Blade Management - Power Limiting",
+			"keywords": ["blade", "power", "limit", "get", "status"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index" }
+			},
+			"flags": {
+				"a": { "flag": "-a", "description": "All blades", "boolean": true }
+			}
+		},
+		{
+			"id": "getbladepowerreading",
+			"name": "Get Blade Power Reading",
+			"base": "wcscli -getbladepowerreading",
+			"description": "Get power reading",
+			"category": "Blade Management - Power Limiting",
+			"keywords": ["blade", "power", "reading", "watts", "consumption"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index" }
+			},
+			"flags": {
+				"a": { "flag": "-a", "description": "All blades", "boolean": true }
+			}
+		},
+		{
+			"id": "getnextboot",
+			"name": "Get Next Boot",
+			"base": "wcscli -getnextboot",
+			"description": "Get pending boot order for next boot",
+			"category": "Blade Management - Boot Configuration",
+			"keywords": ["blade", "boot", "next", "order", "bios"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index", "required": true }
+			}
+		},
+		{
+			"id": "setnextboot",
+			"name": "Set Next Boot",
+			"base": "wcscli -setnextboot",
+			"description": "Set boot device for next reboot",
+			"category": "Blade Management - Boot Configuration",
+			"keywords": ["blade", "boot", "next", "set", "pxe", "hdd", "bios", "uefi"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index", "required": true },
+				"t": { "flag": "-t", "placeholder": "type", "description": "Boot type (1=NoOverride, 2=ForcePxe, 3=ForceDefaultHdd, 4=ForceBiosSetup, 5=ForceFloppyOrRemovable)", "required": true },
+				"m": { "flag": "-m", "placeholder": "0|1", "description": "Mode (0=legacy, 1=UEFI)", "required": true },
+				"p": { "flag": "-p", "placeholder": "0|1", "description": "Persistent (0=one-time, 1=persistent)", "required": true },
+				"n": { "flag": "-n", "placeholder": "instance", "description": "Boot device instance", "default": "0" }
+			},
+			"presets": [
+				{ "label": "PXE (Legacy, One-time)", "values": { "t": "2", "m": "0", "p": "0" } },
+				{ "label": "PXE (UEFI, One-time)", "values": { "t": "2", "m": "1", "p": "0" } },
+				{ "label": "HDD (Legacy, One-time)", "values": { "t": "3", "m": "0", "p": "0" } },
+				{ "label": "HDD (UEFI, One-time)", "values": { "t": "3", "m": "1", "p": "0" } },
+				{ "label": "BIOS Setup (Legacy)", "values": { "t": "4", "m": "0", "p": "0" } },
+				{ "label": "BIOS Setup (UEFI)", "values": { "t": "4", "m": "1", "p": "0" } }
+			]
+		},
+		{
+			"id": "getbladeassetinfo",
+			"name": "Get Blade Asset Info",
+			"base": "wcscli -getbladeassetinfo",
+			"description": "Get blade FRU information",
+			"category": "Blade Management - Asset Information (FRU)",
+			"keywords": ["blade", "asset", "fru", "info", "serial"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index", "required": true }
+			}
+		},
+		{
+			"id": "setbladeassetinfo",
+			"name": "Set Blade Asset Info",
+			"base": "wcscli -setbladeassetinfo",
+			"description": "Edit blade FRU Multi Record Area",
+			"category": "Blade Management - Asset Information (FRU)",
+			"keywords": ["blade", "asset", "fru", "edit", "set"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index", "required": true },
+				"p": { "flag": "-p", "placeholder": "payload", "description": "Data to write (max 2 fields, 56 bytes each)", "required": true }
+			}
+		},
+		{
+			"id": "getpdbassetinfo",
+			"name": "Get PDB Asset Info",
+			"base": "wcscli -getpdbassetinfo",
+			"description": "Get PDB FRU information",
+			"category": "Blade Management - Asset Information (FRU)",
+			"keywords": ["pdb", "asset", "fru", "info"]
+		},
+		{
+			"id": "setpdbassetinfo",
+			"name": "Set PDB Asset Info",
+			"base": "wcscli -setpdbassetinfo",
+			"description": "Edit PDB FRU Multi Record Area",
+			"category": "Blade Management - Asset Information (FRU)",
+			"keywords": ["pdb", "asset", "fru", "edit", "set"],
+			"params": {
+				"p": { "flag": "-p", "placeholder": "payload", "description": "Data to write (max 2 fields, 56 bytes each)", "required": true }
+			}
+		},
+		{
+			"id": "getbladebiospostcode",
+			"name": "Get Blade BIOS POST Code",
+			"base": "wcscli -getbladebiospostcode",
+			"description": "Get BIOS POST code",
+			"category": "Blade Management - BIOS & Diagnostics",
+			"keywords": ["blade", "bios", "post", "code"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index", "required": true }
+			}
+		},
+		{
+			"id": "getbladebiosconfig",
+			"name": "Get Blade BIOS Config",
+			"base": "wcscli -getbladebiosconfig",
+			"description": "Get blade BIOS configuration",
+			"category": "Blade Management - BIOS & Diagnostics",
+			"keywords": ["blade", "bios", "config", "configuration"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index", "required": true }
+			}
+		},
+		{
+			"id": "setbladebiosconfig",
+			"name": "Set Blade BIOS Config",
+			"base": "wcscli -setbladebiosconfig",
+			"description": "Set BIOS configuration for next reboot",
+			"category": "Blade Management - BIOS & Diagnostics",
+			"keywords": ["blade", "bios", "config", "configuration", "set"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index", "required": true },
+				"j": { "flag": "-j", "placeholder": "major", "description": "Major configuration number", "required": true },
+				"n": { "flag": "-n", "placeholder": "minor", "description": "Minor configuration number", "required": true }
+			},
+			"presets": [
+				{ "label": "GN1 (WCS General)", "values": { "j": "0", "n": "0" } },
+				{ "label": "AZ1 (Azure Compute)", "values": { "j": "1", "n": "0" } },
+				{ "label": "AH1 (Azure Compute HT/Legacy)", "values": { "j": "1", "n": "1" } },
+				{ "label": "AS1 (Azure XStore Standard)", "values": { "j": "1", "n": "2" } },
+				{ "label": "AT1 (Azure XStore Utility)", "values": { "j": "1", "n": "3" } },
+				{ "label": "AX1 (Azure XIO Standard)", "values": { "j": "1", "n": "4" } },
+				{ "label": "AY1 (Azure XIO Utility)", "values": { "j": "1", "n": "5" } },
+				{ "label": "AA1 (Azure Compute HT/Legacy)", "values": { "j": "1", "n": "6" } },
+				{ "label": "AI1 (Azure Compute HT/UEFI)", "values": { "j": "1", "n": "7" } },
+				{ "label": "BA1 (Bing Online)", "values": { "j": "2", "n": "0" } },
+				{ "label": "BB1 (Bing Offline)", "values": { "j": "2", "n": "1" } },
+				{ "label": "BC1 (Bing Offline/HT)", "values": { "j": "2", "n": "2" } },
+				{ "label": "EA1 (Exchange)", "values": { "j": "3", "n": "0" } },
+				{ "label": "PA1 (CPS)", "values": { "j": "4", "n": "0" } }
+			]
+		},
+		{
+			"id": "setbladedatasafeon",
+			"name": "Set Blade DataSafe ON",
+			"base": "wcscli -setbladedatasafeon",
+			"description": "Enable datasafe for blade",
+			"category": "Blade Management - DataSafe Commands",
+			"keywords": ["blade", "datasafe", "enable", "on"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index" }
+			},
+			"flags": {
+				"a": { "flag": "-a", "description": "All connected blades", "boolean": true }
+			}
+		},
+		{
+			"id": "setbladedatasafeoff",
+			"name": "Set Blade DataSafe OFF",
+			"base": "wcscli -setbladedatasafeoff",
+			"description": "Disable datasafe for blade",
+			"category": "Blade Management - DataSafe Commands",
+			"keywords": ["blade", "datasafe", "disable", "off"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index" }
+			},
+			"flags": {
+				"a": { "flag": "-a", "description": "All connected blades", "boolean": true }
+			}
+		},
+		{
+			"id": "setdatasafepoweron",
+			"name": "Set DataSafe Power ON",
+			"base": "wcscli -setdatasafepoweron",
+			"description": "Set datasafe power ON",
+			"category": "Blade Management - DataSafe Commands",
+			"keywords": ["datasafe", "power", "on"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index" }
+			},
+			"flags": {
+				"a": { "flag": "-a", "description": "All connected blades", "boolean": true }
+			}
+		},
+		{
+			"id": "setdatasafepoweroff",
+			"name": "Set DataSafe Power OFF",
+			"base": "wcscli -setdatasafepoweroff",
+			"description": "Set datasafe power OFF",
+			"category": "Blade Management - DataSafe Commands",
+			"keywords": ["datasafe", "power", "off"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index" }
+			},
+			"flags": {
+				"a": { "flag": "-a", "description": "All connected blades", "boolean": true }
+			}
+		},
+		{
+			"id": "setbladedatasafeactivepowercycle",
+			"name": "Set Blade DataSafe Active Power Cycle",
+			"base": "wcscli -setbladedatasafeactivepowercycle",
+			"description": "Datasafe power cycle",
+			"category": "Blade Management - DataSafe Commands",
+			"keywords": ["blade", "datasafe", "power", "cycle"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index" }
+			},
+			"flags": {
+				"a": { "flag": "-a", "description": "All connected blades", "boolean": true }
+			}
+		},
+		{
+			"id": "getbladedatasafepowerstate",
+			"name": "Get Blade DataSafe Power State",
+			"base": "wcscli -getbladedatasafepowerstate",
+			"description": "Get blade datasafe power state",
+			"category": "Blade Management - DataSafe Commands",
+			"keywords": ["blade", "datasafe", "power", "state", "status"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index" }
+			},
+			"flags": {
+				"a": { "flag": "-a", "description": "All connected blades", "boolean": true }
+			}
+		},
+		{
+			"id": "getblademezzpassthroughmode",
+			"name": "Get Blade Mezz Passthrough Mode",
+			"base": "wcscli -getblademezzpassthroughmode",
+			"description": "Get pass-through mode of Blade FPGA Mezzanine",
+			"category": "Blade Management - Mezzanine (FPGA)",
+			"keywords": ["blade", "mezzanine", "fpga", "passthrough", "mode"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index", "required": true }
+			}
+		},
+		{
+			"id": "setblademezzpassthroughmode",
+			"name": "Set Blade Mezz Passthrough Mode",
+			"base": "wcscli -setblademezzpassthroughmode",
+			"description": "Set pass-through mode of Blade FPGA Mezzanine",
+			"category": "Blade Management - Mezzanine (FPGA)",
+			"keywords": ["blade", "mezzanine", "fpga", "passthrough", "mode", "set"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index", "required": true },
+				"m": { "flag": "-m", "placeholder": "true|false", "description": "Pass-through mode enabled", "required": true }
+			}
+		},
+		{
+			"id": "getblademezzstatus",
+			"name": "Get Blade Mezz Status",
+			"base": "wcscli -getblademezzstatus",
+			"description": "Get status of Blade FPGA Mezzanine",
+			"category": "Blade Management - Mezzanine (FPGA)",
+			"keywords": ["blade", "mezzanine", "fpga", "status"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index", "required": true }
+			}
+		},
+		{
+			"id": "getblademezzassetinfo",
+			"name": "Get Blade Mezz Asset Info",
+			"base": "wcscli -getblademezzassetinfo",
+			"description": "Get FRU information of Blade FPGA Mezzanine",
+			"category": "Blade Management - Mezzanine (FPGA)",
+			"keywords": ["blade", "mezzanine", "fpga", "asset", "fru", "info"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index", "required": true }
+			}
+		},
+		{
+			"id": "setbladetpmphysicalpresence",
+			"name": "Set Blade TPM Physical Presence",
+			"base": "wcscli -setbladetpmphysicalpresence",
+			"description": "Set TPM physical presence",
+			"category": "Blade Management - TPM",
+			"keywords": ["blade", "tpm", "physical", "presence", "set"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index", "required": true },
+				"p": { "flag": "-p", "placeholder": "true|false|1|0", "description": "Presence", "required": true }
+			}
+		},
+		{
+			"id": "getbladetpmphysicalpresence",
+			"name": "Get Blade TPM Physical Presence",
+			"base": "wcscli -getbladetpmphysicalpresence",
+			"description": "Get TPM physical presence",
+			"category": "Blade Management - TPM",
+			"keywords": ["blade", "tpm", "physical", "presence", "get"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index", "required": true }
+			}
+		},
+		{
+			"id": "setchassisattentionledon",
+			"name": "Set Chassis Attention LED ON",
+			"base": "wcscli -setchassisattentionledon",
+			"description": "Turn chassis attention LED ON",
+			"category": "Chassis Manager Management - LED Control",
+			"keywords": ["chassis", "attention", "led", "on", "light"]
+		},
+		{
+			"id": "setchassisattentionledoff",
+			"name": "Set Chassis Attention LED OFF",
+			"base": "wcscli -setchassisattentionledoff",
+			"description": "Turn chassis attention LED OFF",
+			"category": "Chassis Manager Management - LED Control",
+			"keywords": ["chassis", "attention", "led", "off", "light"]
+		},
+		{
+			"id": "getchassisattentionledstatus",
+			"name": "Get Chassis Attention LED Status",
+			"base": "wcscli -getchassisattentionledstatus",
+			"description": "Get chassis attention LED status",
+			"category": "Chassis Manager Management - LED Control",
+			"keywords": ["chassis", "attention", "led", "status", "light"]
+		},
+		{
+			"id": "readchassislog",
+			"name": "Read Chassis Log",
+			"base": "wcscli -readchassislog",
+			"description": "Read chassis log",
+			"category": "Chassis Manager Management - Logs",
+			"keywords": ["chassis", "log", "read", "event"],
+			"params": {
+				"s": { "flag": "-s", "placeholder": "YYYY:MM:DD", "description": "Start date" },
+				"e": { "flag": "-e", "placeholder": "YYYY:MM:DD", "description": "End date" }
+			}
+		},
+		{
+			"id": "clearchassislog",
+			"name": "Clear Chassis Log",
+			"base": "wcscli -clearchassislog",
+			"description": "Clear chassis log",
+			"category": "Chassis Manager Management - Logs",
+			"keywords": ["chassis", "log", "clear", "event"]
+		},
+		{
+			"id": "getacsocketpowerstate",
+			"name": "Get AC Socket Power State",
+			"base": "wcscli -getacsocketpowerstate",
+			"description": "Get chassis AC socket status",
+			"category": "Chassis Manager Management - AC Socket Control",
+			"keywords": ["ac", "socket", "power", "state", "status", "tor", "switch"],
+			"params": {
+				"p": { "flag": "-p", "placeholder": "port", "description": "Port number", "required": true }
+			}
+		},
+		{
+			"id": "setacsocketpowerstateon",
+			"name": "Set AC Socket Power State ON",
+			"base": "wcscli -setacsocketpowerstateon",
+			"description": "Turn chassis AC socket ON",
+			"category": "Chassis Manager Management - AC Socket Control",
+			"keywords": ["ac", "socket", "power", "on", "tor", "switch"],
+			"params": {
+				"p": { "flag": "-p", "placeholder": "port", "description": "Port number", "required": true }
+			}
+		},
+		{
+			"id": "setacsocketpowerstateoff",
+			"name": "Set AC Socket Power State OFF",
+			"base": "wcscli -setacsocketpowerstateoff",
+			"description": "Turn chassis AC socket OFF",
+			"category": "Chassis Manager Management - AC Socket Control",
+			"keywords": ["ac", "socket", "power", "off", "tor", "switch"],
+			"params": {
+				"p": { "flag": "-p", "placeholder": "port", "description": "Port number", "required": true }
+			}
+		},
+		{
+			"id": "adduser",
+			"name": "Add User",
+			"base": "wcscli -adduser",
+			"description": "Add new chassis controller user",
+			"category": "Chassis Manager Management - User Management",
+			"keywords": ["user", "add", "create", "admin", "operator"],
+			"params": {
+				"u": { "flag": "-u", "placeholder": "username", "description": "Username", "required": true },
+				"p": { "flag": "-p", "placeholder": "password", "description": "Password", "required": true }
+			},
+			"flags": {
+				"a": { "flag": "-a", "description": "Admin privilege", "boolean": true },
+				"o": { "flag": "-o", "description": "Operator privilege", "boolean": true },
+				"r": { "flag": "-r", "description": "User privilege", "boolean": true }
+			}
+		},
+		{
+			"id": "changeuserpwd",
+			"name": "Change User Password",
+			"base": "wcscli -changeuserpwd",
+			"description": "Change user password",
+			"category": "Chassis Manager Management - User Management",
+			"keywords": ["user", "password", "change"],
+			"params": {
+				"u": { "flag": "-u", "placeholder": "username", "description": "Username", "required": true },
+				"p": { "flag": "-p", "placeholder": "password", "description": "New password", "required": true }
+			}
+		},
+		{
+			"id": "changeuserrole",
+			"name": "Change User Role",
+			"base": "wcscli -changeuserrole",
+			"description": "Change user security role",
+			"category": "Chassis Manager Management - User Management",
+			"keywords": ["user", "role", "change", "admin", "operator", "privilege"],
+			"params": {
+				"u": { "flag": "-u", "placeholder": "username", "description": "Username", "required": true }
+			},
+			"flags": {
+				"a": { "flag": "-a", "description": "Admin privilege", "boolean": true },
+				"o": { "flag": "-o", "description": "Operator privilege", "boolean": true },
+				"r": { "flag": "-r", "description": "User privilege", "boolean": true }
+			}
+		},
+		{
+			"id": "removeuser",
+			"name": "Remove User",
+			"base": "wcscli -removeuser",
+			"description": "Remove user from chassis controller",
+			"category": "Chassis Manager Management - User Management",
+			"keywords": ["user", "remove", "delete"],
+			"params": {
+				"u": { "flag": "-u", "placeholder": "username", "description": "Username", "required": true }
+			}
+		},
+		{
+			"id": "getchassismanagerassetinfo",
+			"name": "Get Chassis Manager Asset Info",
+			"base": "wcscli -getchassismanagerassetinfo",
+			"description": "Get chassis manager FRU information",
+			"category": "Chassis Manager Management - Asset Information",
+			"keywords": ["chassis", "manager", "asset", "fru", "info"]
+		},
+		{
+			"id": "setchassismanagerassetinfo",
+			"name": "Set Chassis Manager Asset Info",
+			"base": "wcscli -setchassismanagerassetinfo",
+			"description": "Edit chassis manager FRU Multi Record Area",
+			"category": "Chassis Manager Management - Asset Information",
+			"keywords": ["chassis", "manager", "asset", "fru", "edit", "set"],
+			"params": {
+				"p": { "flag": "-p", "placeholder": "payload", "description": "Data to write (max 2 fields, 56 bytes each)", "required": true }
+			}
+		},
+		{
+			"id": "scandevice",
+			"name": "Scan Device",
+			"base": "wcscli -scandevice",
+			"description": "Scan chassis manager device and display settings",
+			"category": "Chassis Manager Management - System Control",
+			"keywords": ["scan", "device", "chassis", "manager", "settings"]
+		},
+		{
+			"id": "chassismanagerrestart",
+			"name": "Chassis Manager Restart",
+			"base": "wcscli -chassismanagerrestart",
+			"description": "Restart chassis manager",
+			"category": "Chassis Manager Management - System Control",
+			"keywords": ["chassis", "manager", "restart", "reboot"]
+		},
+		{
+			"id": "chassismanagersoftrestart",
+			"name": "Chassis Manager Soft Restart",
+			"base": "wcscli -chassismanagersoftrestart",
+			"description": "Soft restart chassis manager",
+			"category": "Chassis Manager Management - System Control",
+			"keywords": ["chassis", "manager", "soft", "restart", "reboot"]
+		},
+		{
+			"id": "startbladeserialsession",
+			"name": "Start Blade Serial Session",
+			"base": "wcscli -startbladeserialsession",
+			"description": "Start serial session to blade (opens Serial-Client-terminal, Ctrl-X to exit)",
+			"category": "Serial Console Sessions",
+			"keywords": ["blade", "serial", "session", "start", "console"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index", "required": true },
+				"s": { "flag": "-s", "placeholder": "seconds", "description": "Session timeout (max: 3600)", "required": true }
+			}
+		},
+		{
+			"id": "stopbladeserialsession",
+			"name": "Stop Blade Serial Session",
+			"base": "wcscli -stopbladeserialsession",
+			"description": "Force terminate active blade serial session",
+			"category": "Serial Console Sessions",
+			"keywords": ["blade", "serial", "session", "stop", "terminate", "console"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index", "required": true }
+			}
+		},
+		{
+			"id": "startportserialsession",
+			"name": "Start Port Serial Session",
+			"base": "wcscli -startportserialsession",
+			"description": "Open serial port console to serial devices (Ctrl-X to exit)",
+			"category": "Serial Console Sessions",
+			"keywords": ["port", "serial", "session", "start", "console", "com"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "port", "description": "Port number (1=COM1, 2=COM2, 5/6 if WCSCLI stopped)", "required": true },
+				"d": { "flag": "-d", "placeholder": "ms", "description": "Device timeout in milliseconds", "default": "0" },
+				"r": { "flag": "-r", "placeholder": "baud", "description": "Baud rate (75,110,300,1200,2400,4800,9600,19200,38400,57600,115200)", "default": "9600" }
+			}
+		},
+		{
+			"id": "stopportserialsession",
+			"name": "Stop Port Serial Session",
+			"base": "wcscli -stopportserialsession",
+			"description": "Stop all sessions on given port",
+			"category": "Serial Console Sessions",
+			"keywords": ["port", "serial", "session", "stop", "terminate", "console"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "port", "description": "Port number", "required": true }
+			}
+		},
+		{
+			"id": "establishcmconnection",
+			"name": "Establish CM Connection",
+			"base": "wcscli -establishcmconnection",
+			"description": "Create connection to chassis manager service and login",
+			"category": "Serial Console Sessions",
+			"keywords": ["connect", "connection", "chassis", "manager", "login"],
+			"params": {
+				"u": { "flag": "-u", "placeholder": "username", "description": "Username (use domain\\username if not local)", "required": true },
+				"x": { "flag": "-x", "placeholder": "password", "description": "Password", "required": true },
+				"m": { "flag": "-m", "placeholder": "host", "description": "Host name", "default": "localhost" },
+				"p": { "flag": "-p", "placeholder": "port", "description": "Port", "default": "8000" },
+				"s": { "flag": "-s", "placeholder": "0|1", "description": "SSL mode (0=disabled, 1=enabled)", "default": "1" },
+				"b": { "flag": "-b", "placeholder": "file", "description": "Batch file (not supported in serial mode)" },
+				"v": { "flag": "-v", "description": "Get CLI version" }
+			},
+			"presets": [
+				{ "label": "admin / $pl3nd1D", "values": { "u": "admin", "x": "$pl3nd1D" } },
+				{ "label": "administrator / $pl3nd1D", "values": { "u": "administrator", "x": "$pl3nd1D" } },
+				{ "label": "admin / Rd!Pa$$w0rd!#9K", "values": { "u": "admin", "x": "Rd!Pa$$w0rd!#9K" } },
+				{ "label": "WcsRma (no password)", "values": { "u": "WcsRma", "x": "" } },
+				{ "label": "root (no password)", "values": { "u": "root", "x": "" } }
+			]
+		},
+		{
+			"id": "terminatecmconnection",
+			"name": "Terminate CM Connection",
+			"base": "wcscli -terminatecmconnection",
+			"description": "Terminate connection to chassis manager service",
+			"category": "Serial Console Sessions",
+			"keywords": ["disconnect", "terminate", "connection", "chassis", "manager", "logout"]
+		},
+		{
+			"id": "startchassismanager",
+			"name": "Start Chassis Manager",
+			"base": "wcscli -startchassismanager",
+			"description": "Start Windows chassis manager service",
+			"category": "CLI Over Serial (WCSCLI+)",
+			"keywords": ["start", "chassis", "manager", "service"]
+		},
+		{
+			"id": "stopchassismanager",
+			"name": "Stop Chassis Manager",
+			"base": "wcscli -stopchassismanager",
+			"description": "Stop Windows chassis manager service",
+			"category": "CLI Over Serial (WCSCLI+)",
+			"keywords": ["stop", "chassis", "manager", "service"]
+		},
+		{
+			"id": "getchassismanagerstatus",
+			"name": "Get Chassis Manager Status",
+			"base": "wcscli -getchassismanagerstatus",
+			"description": "Get status of Windows chassis manager service",
+			"category": "CLI Over Serial (WCSCLI+)",
+			"keywords": ["status", "chassis", "manager", "service"]
+		},
+		{
+			"id": "enablechassismanagerssl",
+			"name": "Enable Chassis Manager SSL",
+			"base": "wcscli -enablechassismanagerssl",
+			"description": "Enable SSL for chassis manager service",
+			"category": "CLI Over Serial (WCSCLI+)",
+			"keywords": ["enable", "ssl", "chassis", "manager", "service"]
+		},
+		{
+			"id": "disablechassismanagerssl",
+			"name": "Disable Chassis Manager SSL",
+			"base": "wcscli -disablechassismanagerssl",
+			"description": "Disable SSL for chassis manager service",
+			"category": "CLI Over Serial (WCSCLI+)",
+			"keywords": ["disable", "ssl", "chassis", "manager", "service"]
+		},
+		{
+			"id": "getnic",
+			"name": "Get NIC",
+			"base": "wcscli -getnic",
+			"description": "Get chassis controller network properties",
+			"category": "CLI Over Serial (WCSCLI+)",
+			"keywords": ["network", "nic", "ip", "interface", "get"]
+		},
+		{
+			"id": "setnic",
+			"name": "Set NIC",
+			"base": "wcscli -setnic",
+			"description": "Set chassis controller network properties",
+			"category": "CLI Over Serial (WCSCLI+)",
+			"keywords": ["network", "nic", "ip", "interface", "set", "dhcp", "static"],
+			"params": {
+				"a": { "flag": "-a", "placeholder": "DHCP|STATIC", "description": "IP address source", "required": true },
+				"i": { "flag": "-i", "placeholder": "IP", "description": "IP address (required for Static)" },
+				"m": { "flag": "-m", "placeholder": "mask", "description": "Subnet mask (required for Static)" },
+				"g": { "flag": "-g", "placeholder": "gateway", "description": "Gateway (optional for Static)" },
+				"p": { "flag": "-p", "placeholder": "DNS", "description": "Primary DNS server" },
+				"d": { "flag": "-d", "placeholder": "DNS", "description": "Secondary DNS server (requires primary)" },
+				"t": { "flag": "-t", "placeholder": "index", "description": "Network interface number (0-indexed)", "default": "0" }
+			},
+			"presets": [
+				{ "label": "DHCP", "values": { "a": "DHCP" } }
+			]
+		},
+		{
+			"id": "clear",
+			"name": "Clear",
+			"base": "wcscli -clear",
+			"description": "Clear command history and PuTTY client screen",
+			"category": "CLI Over Serial (WCSCLI+)",
+			"keywords": ["clear", "screen", "history", "putty"]
+		},
+		{
+			"id": "setlocalupdate",
+			"name": "Set Local Update",
+			"base": "wcscli -setlocalupdate",
+			"description": "Update chassis manager firmware locally",
+			"category": "CLI Over Serial (WCSCLI+)",
+			"keywords": ["firmware", "update", "local", "chassis", "manager"],
+			"params": {
+				"f": { "flag": "-f", "placeholder": "path", "description": "Firmware image file path (TFTP package)", "required": true }
+			}
+		},
+		{
+			"id": "getlocalupdatestatus",
+			"name": "Get Local Update Status",
+			"base": "wcscli -getlocalupdatestatus",
+			"description": "Get local chassis manager firmware update status",
+			"category": "CLI Over Serial (WCSCLI+)",
+			"keywords": ["firmware", "update", "status", "local", "chassis", "manager"]
+		},
+		{
+			"id": "getauxdevicetype",
+			"name": "Get Aux Device Type",
+			"base": "wcscli -getauxdevicetype",
+			"description": "Get auxiliary device type information",
+			"category": "Auxiliary Devices",
+			"keywords": ["aux", "auxiliary", "device", "type"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "deviceId", "description": "Device ID", "required": true }
+			}
+		},
+		{
+			"id": "getauxdevicestatus",
+			"name": "Get Aux Device Status",
+			"base": "wcscli -getauxdevicestatus",
+			"description": "Get auxiliary device status",
+			"category": "Auxiliary Devices",
+			"keywords": ["aux", "auxiliary", "device", "status"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "deviceId", "description": "Device ID", "required": true }
+			}
+		},
+		{
+			"id": "setauxdeviceinfo",
+			"name": "Set Aux Device Info",
+			"base": "wcscli -setauxdeviceinfo",
+			"description": "Set auxiliary device information",
+			"category": "Auxiliary Devices",
+			"keywords": ["aux", "auxiliary", "device", "info", "set"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "deviceId", "description": "Device ID", "required": true },
+				"d": { "flag": "-d", "placeholder": "address", "description": "Address", "required": true },
+				"p": { "flag": "-p", "placeholder": "payload", "description": "Payload", "required": true }
+			}
+		},
+		{
+			"id": "setbladepoweralertpolicy",
+			"name": "Set Blade Power Alert Policy",
+			"base": "wcscli -setbladepoweralertpolicy",
+			"description": "Configure blade behavior upon power alert signal",
+			"category": "Power Alert & Capping",
+			"keywords": ["blade", "power", "alert", "policy", "throttle", "cap"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index", "required": true },
+				"e": { "flag": "-e", "placeholder": "action", "description": "Alert action (0=do nothing, 1=throttle, 2=fast throttle)", "required": true },
+				"p": { "flag": "-p", "placeholder": "watts", "description": "Power limit in watts", "required": true },
+				"r": { "flag": "-r", "placeholder": "action", "description": "Remediation action (0=do nothing, 1=remove limit & rearm, 2=rearm)" },
+				"f": { "flag": "-f", "placeholder": "ms", "description": "Fast throttle duration in ms", "default": "20" },
+				"d": { "flag": "-d", "placeholder": "seconds", "description": "Auto remove delay (1-250 seconds)" }
+			}
+		},
+		{
+			"id": "getbladepoweralertpolicy",
+			"name": "Get Blade Power Alert Policy",
+			"base": "wcscli -getbladepoweralertpolicy",
+			"description": "Display blade power alert driven capping parameters",
+			"category": "Power Alert & Capping",
+			"keywords": ["blade", "power", "alert", "policy", "throttle", "cap"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index", "required": true }
+			}
+		},
+		{
+			"id": "setchassispoweralertpolicy",
+			"name": "Set Chassis Power Alert Policy",
+			"base": "wcscli -setchassispoweralertpolicy",
+			"description": "Set chassis power alert trigger policy",
+			"category": "Power Alert & Capping",
+			"keywords": ["chassis", "power", "alert", "policy", "trigger"],
+			"params": {
+				"e": { "flag": "-e", "placeholder": "policy", "description": "Alert policy (0=disable, 1=enable)", "required": true },
+				"p": { "flag": "-p", "placeholder": "watts", "description": "Power limit in watts", "required": true }
+			}
+		},
+		{
+			"id": "getchassispoweralertpolicy",
+			"name": "Get Chassis Power Alert Policy",
+			"base": "wcscli -getchassispoweralertpolicy",
+			"description": "Get chassis-level power alert settings (PSU power, alert events)",
+			"category": "Power Alert & Capping",
+			"keywords": ["chassis", "power", "alert", "policy", "psu"]
+		},
+		{
+			"id": "getbladethrottlingstatistics",
+			"name": "Get Blade Throttling Statistics",
+			"base": "wcscli -getbladethrottlingstatistics",
+			"description": "Get percentage time spent in throttling and power capping entities",
+			"category": "Power Alert & Capping",
+			"keywords": ["blade", "throttling", "statistics", "power", "cap"],
+			"params": {
+				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index", "required": true }
+			}
+		}
+	]
+}
