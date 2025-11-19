@@ -95,6 +95,7 @@ function performSearch(query) {
 	const commands = appState.commands[appState.currentGeneration];
 
 	// Easter egg: JoJo reference
+	const jojoAudio = document.getElementById('jojo-audio');
 	if (query.toLowerCase() === 'jojo') {
 		searchResults.innerHTML = `
 			<div style="display: flex; align-items: center; justify-content: center; padding: 40px; gap: 20px;">
@@ -105,7 +106,12 @@ function performSearch(query) {
 		`;
 		searchResults.classList.remove('hidden');
 		adjustSearchResultsHeight();
+		jojoAudio.currentTime = 0;
+		jojoAudio.play();
 		return;
+	} else {
+		jojoAudio.pause();
+		jojoAudio.currentTime = 0;
 	}
 
 	if (commands.length === 0) {
