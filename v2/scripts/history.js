@@ -390,6 +390,11 @@ function filterHistory(query) {
  * @param {number} count - Number of recent commands to show
  */
 export function showRecentHistory(count = 10) {
+    // Don't show if already visible
+    if (document.getElementById('recent-history-panel')) {
+        return;
+    }
+
     const history = getHistory(count);
 
     if (!history || history.length === 0) {
@@ -399,7 +404,7 @@ export function showRecentHistory(count = 10) {
     // Create recent history panel
     const panel = document.createElement('div');
     panel.id = 'recent-history-panel';
-    panel.className = 'recent-history-panel';
+    panel.className = 'recent-history-panel card-margin';
 
     panel.innerHTML = `
         <div class="recent-history-header">
@@ -437,10 +442,10 @@ export function showRecentHistory(count = 10) {
     const closeBtn = panel.querySelector('.recent-history-close');
     closeBtn.addEventListener('click', dismissRecentHistory);
 
-    // Insert panel after the search container
-    const searchContainer = document.querySelector('.search-container');
-    if (searchContainer) {
-        searchContainer.parentNode.insertBefore(panel, searchContainer.nextSibling);
+    // Insert panel at top of #cards container
+    const cardsContainer = document.getElementById('cards');
+    if (cardsContainer) {
+        cardsContainer.insertBefore(panel, cardsContainer.firstChild);
     }
 }
 

@@ -1,4 +1,5 @@
 import { saveToHistory } from './history.js';
+import { addBookmark, isBookmarked, removeBookmarkByCommandId } from './bookmarks.js';
 
 let appState = null;
 
@@ -11,6 +12,7 @@ export function initializeUI(state) {
 	const commandCard = document.getElementById('command-card');
 	const closeButton = document.getElementById('close-card');
 	const copyButton = document.getElementById('copy-button');
+	const bookmarkButton = document.getElementById('bookmark-command-button');
 	const commandPreview = document.getElementById('command-preview');
 	const globalIndexInput = document.getElementById('global-index-input');
 
@@ -27,6 +29,11 @@ export function initializeUI(state) {
 	// Copy button handler
 	copyButton.addEventListener('click', () => {
 		copyCommand();
+	});
+
+	// Bookmark button handler
+	bookmarkButton.addEventListener('click', () => {
+		bookmarkCommand();
 	});
 
 	// Click on command preview to select text
@@ -81,8 +88,23 @@ export function showCommandCard(command) {
 		renderFlags(command.flags, cardContent);
 	}
 
+	// Render mezz analyzer for getblademezzstatus and show system fpga health commands
+	if (command.id === 'getblademezzstatus' || command.base.includes('getblademezzstatus') ||
+	    command.id === 'show-system-fpga-health' || command.base.includes('show system fpga health')) {
+		renderMezzAnalyzer(cardContent, command.name);
+	}
+
 	// Show the card
 	commandCard.classList.remove('hidden');
+
+	// Move card to top position (first in #cards)
+	const cardsContainer = document.getElementById('cards');
+	if (cardsContainer && cardsContainer.firstChild !== commandCard) {
+		cardsContainer.insertBefore(commandCard, cardsContainer.firstChild);
+	}
+
+	// Update bookmark button state
+	updateBookmarkButtonState(command.id);
 
 	// Build and display initial command
 	buildCommand();
@@ -142,7 +164,7 @@ function renderParams(params, container) {
 
 	for (const [key, param] of Object.entries(params)) {
 		// Skip blade index parameter (handled by global input field)
-		if (key === 'i' && param.description === 'Blade index') {
+		if (key === 'i' && (param.description === 'Blade index' || param.description === 'Global blade index')) {
 			continue;
 		}
 
@@ -223,10 +245,16 @@ function renderFlags(flags, container) {
 
 /**
  * Syntax highlight a command string
+ * @param {string} commandString - Full command string
+ * @param {string} baseCommand - The base command (e.g., "show network ping")
  */
-function highlightSyntax(commandString) {
+function highlightSyntax(commandString, baseCommand = '') {
 	const tokens = [];
 	let i = 0;
+
+	// Track position relative to base command
+	const baseLength = baseCommand.length;
+	let inBaseCommand = baseLength > 0;
 
 	while (i < commandString.length) {
 		// Skip whitespace
@@ -236,8 +264,8 @@ function highlightSyntax(commandString) {
 			continue;
 		}
 
-		// Check for quoted strings
-		if (commandString[i] === '"' || commandString[i] === "'") {
+		// Check for quoted strings (only after base command)
+		if (!inBaseCommand && (commandString[i] === '"' || commandString[i] === "'")) {
 			const quote = commandString[i];
 			let str = quote;
 			i++;
@@ -260,16 +288,21 @@ function highlightSyntax(commandString) {
 			i++;
 		}
 
-		// Classify word
-		if (word.startsWith('-')) {
+		// Check if we're still within base command
+		if (inBaseCommand && i <= baseLength) {
+			tokens.push({ type: 'command', value: word });
+			// Check if we've passed the base command
+			if (i >= baseLength) {
+				inBaseCommand = false;
+			}
+		}
+		// Classify word after base command
+		else if (word.startsWith('-')) {
 			tokens.push({ type: 'flag', value: word });
 		} else if (/^\d+$/.test(word)) {
 			tokens.push({ type: 'number', value: word });
-		} else if (tokens.length === 0 || (tokens.length === 1 && typeof tokens[0] === 'string')) {
-			// First non-whitespace token is the command
-			tokens.push({ type: 'command', value: word });
 		} else {
-			// Everything else is text
+			// Everything else is text (value after flag)
 			tokens.push({ type: 'text', value: word });
 		}
 	}
@@ -303,7 +336,8 @@ function buildCommand() {
 
 	// Check if command has blade index parameter and add from global input
 	const globalIndexInput = document.getElementById('global-index-input');
-	if (command.params && command.params.i && command.params.i.description === 'Blade index') {
+	if (command.params && command.params.i &&
+	    (command.params.i.description === 'Blade index' || command.params.i.description === 'Global blade index')) {
 		if (globalIndexInput.value.trim()) {
 			commandString += ` ${command.params.i.flag} ${globalIndexInput.value.trim()}`;
 		}
@@ -328,7 +362,7 @@ function buildCommand() {
 
 	// Update preview with syntax highlighting
 	const commandPreview = document.getElementById('command-preview');
-	commandPreview.innerHTML = highlightSyntax(commandString);
+	commandPreview.innerHTML = highlightSyntax(commandString, command.base);
 	commandPreview.dataset.plainText = commandString;
 
 	// Dispatch event for command builder
@@ -369,4 +403,184 @@ function copyCommand() {
 	}).catch(err => {
 		console.error('Failed to copy:', err);
 	});
+}
+
+/**
+ * Update bookmark button state based on whether command is bookmarked
+ */
+function updateBookmarkButtonState(commandId) {
+	const bookmarkButton = document.getElementById('bookmark-command-button');
+	const bookmarked = isBookmarked(commandId);
+
+	if (bookmarked) {
+		bookmarkButton.classList.remove('btn-secondary');
+		bookmarkButton.classList.add('btn-bookmarked');
+		bookmarkButton.title = 'Remove Bookmark';
+	} else {
+		bookmarkButton.classList.remove('btn-bookmarked');
+		bookmarkButton.classList.add('btn-secondary');
+		bookmarkButton.title = 'Bookmark';
+	}
+}
+
+/**
+ * Toggle bookmark for current command
+ */
+function bookmarkCommand() {
+	const commandPreview = document.getElementById('command-preview');
+
+	// Get plain text command
+	const command = commandPreview.dataset.plainText || commandPreview.textContent;
+
+	if (!command || !appState.currentCommand) {
+		return;
+	}
+
+	const commandName = appState.currentCommand.name;
+	const commandId = appState.currentCommand.id;
+	const generation = appState.activeGeneration || 'legacy';
+
+	// Check if already bookmarked - toggle
+	if (isBookmarked(commandId)) {
+		removeBookmarkByCommandId(commandId);
+	} else {
+		addBookmark(command, commandName, generation, commandId);
+	}
+
+	// Update button state
+	updateBookmarkButtonState(commandId);
+}
+
+/**
+ * Render mezz analyzer section for commands with FPGA health output
+ */
+function renderMezzAnalyzer(container, commandName = 'this command') {
+	const analyzerDiv = document.createElement('div');
+	analyzerDiv.className = 'mezz-analyzer';
+
+	analyzerDiv.innerHTML = `
+		<div class="mezz-analyzer-title">Paste Status Output for Analysis</div>
+		<textarea id="mezzStatusInput" class="mezz-textarea" placeholder="Paste the output of ${commandName} here..."></textarea>
+		<div id="mezzStatusResults" class="mezz-results"></div>
+	`;
+
+	container.appendChild(analyzerDiv);
+
+	// Initialize auto-analysis
+	const textarea = analyzerDiv.querySelector('#mezzStatusInput');
+	let debounceTimer;
+
+	// Auto-analyze on input with debounce
+	textarea.addEventListener('input', () => {
+		clearTimeout(debounceTimer);
+		debounceTimer = setTimeout(() => {
+			analyzeBlademezzStatus();
+		}, 500);
+	});
+
+	// Immediate analysis on paste
+	textarea.addEventListener('paste', () => {
+		setTimeout(() => {
+			analyzeBlademezzStatus();
+		}, 100);
+	});
+}
+
+/**
+ * Analyze Blade Mezz Status output
+ */
+function analyzeBlademezzStatus() {
+	const input = document.getElementById('mezzStatusInput').value;
+	const resultsDiv = document.getElementById('mezzStatusResults');
+
+	if (!input.trim()) {
+		resultsDiv.innerHTML = '';
+		return;
+	}
+
+	// Helper function to parse boolean value - returns true/false/null
+	function parseBool(pattern) {
+		const match = pattern.exec(input);
+		if (!match) return null;
+		return match[1].toLowerCase() === 'true';
+	}
+
+	// Parse the status values using regex
+	const status = {
+		pcieLane0Up: parseBool(/Pcie\s+Lane\s+0\s+Up\s*=\s*(True|False)/i),
+		pcieLane1Up: parseBool(/Pcie\s+Lane\s+1\s+Up\s*=\s*(True|False)/i),
+		networkLink0Up: parseBool(/Network\s+Link\s+0\s+Up\s*=\s*(True|False)/i),
+		networkLink0Tx: parseBool(/Network\s+Link\s+0\s+Tx\s+Activity\s*=\s*(True|False)/i),
+		networkLink0Rx: parseBool(/Network\s+Link\s+0\s+Rx\s+Activity\s*=\s*(True|False)/i),
+		networkLink1Up: parseBool(/Network\s+Link\s+1\s+Up\s*=\s*(True|False)/i),
+		networkLink1Tx: parseBool(/Network\s+Link\s+1\s+Tx\s+Activity\s*=\s*(True|False)/i),
+		networkLink1Rx: parseBool(/Network\s+Link\s+1\s+Rx\s+Activity\s*=\s*(True|False)/i),
+		statusCode: /Status\s*=\s*(0x[0-9A-Fa-f]+)/i.exec(input)?.[1]?.toUpperCase()
+	};
+
+	// Check if we found any values
+	const hasData = Object.values(status).some(val => val !== null);
+	if (!hasData) {
+		resultsDiv.innerHTML = '<div class="mezz-error">Could not parse status values. Please check the format.<br><br>Expected format:<br>Pcie Lane 0 Up = True<br>Network Link 0 Up = False<br>etc.</div>';
+		return;
+	}
+
+	// Determine fault condition
+	let diagnosis = '';
+	let severity = '';
+	let recommendation = '';
+
+	// Rule 1: Good - PCIe up, both links up, Status = 0xAF
+	if (status.pcieLane0Up === true && status.pcieLane1Up === true &&
+	    status.networkLink0Up === true && status.networkLink1Up === true &&
+	    status.statusCode === '0XAF') {
+		diagnosis = 'Good Status (Reseat all DAC Cables)';
+		severity = 'good';
+		recommendation = 'System is functioning properly. Both PCIe lanes and network links are up with status code 0xAF.';
+	}
+	// Rule 2: Bad Loop back cable
+	else if (status.pcieLane0Up === true && status.pcieLane1Up === true &&
+	         status.networkLink0Up === false && status.networkLink0Tx === true && status.networkLink0Rx === false &&
+	         status.networkLink1Up === true && status.networkLink1Tx === false && status.networkLink1Rx === true) {
+		diagnosis = 'Bad Loop Back Cable';
+		severity = 'fault';
+		recommendation = 'Replace the loop back cable from the NIC to the network interface.';
+	}
+	// Rule 3: Bad DAC cable
+	else if (status.pcieLane0Up === true && status.pcieLane1Up === true &&
+	         status.networkLink0Up === false && status.networkLink0Tx === false && status.networkLink0Rx === false &&
+	         status.networkLink1Up === false && status.networkLink1Tx === false && status.networkLink1Rx === false) {
+		diagnosis = 'Bad DAC Cable from TOR to Tray Backplane';
+		severity = 'fault';
+		recommendation = 'Check and replace the DAC cable connection between the TOR (Top of Rack) switch and the tray backplane.';
+	}
+	// Rule 4: Bad Motherboard/NIC/Backplane
+	else if (status.pcieLane0Up === false && status.pcieLane1Up === false &&
+	         status.networkLink0Up === false && status.networkLink0Tx === false && status.networkLink0Rx === false &&
+	         status.networkLink1Up === false && status.networkLink1Tx === false && status.networkLink1Rx === false) {
+		diagnosis = 'Bad Motherboard, NIC, or Tray Backplane';
+		severity = 'fault';
+		recommendation = 'Hardware failure detected. Check the motherboard, NIC card, or tray backplane. May require component replacement.';
+	}
+	// Rule 5: Reseat all Cabling
+	else if (status.pcieLane0Up === true && status.pcieLane1Up === true &&
+	         status.networkLink0Up === true && status.networkLink1Up === true) {
+		diagnosis = 'Reseat All Cabling';
+		severity = 'warning';
+		recommendation = 'Links are up but status is not optimal. Try reseating all cable connections.';
+	}
+	// Default: Unknown condition
+	else {
+		diagnosis = 'Unknown Condition';
+		severity = 'warning';
+		recommendation = 'The status does not match known fault patterns. Review the values manually or consult documentation.';
+	}
+
+	// Build results HTML
+	resultsDiv.innerHTML = `
+		<div class="mezz-diagnosis mezz-${severity}">
+			<h3>${diagnosis}</h3>
+			<p>${recommendation}</p>
+		</div>
+	`;
 }

@@ -1,6 +1,18 @@
 let appState = null;
 
 /**
+ * Adjust search results max-height based on viewport
+ */
+function adjustSearchResultsHeight() {
+	const searchResults = document.getElementById('search-results');
+	const rect = searchResults.getBoundingClientRect();
+	const viewportHeight = window.innerHeight;
+	const bottomPadding = 30;
+	const maxHeight = viewportHeight - rect.top - bottomPadding;
+	searchResults.style.maxHeight = `${Math.max(200, maxHeight)}px`;
+}
+
+/**
  * Initialize search functionality
  */
 export function initializeSearch(state) {
@@ -58,6 +70,7 @@ function showAllCommands() {
 	if (commands.length === 0) {
 		searchResults.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--text-color);">No commands available for this generation</div>';
 		searchResults.classList.remove('hidden');
+		adjustSearchResultsHeight();
 		return;
 	}
 
@@ -71,6 +84,7 @@ function showAllCommands() {
 	}
 
 	searchResults.classList.remove('hidden');
+	adjustSearchResultsHeight();
 }
 
 /**
@@ -90,12 +104,14 @@ function performSearch(query) {
 			</div>
 		`;
 		searchResults.classList.remove('hidden');
+		adjustSearchResultsHeight();
 		return;
 	}
 
 	if (commands.length === 0) {
 		searchResults.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--text-color);">No commands available for this generation</div>';
 		searchResults.classList.remove('hidden');
+		adjustSearchResultsHeight();
 		return;
 	}
 
@@ -105,6 +121,7 @@ function performSearch(query) {
 	if (results.length === 0) {
 		searchResults.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--text-color);">No results found</div>';
 		searchResults.classList.remove('hidden');
+		adjustSearchResultsHeight();
 		return;
 	}
 
@@ -118,6 +135,7 @@ function performSearch(query) {
 	}
 
 	searchResults.classList.remove('hidden');
+	adjustSearchResultsHeight();
 }
 
 /**

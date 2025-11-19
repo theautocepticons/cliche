@@ -2,6 +2,7 @@ import { initializeSearch } from './search.js';
 import { initializeUI } from './ui.js';
 import { initializeCommandBuilder } from './command-builder.js';
 import { showHistoryModal, showRecentHistory, autoHideRecentHistory } from './history.js';
+import { showBookmarksModal } from './bookmarks.js';
 
 // App State
 const state = {
@@ -31,10 +32,22 @@ async function init() {
 // History Management
 function initializeHistory() {
 	const historyButton = document.getElementById('history-button');
+	const recentButton = document.getElementById('recent-button');
+	const bookmarksButton = document.getElementById('bookmarks-button');
 
 	// History button click handler
 	historyButton.addEventListener('click', () => {
 		showHistoryModal();
+	});
+
+	// Recent button click handler
+	recentButton.addEventListener('click', () => {
+		showRecentHistory(10);
+	});
+
+	// Bookmarks button click handler
+	bookmarksButton.addEventListener('click', () => {
+		showBookmarksModal();
 	});
 
 	// Show recent history on page load
@@ -101,10 +114,22 @@ function initializeGenToggle() {
 	const genLegacy = document.getElementById('gen-legacy');
 	const gen6Plus = document.getElementById('gen-6plus');
 
+	// Load saved generation preference
+	const savedGen = localStorage.getItem('cliche_generation') || 'legacy';
+	if (savedGen === '6plus') {
+		state.currentGeneration = '6plus';
+		state.activeGeneration = '6plus';
+		gen6Plus.classList.remove('btn-secondary');
+		gen6Plus.classList.add('btn-primary', 'active');
+		genLegacy.classList.remove('btn-primary', 'active');
+		genLegacy.classList.add('btn-secondary');
+	}
+
 	genLegacy.addEventListener('click', () => {
 		if (state.currentGeneration !== 'legacy') {
 			state.currentGeneration = 'legacy';
 			state.activeGeneration = 'legacy';
+			localStorage.setItem('cliche_generation', 'legacy');
 			genLegacy.classList.remove('btn-secondary');
 			genLegacy.classList.add('btn-primary', 'active');
 			gen6Plus.classList.remove('btn-primary', 'active');
@@ -120,6 +145,7 @@ function initializeGenToggle() {
 		if (state.currentGeneration !== '6plus') {
 			state.currentGeneration = '6plus';
 			state.activeGeneration = '6plus';
+			localStorage.setItem('cliche_generation', '6plus');
 			gen6Plus.classList.remove('btn-secondary');
 			gen6Plus.classList.add('btn-primary', 'active');
 			genLegacy.classList.remove('btn-primary', 'active');

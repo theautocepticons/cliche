@@ -26,8 +26,7 @@
 				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index" }
 			},
 			"flags": {
-				"a": { "flag": "-a", "description": "All blades", "boolean": true }
-			}
+				}
 		},
 		{
 			"id": "getchassishealth",
@@ -268,8 +267,7 @@
 				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index" }
 			},
 			"flags": {
-				"a": { "flag": "-a", "description": "All blades", "boolean": true }
-			}
+				}
 		},
 		{
 			"id": "setpoweroff",
@@ -282,8 +280,7 @@
 				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index" }
 			},
 			"flags": {
-				"a": { "flag": "-a", "description": "All blades", "boolean": true }
-			}
+				}
 		},
 		{
 			"id": "getpowerstate",
@@ -296,8 +293,7 @@
 				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index" }
 			},
 			"flags": {
-				"a": { "flag": "-a", "description": "All blades", "boolean": true }
-			}
+				}
 		},
 		{
 			"id": "setbladeon",
@@ -310,8 +306,7 @@
 				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index" }
 			},
 			"flags": {
-				"a": { "flag": "-a", "description": "All connected blades", "boolean": true }
-			}
+				}
 		},
 		{
 			"id": "setbladeoff",
@@ -324,8 +319,7 @@
 				"i": { "flag": "-i", "placeholder": "1-48", "description": "Blade index" }
 			},
 			"flags": {
-				"a": { "flag": "-a", "description": "All connected blades", "boolean": true }
-			}
+				}
 		},
 		{
 			"id": "getbladestate",
@@ -338,8 +332,7 @@
 				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index" }
 			},
 			"flags": {
-				"a": { "flag": "-a", "description": "All connected blades", "boolean": true }
-			}
+				}
 		},
 		{
 			"id": "setbladedefaultpowerstate",
@@ -353,8 +346,7 @@
 				"s": { "flag": "-s", "placeholder": "0|1", "description": "State (0=stay OFF, 1=power ON)", "required": true }
 			},
 			"flags": {
-				"a": { "flag": "-a", "description": "All connected blades", "boolean": true }
-			}
+				}
 		},
 		{
 			"id": "getbladedefaultpowerstate",
@@ -367,8 +359,7 @@
 				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index" }
 			},
 			"flags": {
-				"a": { "flag": "-a", "description": "All blades", "boolean": true }
-			}
+				}
 		},
 		{
 			"id": "setbladeactivepowercycle",
@@ -382,8 +373,7 @@
 				"t": { "flag": "-t", "placeholder": "seconds", "description": "Power off time", "default": "0" }
 			},
 			"flags": {
-				"a": { "flag": "-a", "description": "All blades", "boolean": true }
-			}
+				}
 		},
 		{
 			"id": "setbladeattentionledon",
@@ -396,8 +386,7 @@
 				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index" }
 			},
 			"flags": {
-				"a": { "flag": "-a", "description": "All blades", "boolean": true }
-			}
+				}
 		},
 		{
 			"id": "setbladeattentionledoff",
@@ -410,8 +399,7 @@
 				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index" }
 			},
 			"flags": {
-				"a": { "flag": "-a", "description": "All blades", "boolean": true }
-			}
+				}
 		},
 		{
 			"id": "readbladelog",
@@ -448,8 +436,7 @@
 				"l": { "flag": "-l", "placeholder": "watts", "description": "Power limit in Watts", "required": true }
 			},
 			"flags": {
-				"a": { "flag": "-a", "description": "All blades", "boolean": true }
-			}
+				}
 		},
 		{
 			"id": "setbladepowerlimiton",
@@ -462,8 +449,7 @@
 				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index" }
 			},
 			"flags": {
-				"a": { "flag": "-a", "description": "All blades", "boolean": true }
-			}
+				}
 		},
 		{
 			"id": "setbladepowerlimitoff",
@@ -476,8 +462,7 @@
 				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index" }
 			},
 			"flags": {
-				"a": { "flag": "-a", "description": "All blades", "boolean": true }
-			}
+				}
 		},
 		{
 			"id": "getbladepowerlimit",
@@ -490,8 +475,7 @@
 				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index" }
 			},
 			"flags": {
-				"a": { "flag": "-a", "description": "All blades", "boolean": true }
-			}
+				}
 		},
 		{
 			"id": "getbladepowerreading",
@@ -504,8 +488,7 @@
 				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index" }
 			},
 			"flags": {
-				"a": { "flag": "-a", "description": "All blades", "boolean": true }
-			}
+				}
 		},
 		{
 			"id": "getnextboot",
@@ -645,8 +628,7 @@
 				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index" }
 			},
 			"flags": {
-				"a": { "flag": "-a", "description": "All connected blades", "boolean": true }
-			}
+				}
 		},
 		{
 			"id": "setbladedatasafeoff",
@@ -659,8 +641,7 @@
 				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index" }
 			},
 			"flags": {
-				"a": { "flag": "-a", "description": "All connected blades", "boolean": true }
-			}
+				}
 		},
 		{
 			"id": "setdatasafepoweron",
@@ -673,8 +654,7 @@
 				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index" }
 			},
 			"flags": {
-				"a": { "flag": "-a", "description": "All connected blades", "boolean": true }
-			}
+				}
 		},
 		{
 			"id": "setdatasafepoweroff",
@@ -687,8 +667,7 @@
 				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index" }
 			},
 			"flags": {
-				"a": { "flag": "-a", "description": "All connected blades", "boolean": true }
-			}
+				}
 		},
 		{
 			"id": "setbladedatasafeactivepowercycle",
@@ -701,8 +680,7 @@
 				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index" }
 			},
 			"flags": {
-				"a": { "flag": "-a", "description": "All connected blades", "boolean": true }
-			}
+				}
 		},
 		{
 			"id": "getbladedatasafepowerstate",
@@ -715,8 +693,7 @@
 				"i": { "flag": "-i", "placeholder": "1-24", "description": "Blade index" }
 			},
 			"flags": {
-				"a": { "flag": "-a", "description": "All connected blades", "boolean": true }
-			}
+				}
 		},
 		{
 			"id": "getblademezzpassthroughmode",

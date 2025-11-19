@@ -270,6 +270,7 @@ h1 {
 	border-radius: 10px;
 	box-shadow: 0 10px 25px var(--card-shadow);
 	z-index: 1000;
+	margin-bottom: 4rem;
 }
 
 .search-results.hidden {
@@ -321,6 +322,12 @@ h1 {
 
 .command-card.hidden {
 	display: none;
+}
+
+div#cards {
+	.card-margin:not(:last-child) {
+		margin-bottom: 1rem;
+	}
 }
 
 @keyframes slideIn {
@@ -674,6 +681,62 @@ h1 {
 	width: 1.75rem;
 	height: 1.75rem;
 	color: var(--text-color);
+	filter: brightness(0);
+}
+
+[data-theme="dark"] .history-icon {
+	filter: brightness(0) invert(1);
+}
+
+.button-icon {
+	width: 1rem;
+	height: 1rem;
+	vertical-align: middle;
+	filter: brightness(0);
+}
+
+[data-theme="dark"] .button-icon {
+	filter: brightness(0) invert(1);
+}
+
+/* Custom Tooltips */
+.history-button-container {
+	position: relative;
+}
+
+.history-button {
+	position: relative;
+}
+
+.tooltip {
+	position: absolute;
+	bottom: calc(100% + 8px);
+	left: 50%;
+	transform: translateX(-50%);
+	background-color: #1f2937;
+	color: white;
+	padding: 6px 10px;
+	border-radius: 4px;
+	font-size: 0.75rem;
+	white-space: nowrap;
+	z-index: 1000;
+	pointer-events: none;
+	opacity: 0;
+	transition: opacity 0.15s ease;
+}
+
+.tooltip::after {
+	content: '';
+	position: absolute;
+	top: calc(100% - 1px);
+	left: 50%;
+	transform: translateX(-50%);
+	border: 5px solid transparent;
+	border-top-color: #1f2937;
+}
+
+.history-button:hover .tooltip {
+	opacity: 1;
 }
 
 /* History Modal */
@@ -959,7 +1022,6 @@ h1 {
 	border-radius: 10px;
 	overflow: hidden;
 	padding: 20px;
-	margin-bottom: 20px;
 	box-shadow: 0 2px 8px var(--card-shadow);
 	animation: slideIn 0.3s ease;
 }
@@ -1079,6 +1141,118 @@ h1 {
 	border-radius: 4px;
 	font-size: 0.75rem;
 	font-weight: 600;
+}
+
+/* Blade Mezz Status Analyzer Styles */
+.mezz-analyzer {
+	margin-top: 15px;
+	padding-top: 15px;
+	border-top: 1px solid var(--border-color);
+}
+
+.mezz-analyzer-title {
+	font-weight: 600;
+	font-size: 0.9rem;
+	margin-bottom: 10px;
+	color: var(--text-color);
+}
+
+.mezz-textarea {
+	width: 100%;
+	min-height: 120px;
+	padding: 12px;
+	font-family: 'Courier New', Courier, monospace;
+	font-size: 13px;
+	border: 1px solid var(--input-border);
+	border-radius: 8px;
+	background-color: var(--input-bg);
+	color: var(--text-color);
+	resize: vertical;
+	transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.mezz-textarea:focus {
+	outline: none;
+	border-color: var(--input-focus);
+	box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.mezz-textarea::placeholder {
+	color: var(--text-color);
+	opacity: 0.5;
+}
+
+.mezz-results:not(:empty) {
+	margin-top: 12px;
+}
+
+.mezz-diagnosis {
+	padding: 12px 16px;
+	border-radius: 8px;
+	border-left: 4px solid;
+}
+
+.mezz-diagnosis h3 {
+	font-size: 14px;
+	font-weight: 600;
+	margin-bottom: 6px;
+}
+
+.mezz-diagnosis p {
+	font-size: 13px;
+	margin: 0;
+	line-height: 1.5;
+}
+
+.mezz-good {
+	background-color: #dcfce7;
+	border-left-color: #16a34a;
+	color: #15803d;
+}
+
+[data-theme="dark"] .mezz-good {
+	background-color: #14532d;
+	border-left-color: #22c55e;
+	color: #86efac;
+}
+
+.mezz-fault {
+	background-color: #fee2e2;
+	border-left-color: #dc2626;
+	color: #991b1b;
+}
+
+[data-theme="dark"] .mezz-fault {
+	background-color: #7f1d1d;
+	border-left-color: #ef4444;
+	color: #fca5a5;
+}
+
+.mezz-warning {
+	background-color: #fef3c7;
+	border-left-color: #f59e0b;
+	color: #92400e;
+}
+
+[data-theme="dark"] .mezz-warning {
+	background-color: #78350f;
+	border-left-color: #fbbf24;
+	color: #fde68a;
+}
+
+.mezz-error {
+	padding: 12px;
+	background-color: #fee2e2;
+	color: #991b1b;
+	border-radius: 8px;
+	font-size: 13px;
+	border-left: 4px solid #dc2626;
+}
+
+[data-theme="dark"] .mezz-error {
+	background-color: #7f1d1d;
+	color: #fca5a5;
+	border-left-color: #ef4444;
 }
 
 /* Responsive adjustments for history */
