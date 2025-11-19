@@ -58,6 +58,11 @@ export function initializeSearch(state) {
 			hideSearchResults();
 		}
 	});
+
+	// Close when page loses focus
+	window.addEventListener('blur', () => {
+		hideSearchResults();
+	});
 }
 
 /**
@@ -301,4 +306,16 @@ function selectCommand(command) {
 function hideSearchResults() {
 	const searchResults = document.getElementById('search-results');
 	searchResults.classList.add('hidden');
+
+	// Stop JoJo easter egg audio and shaking
+	const jojoAudio = document.getElementById('jojo-audio');
+	if (jojoAudio) {
+		jojoAudio.pause();
+		jojoAudio.currentTime = 0;
+	}
+	if (window.jojoShakeTimeout) {
+		clearTimeout(window.jojoShakeTimeout);
+		window.jojoShakeTimeout = null;
+	}
+	document.body.classList.remove('jojo-shake');
 }
