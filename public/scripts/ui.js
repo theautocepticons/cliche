@@ -530,44 +530,45 @@ function analyzeBlademezzStatus() {
 	let severity = '';
 	let recommendation = '';
 
-	// Rule 1: Good - PCIe up, both links up, Status = 0xAF
+	// Rule 1: Bad Loop back cable - Link 0 down with Tx only, Link 1 up with Rx only
 	if (status.pcieLane0Up === true && status.pcieLane1Up === true &&
-	    status.networkLink0Up === true && status.networkLink1Up === true &&
-	    status.statusCode === '0XAF') {
-		diagnosis = 'Good Status (Reseat all DAC Cables)';
-		severity = 'good';
-		recommendation = 'System is functioning properly. Both PCIe lanes and network links are up with status code 0xAF.';
-	}
-	// Rule 2: Bad Loop back cable
-	else if (status.pcieLane0Up === true && status.pcieLane1Up === true &&
-	         status.networkLink0Up === false && status.networkLink0Tx === true && status.networkLink0Rx === false &&
-	         status.networkLink1Up === true && status.networkLink1Tx === false && status.networkLink1Rx === true) {
+	    status.networkLink0Up === false && status.networkLink0Tx === true && status.networkLink0Rx === false &&
+	    status.networkLink1Up === true && status.networkLink1Tx === false && status.networkLink1Rx === true) {
 		diagnosis = 'Bad Loop Back Cable';
 		severity = 'fault';
 		recommendation = 'Replace the loop back cable from the NIC to the network interface.';
 	}
-	// Rule 3: Bad DAC cable
+	// Rule 2: Network Cable to Backplane/Switch Port - All network links down
 	else if (status.pcieLane0Up === true && status.pcieLane1Up === true &&
 	         status.networkLink0Up === false && status.networkLink0Tx === false && status.networkLink0Rx === false &&
 	         status.networkLink1Up === false && status.networkLink1Tx === false && status.networkLink1Rx === false) {
-		diagnosis = 'Bad DAC Cable from TOR to Tray Backplane';
+		diagnosis = 'Network Cable to Backplane/Switch Port Issue';
 		severity = 'fault';
-		recommendation = 'Check and replace the DAC cable connection between the TOR (Top of Rack) switch and the tray backplane.';
+		recommendation = 'Check the network cable connection from the blade to the backplane or switch port.';
 	}
-	// Rule 4: Bad Motherboard/NIC/Backplane
-	else if (status.pcieLane0Up === false && status.pcieLane1Up === false &&
-	         status.networkLink0Up === false && status.networkLink0Tx === false && status.networkLink0Rx === false &&
-	         status.networkLink1Up === false && status.networkLink1Tx === false && status.networkLink1Rx === false) {
-		diagnosis = 'Bad Motherboard, NIC, or Tray Backplane';
+	// Rule 3: Bad Motherboard/NIC/Backplane - PCIe lanes down (network links don\'t matter)
+	else if (status.pcieLane0Up === false && status.pcieLane1Up === false) {
+		diagnosis = 'Bad Motherboard, NIC, or Backplane';
 		severity = 'fault';
-		recommendation = 'Hardware failure detected. Check the motherboard, NIC card, or tray backplane. May require component replacement.';
+		recommendation = 'Hardware failure detected. PCIe lanes are down. Check the motherboard, NIC card, or backplane. May require component replacement.';
 	}
-	// Rule 5: Reseat all Cabling
+	// Rule 4: Reseat all DAC Cables - Links up but Rx/Tx issues, Status = 0xAF
 	else if (status.pcieLane0Up === true && status.pcieLane1Up === true &&
-	         status.networkLink0Up === true && status.networkLink1Up === true) {
-		diagnosis = 'Reseat All Cabling';
+	         status.networkLink0Up === true && status.networkLink0Tx === true && status.networkLink0Rx === false &&
+	         status.networkLink1Up === true && status.networkLink1Tx === false && status.networkLink1Rx === true &&
+	         status.statusCode === '0XAF') {
+		diagnosis = 'Reseat All DAC Cables';
 		severity = 'warning';
-		recommendation = 'Links are up but status is not optimal. Try reseating all cable connections.';
+		recommendation = 'Network links are up but showing Tx/Rx activity issues. Reseat all DAC cable connections.';
+	}
+	// Rule 5: Good Status - All links up and functioning
+	else if (status.pcieLane0Up === true && status.pcieLane1Up === true &&
+	         status.networkLink0Up === true && status.networkLink1Up === true &&
+	         status.networkLink0Tx === true && status.networkLink0Rx === true &&
+	         status.networkLink1Tx === true && status.networkLink1Rx === true) {
+		diagnosis = 'Good Status';
+		severity = 'good';
+		recommendation = 'System is functioning properly. Both PCIe lanes and network links are up with full activity.';
 	}
 	// Default: Unknown condition
 	else {
