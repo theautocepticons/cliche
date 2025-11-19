@@ -570,11 +570,93 @@ function analyzeBlademezzStatus() {
 		severity = 'good';
 		recommendation = 'System is functioning properly. Both PCIe lanes and network links are up with full activity.';
 	}
-	// Default: Unknown condition
+	// Default: Unknown condition - perform probabilistic inference
 	else {
-		diagnosis = 'Unknown Condition';
+		// Build probability table based on individual signals
+		const issues = {
+			'Motherboard/NIC/Backplane': 0,
+			'Loop Back Cable': 0,
+			'DAC Cable to Switch': 0,
+			'Network Configuration': 0
+		};
+		const anomalies = [];
+
+		// Analyze PCIe lanes - critical indicators for hardware
+		if (status.pcieLane0Up === false) {
+			issues['Motherboard/NIC/Backplane'] += 45;
+			anomalies.push('PCIe Lane 0 is down');
+		}
+		if (status.pcieLane1Up === false) {
+			issues['Motherboard/NIC/Backplane'] += 45;
+			anomalies.push('PCIe Lane 1 is down');
+		}
+
+		// Analyze Network Link 0 (loop back to NIC)
+		if (status.networkLink0Up === false) {
+			issues['Loop Back Cable'] += 40;
+			issues['Motherboard/NIC/Backplane'] += 20;
+			anomalies.push('Network Link 0 is down');
+		}
+		if (status.networkLink0Tx === true && status.networkLink0Rx === false) {
+			issues['Loop Back Cable'] += 30;
+			anomalies.push('Link 0: Transmitting but not receiving');
+		}
+		if (status.networkLink0Tx === false && status.networkLink0Rx === true) {
+			issues['Loop Back Cable'] += 25;
+			issues['Motherboard/NIC/Backplane'] += 15;
+			anomalies.push('Link 0: Receiving but not transmitting');
+		}
+		if (status.networkLink0Tx === false && status.networkLink0Rx === false && status.networkLink0Up === true) {
+			issues['Network Configuration'] += 30;
+			anomalies.push('Link 0: Up but no activity');
+		}
+
+		// Analyze Network Link 1 (cable to switch)
+		if (status.networkLink1Up === false) {
+			issues['DAC Cable to Switch'] += 40;
+			anomalies.push('Network Link 1 is down');
+		}
+		if (status.networkLink1Tx === true && status.networkLink1Rx === false) {
+			issues['DAC Cable to Switch'] += 35;
+			anomalies.push('Link 1: Transmitting but not receiving from switch');
+		}
+		if (status.networkLink1Tx === false && status.networkLink1Rx === true) {
+			issues['DAC Cable to Switch'] += 30;
+			anomalies.push('Link 1: Receiving but not transmitting to switch');
+		}
+		if (status.networkLink1Tx === false && status.networkLink1Rx === false && status.networkLink1Up === true) {
+			issues['Network Configuration'] += 30;
+			anomalies.push('Link 1: Up but no activity');
+		}
+
+		// Sort issues by probability
+		const sortedIssues = Object.entries(issues)
+			.filter(([, prob]) => prob > 0)
+			.sort((a, b) => b[1] - a[1])
+			.map(([issue, prob]) => ({
+				issue,
+				probability: Math.min(prob, 95) // Cap at 95%
+			}));
+
+		// Build detailed output
+		let anomalyList = anomalies.length > 0
+			? '<strong>Detected Anomalies:</strong><ul style="margin-left: 20px;">' + anomalies.map(a => `<li>${a}</li>`).join('') + '</ul>'
+			: '';
+
+		let probabilityTable = '';
+		if (sortedIssues.length > 0) {
+			probabilityTable = '<strong>Probable Causes:</strong><ul style="margin-left: 20px;">';
+			sortedIssues.forEach(({issue, probability}) => {
+				let confidence = probability >= 70 ? 'High' : probability >= 40 ? 'Medium' : 'Low';
+				probabilityTable += `<li>${issue}: ${probability}% (${confidence} confidence)</li>`;
+			});
+			probabilityTable += '</ul>';
+		}
+
+		diagnosis = 'Unknown Pattern - Analysis Required';
 		severity = 'warning';
-		recommendation = 'The status does not match known fault patterns. Review the values manually or consult documentation.';
+		recommendation = anomalyList + probabilityTable +
+			'<br><em>This pattern does not match known configurations. Review the probable causes above and check components in order of likelihood.</em>';
 	}
 
 	// Build results HTML
