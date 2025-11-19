@@ -108,10 +108,20 @@ function performSearch(query) {
 		adjustSearchResultsHeight();
 		jojoAudio.currentTime = 0;
 		jojoAudio.play();
+		// Start shaking after 2 seconds
+		window.jojoShakeTimeout = setTimeout(() => {
+			document.body.classList.add('jojo-shake');
+		}, 2000);
 		return;
 	} else {
 		jojoAudio.pause();
 		jojoAudio.currentTime = 0;
+		// Stop shaking
+		if (window.jojoShakeTimeout) {
+			clearTimeout(window.jojoShakeTimeout);
+			window.jojoShakeTimeout = null;
+		}
+		document.body.classList.remove('jojo-shake');
 	}
 
 	if (commands.length === 0) {

@@ -1304,3 +1304,38 @@ div#cards {
 		flex: 1;
 	}
 }
+
+
+/* JoJo Easter Egg Shake Animations */
+@keyframes shake1 {
+	0%, 100% { transform: translate(0, 0) rotate(0deg); }
+	25% { transform: translate(-2px, 1px) rotate(-0.5deg); }
+	50% { transform: translate(2px, -1px) rotate(0.5deg); }
+	75% { transform: translate(-1px, 2px) rotate(-0.3deg); }
+}
+
+@keyframes shake2 {
+	0%, 100% { transform: translate(0, 0) rotate(0deg); }
+	20% { transform: translate(1px, -2px) rotate(0.4deg); }
+	40% { transform: translate(-2px, 1px) rotate(-0.6deg); }
+	60% { transform: translate(2px, 2px) rotate(0.3deg); }
+	80% { transform: translate(-1px, -1px) rotate(-0.4deg); }
+}
+
+@keyframes shake3 {
+	0%, 100% { transform: translate(0, 0) rotate(0deg); }
+	33% { transform: translate(2px, 1px) rotate(0.5deg); }
+	66% { transform: translate(-1px, -2px) rotate(-0.5deg); }
+}
+
+.jojo-shake > *:nth-child(3n+1) {
+	animation: shake1 0.15s infinite;
+}
+
+.jojo-shake > *:nth-child(3n+2) {
+	animation: shake2 0.12s infinite;
+}
+
+.jojo-shake > *:nth-child(3n) {
+	animation: shake3 0.18s infinite;
+}
