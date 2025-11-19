@@ -1,0 +1,4725 @@
+{
+	"commands": [
+		{
+			"id": "show-network",
+			"name": "Show Network",
+			"base": "show network",
+			"description": "Display all physical network interfaces",
+			"category": "Network",
+			"keywords": [
+				"network",
+				"interface",
+				"physical",
+				"eth0",
+				"eth1"
+			],
+			"flags": {
+				"h": {
+					"flag": "-h",
+					"description": "Help",
+					"boolean": true
+				}
+			}
+		},
+		{
+			"id": "show-network-interface",
+			"name": "Show Network Interface",
+			"base": "show network interface",
+			"description": "Display specific interface details (IPv4/IPv6, MAC address, status)",
+			"category": "Network",
+			"keywords": [
+				"network",
+				"interface",
+				"ipv4",
+				"ipv6",
+				"mac",
+				"address",
+				"status"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "eth0|eth1",
+					"description": "Interface name",
+					"required": true
+				}
+			},
+			"flags": {
+				"h": {
+					"flag": "-h",
+					"description": "Help",
+					"boolean": true
+				}
+			}
+		},
+		{
+			"id": "show-network-ping",
+			"name": "Show Network Ping",
+			"base": "show network ping",
+			"description": "Test network connectivity to remote host",
+			"category": "Network",
+			"keywords": [
+				"network",
+				"ping",
+				"connectivity",
+				"test",
+				"icmp"
+			],
+			"params": {
+				"a": {
+					"flag": "-a",
+					"placeholder": "address",
+					"description": "Destination IP address or hostname",
+					"required": true
+				},
+				"c": {
+					"flag": "-c",
+					"placeholder": "count",
+					"description": "Number of ping packets to send"
+				},
+				"w": {
+					"flag": "-w",
+					"placeholder": "timeout",
+					"description": "Timeout in seconds"
+				}
+			},
+			"flags": {
+				"h": {
+					"flag": "-h",
+					"description": "Help",
+					"boolean": true
+				}
+			}
+		},
+		{
+			"id": "show-network-traceroute",
+			"name": "Show Network Traceroute",
+			"base": "show network traceroute",
+			"description": "Discover route to remote host",
+			"category": "Network",
+			"keywords": [
+				"network",
+				"traceroute",
+				"route",
+				"hop",
+				"path"
+			],
+			"params": {
+				"a": {
+					"flag": "-a",
+					"placeholder": "address",
+					"description": "Destination IP address or hostname",
+					"required": true
+				}
+			},
+			"flags": {
+				"u": {
+					"flag": "-u",
+					"description": "Use UDP instead of ICMP",
+					"boolean": true
+				},
+				"h": {
+					"flag": "-h",
+					"description": "Help",
+					"boolean": true
+				}
+			}
+		},
+		{
+			"id": "set-network-static",
+			"name": "Set Network Static",
+			"base": "set network static",
+			"description": "Configure static IP address for network interface",
+			"category": "Network",
+			"keywords": [
+				"network",
+				"static",
+				"ip",
+				"address",
+				"configure",
+				"set"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "eth0|eth1",
+					"description": "Interface name",
+					"required": true
+				},
+				"a": {
+					"flag": "-a",
+					"placeholder": "address",
+					"description": "Static IP address",
+					"required": true
+				},
+				"s": {
+					"flag": "-s",
+					"placeholder": "subnet",
+					"description": "Subnet mask or prefix length",
+					"required": true
+				},
+				"g": {
+					"flag": "-g",
+					"placeholder": "gateway",
+					"description": "Default gateway IP address"
+				},
+				"b": {
+					"flag": "-b",
+					"placeholder": "broadcast",
+					"description": "Broadcast address"
+				}
+			},
+			"flags": {
+				"v": {
+					"flag": "-v 6",
+					"description": "Use IPv6 instead of IPv4",
+					"boolean": true
+				},
+				"h": {
+					"flag": "-h",
+					"description": "Help",
+					"boolean": true
+				}
+			}
+		},
+		{
+			"id": "set-network-dhcp",
+			"name": "Set Network DHCP",
+			"base": "set network dhcp",
+			"description": "Enable DHCP for network interface",
+			"category": "Network",
+			"keywords": [
+				"network",
+				"dhcp",
+				"dynamic",
+				"ip",
+				"address"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "eth0|eth1",
+					"description": "Interface name",
+					"required": true
+				},
+				"g": {
+					"flag": "-g",
+					"placeholder": "gateway",
+					"description": "Default gateway IP address"
+				}
+			},
+			"flags": {
+				"v": {
+					"flag": "-v 6",
+					"description": "Use DHCPv6 instead of DHCPv4",
+					"boolean": true
+				},
+				"h": {
+					"flag": "-h",
+					"description": "Help",
+					"boolean": true
+				}
+			}
+		},
+		{
+			"id": "set-network-interface-enable",
+			"name": "Set Network Interface Enable",
+			"base": "set network interface enable",
+			"description": "Enable network interface",
+			"category": "Network",
+			"keywords": [
+				"network",
+				"interface",
+				"enable",
+				"up"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "interface",
+					"description": "Interface name to enable",
+					"required": true
+				}
+			},
+			"flags": {
+				"h": {
+					"flag": "-h",
+					"description": "Help",
+					"boolean": true
+				}
+			}
+		},
+		{
+			"id": "set-network-interface-disable",
+			"name": "Set Network Interface Disable",
+			"base": "set network interface disable",
+			"description": "Disable network interface",
+			"category": "Network",
+			"keywords": [
+				"network",
+				"interface",
+				"disable",
+				"down"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "interface",
+					"description": "Interface name to disable",
+					"required": true
+				}
+			},
+			"flags": {
+				"h": {
+					"flag": "-h",
+					"description": "Help",
+					"boolean": true
+				}
+			}
+		},
+		{
+			"id": "show-manager-info",
+			"name": "Show Manager Info",
+			"base": "show manager info",
+			"description": "Display manager component status (servers, PSUs, manager info)",
+			"category": "Manager",
+			"keywords": [
+				"manager",
+				"info",
+				"status",
+				"servers",
+				"psu",
+				"component"
+			],
+			"flags": {
+				"s": {
+					"flag": "-s",
+					"description": "Show server information",
+					"boolean": true
+				},
+				"p": {
+					"flag": "-p",
+					"description": "Show power supply information",
+					"boolean": true
+				},
+				"m": {
+					"flag": "-m",
+					"description": "Show manager information",
+					"boolean": true
+				},
+				"h": {
+					"flag": "-h",
+					"description": "Help",
+					"boolean": true
+				}
+			}
+		},
+		{
+			"id": "show-manager-health",
+			"name": "Show Manager Health",
+			"base": "show manager health",
+			"description": "Display health status (servers, PSU, memory, temperature)",
+			"category": "Manager",
+			"keywords": [
+				"manager",
+				"health",
+				"status",
+				"psu",
+				"memory",
+				"temperature"
+			],
+			"flags": {
+				"s": {
+					"flag": "-s",
+					"description": "Show server health",
+					"boolean": true
+				},
+				"p": {
+					"flag": "-p",
+					"description": "Show PSU health",
+					"boolean": true
+				},
+				"m": {
+					"flag": "-m",
+					"description": "Show memory health",
+					"boolean": true
+				},
+				"h": {
+					"flag": "-h",
+					"description": "Help",
+					"boolean": true
+				}
+			}
+		},
+		{
+			"id": "show-manager-version",
+			"name": "Show Manager Version",
+			"base": "show manager version",
+			"description": "Display manager version information (package, rootfs, U-Boot, kernel, devicetree)",
+			"category": "Manager",
+			"keywords": [
+				"manager",
+				"version",
+				"package",
+				"rootfs",
+				"uboot",
+				"kernel"
+			]
+		},
+		{
+			"id": "show-manager-led",
+			"name": "Show Manager LED",
+			"base": "show manager led",
+			"description": "Get manager LED status (ON/OFF)",
+			"category": "Manager",
+			"keywords": [
+				"manager",
+				"led",
+				"status",
+				"light"
+			]
+		},
+		{
+			"id": "show-manager-inventory",
+			"name": "Show Manager Inventory",
+			"base": "show manager inventory",
+			"description": "Display manager inventory details",
+			"category": "Manager",
+			"keywords": [
+				"manager",
+				"inventory",
+				"details"
+			]
+		},
+		{
+			"id": "show-manager-scandevice",
+			"name": "Show Manager Scan Device",
+			"base": "show manager scandevice",
+			"description": "Display rack manager system information and device scan",
+			"category": "Manager",
+			"keywords": [
+				"manager",
+				"scan",
+				"device",
+				"system",
+				"information"
+			]
+		},
+		{
+			"id": "show-manager-fru",
+			"name": "Show Manager FRU",
+			"base": "show manager fru",
+			"description": "Get FRU information of R-SCM board",
+			"category": "Manager",
+			"keywords": [
+				"manager",
+				"fru",
+				"field",
+				"replaceable",
+				"unit",
+				"rscm"
+			]
+		},
+		{
+			"id": "show-manager-portmap",
+			"name": "Show Manager Portmap",
+			"base": "show manager portmap",
+			"description": "Display port mapping details for RSCM connections",
+			"category": "Manager",
+			"keywords": [
+				"manager",
+				"portmap",
+				"mapping",
+				"connections"
+			]
+		},
+		{
+			"id": "show-manager-type",
+			"name": "Show Manager Type",
+			"base": "show manager type",
+			"description": "Display manager type",
+			"category": "Manager",
+			"keywords": [
+				"manager",
+				"type"
+			]
+		},
+		{
+			"id": "show-manager-menu",
+			"name": "Show Manager Menu",
+			"base": "show manager menu",
+			"description": "Show recovery menu status (enabled/disabled)",
+			"category": "Manager",
+			"keywords": [
+				"manager",
+				"menu",
+				"recovery",
+				"status"
+			]
+		},
+		{
+			"id": "show-manager-time",
+			"name": "Show Manager Time",
+			"base": "show manager time",
+			"description": "Display manager system time and date in UTC",
+			"category": "Manager",
+			"keywords": [
+				"manager",
+				"time",
+				"date",
+				"utc",
+				"clock"
+			]
+		},
+		{
+			"id": "show-manager-log",
+			"name": "Show Manager Log",
+			"base": "show manager log",
+			"description": "Print rack manager telemetry log with filtering options",
+			"category": "Manager - Logging",
+			"keywords": [
+				"manager",
+				"log",
+				"telemetry",
+				"filter"
+			],
+			"params": {
+				"b": {
+					"flag": "-b",
+					"placeholder": "YYYY-MM-DD HH:MM:SS",
+					"description": "Start time filter"
+				},
+				"e": {
+					"flag": "-e",
+					"placeholder": "YYYY-MM-DD HH:MM:SS",
+					"description": "End time filter"
+				},
+				"s": {
+					"flag": "-s",
+					"placeholder": "startid",
+					"description": "Start log entry ID"
+				},
+				"f": {
+					"flag": "-f",
+					"placeholder": "endid",
+					"description": "End log entry ID"
+				},
+				"l": {
+					"flag": "-l",
+					"placeholder": "0-3",
+					"description": "Log level filter"
+				},
+				"c": {
+					"flag": "-c",
+					"placeholder": "component",
+					"description": "Component name filter"
+				},
+				"i": {
+					"flag": "-i",
+					"placeholder": "deviceid",
+					"description": "Device ID filter"
+				},
+				"p": {
+					"flag": "-p",
+					"placeholder": "portid",
+					"description": "Port ID filter"
+				}
+			}
+		},
+		{
+			"id": "show-manager-logread",
+			"name": "Show Manager Log Read",
+			"base": "show manager logread",
+			"description": "Print system log file contents",
+			"category": "Manager - Logging",
+			"keywords": [
+				"manager",
+				"log",
+				"read",
+				"file",
+				"system"
+			],
+			"params": {
+				"f": {
+					"flag": "-f",
+					"placeholder": "filename",
+					"description": "Log filename to read",
+					"required": true
+				},
+				"g": {
+					"flag": "-g",
+					"placeholder": "grepstr",
+					"description": "Grep pattern to filter"
+				},
+				"l": {
+					"flag": "-l",
+					"placeholder": "numlines",
+					"description": "Number of lines to display"
+				}
+			}
+		},
+		{
+			"id": "show-manager-loglevel",
+			"name": "Show Manager Log Level",
+			"base": "show manager loglevel",
+			"description": "Show log level of ocsevent.log",
+			"category": "Manager - Logging",
+			"keywords": [
+				"manager",
+				"log",
+				"level",
+				"ocsevent"
+			]
+		},
+		{
+			"id": "set-manager-log-clear",
+			"name": "Set Manager Log Clear",
+			"base": "set manager log clear",
+			"description": "Clear all log entries",
+			"category": "Manager - Logging",
+			"keywords": [
+				"manager",
+				"log",
+				"clear",
+				"delete"
+			]
+		},
+		{
+			"id": "set-manager-loglevel",
+			"name": "Set Manager Log Level",
+			"base": "set manager loglevel",
+			"description": "Change log level of ocsevent.log",
+			"category": "Manager - Logging",
+			"keywords": [
+				"manager",
+				"log",
+				"level",
+				"set",
+				"ocsevent"
+			],
+			"params": {
+				"l": {
+					"flag": "-l",
+					"placeholder": "0-3",
+					"description": "Log level (0=Error, 1=Warning, 2=Info, 3=Debug)",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "show-manager-powermeter-alert",
+			"name": "Show Manager Powermeter Alert",
+			"base": "show manager powermeter alert",
+			"description": "Show rack alert policy configuration",
+			"category": "Manager - Power",
+			"keywords": [
+				"manager",
+				"powermeter",
+				"alert",
+				"policy",
+				"rack"
+			]
+		},
+		{
+			"id": "show-manager-powermeter-limit",
+			"name": "Show Manager Powermeter Limit",
+			"base": "show manager powermeter limit",
+			"description": "Show rack power limit policy",
+			"category": "Manager - Power",
+			"keywords": [
+				"manager",
+				"powermeter",
+				"limit",
+				"policy",
+				"rack"
+			]
+		},
+		{
+			"id": "show-manager-powermeter-throttletype",
+			"name": "Show Manager Powermeter Throttle Type",
+			"base": "show manager powermeter throttletype",
+			"description": "Show powershelf throttle mode",
+			"category": "Manager - Power",
+			"keywords": [
+				"manager",
+				"powermeter",
+				"throttle",
+				"mode",
+				"powershelf"
+			]
+		},
+		{
+			"id": "show-manager-powermeter-reading",
+			"name": "Show Manager Powermeter Reading",
+			"base": "show manager powermeter reading",
+			"description": "Show rack power readings (voltage, current, power)",
+			"category": "Manager - Power",
+			"keywords": [
+				"manager",
+				"powermeter",
+				"reading",
+				"voltage",
+				"current",
+				"power",
+				"rack"
+			]
+		},
+		{
+			"id": "show-manager-powermeter-multipolicy-active",
+			"name": "Show Manager Powermeter Multipolicy Active",
+			"base": "show manager powermeter multipolicy active",
+			"description": "Show active requestor multi-policy power configuration",
+			"category": "Manager - Power",
+			"keywords": [
+				"manager",
+				"powermeter",
+				"multipolicy",
+				"active",
+				"requestor"
+			]
+		},
+		{
+			"id": "show-manager-powermeter-multipolicy-single",
+			"name": "Show Manager Powermeter Multipolicy Single",
+			"base": "show manager powermeter multipolicy single",
+			"description": "Show single requestor multi-policy configuration",
+			"category": "Manager - Power",
+			"keywords": [
+				"manager",
+				"powermeter",
+				"multipolicy",
+				"single",
+				"requestor"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "requestor-id",
+					"description": "Requestor ID",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "show-manager-powermeter-multipolicy-all",
+			"name": "Show Manager Powermeter Multipolicy All",
+			"base": "show manager powermeter multipolicy all",
+			"description": "Show all requestors multi-policy configuration",
+			"category": "Manager - Power",
+			"keywords": [
+				"manager",
+				"powermeter",
+				"multipolicy",
+				"all",
+				"requestors"
+			]
+		},
+		{
+			"id": "show-manager-power-reading",
+			"name": "Show Manager Power Reading",
+			"base": "show manager power reading",
+			"description": "Show manager power reading",
+			"category": "Manager - Power",
+			"keywords": [
+				"manager",
+				"power",
+				"reading"
+			]
+		},
+		{
+			"id": "show-manager-power-status",
+			"name": "Show Manager Power Status",
+			"base": "show manager power status",
+			"description": "Show manager power status",
+			"category": "Manager - Power",
+			"keywords": [
+				"manager",
+				"power",
+				"status"
+			]
+		},
+		{
+			"id": "set-manager-powermeter-alert",
+			"name": "Set Manager Powermeter Alert",
+			"base": "set manager powermeter alert",
+			"description": "Set rack power alert policy",
+			"category": "Manager - Power",
+			"keywords": [
+				"manager",
+				"powermeter",
+				"alert",
+				"policy",
+				"set"
+			],
+			"params": {
+				"e": {
+					"flag": "-e",
+					"placeholder": "0|1",
+					"description": "Alert policy (0=disable, 1=enable)",
+					"required": true
+				},
+				"d": {
+					"flag": "-d",
+					"placeholder": "dcthrottle",
+					"description": "DC throttle value",
+					"required": true
+				},
+				"p": {
+					"flag": "-p",
+					"placeholder": "watts",
+					"description": "Power limit in watts",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "set-manager-powermeter-limit",
+			"name": "Set Manager Powermeter Limit",
+			"base": "set manager powermeter limit",
+			"description": "Set rack power limit",
+			"category": "Manager - Power",
+			"keywords": [
+				"manager",
+				"powermeter",
+				"limit",
+				"set",
+				"rack"
+			],
+			"params": {
+				"p": {
+					"flag": "-p",
+					"placeholder": "watts",
+					"description": "Power limit in watts",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "set-manager-powermeter-multipolicy",
+			"name": "Set Manager Powermeter Multipolicy",
+			"base": "set manager powermeter multipolicy",
+			"description": "Configure multi-policy power management",
+			"category": "Manager - Power",
+			"keywords": [
+				"manager",
+				"powermeter",
+				"multipolicy",
+				"configure"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "requestor-id",
+					"description": "Requestor ID",
+					"required": true
+				},
+				"a": {
+					"flag": "-a",
+					"placeholder": "0|1",
+					"description": "Rack alert enable",
+					"required": true
+				},
+				"t": {
+					"flag": "-t",
+					"placeholder": "value",
+					"description": "DC throttle value",
+					"required": true
+				},
+				"l": {
+					"flag": "-l",
+					"placeholder": "watts",
+					"description": "Rack power limit in watts",
+					"required": true
+				},
+				"p": {
+					"flag": "-p",
+					"placeholder": "watts",
+					"description": "Blade power limit in watts",
+					"required": true
+				},
+				"e": {
+					"flag": "-e",
+					"placeholder": "action",
+					"description": "Alert action type",
+					"required": true
+				},
+				"f": {
+					"flag": "-f",
+					"placeholder": "ms",
+					"description": "Throttle duration in ms",
+					"required": true
+				},
+				"d": {
+					"flag": "-d",
+					"placeholder": "seconds",
+					"description": "Remove delay in seconds",
+					"required": true
+				},
+				"r": {
+					"flag": "-r",
+					"placeholder": "action",
+					"description": "Remediation action"
+				}
+			}
+		},
+		{
+			"id": "set-manager-powermeter-clearmax",
+			"name": "Set Manager Powermeter Clear Max",
+			"base": "set manager powermeter clearmax",
+			"description": "Clear rack maximum power reading",
+			"category": "Manager - Power",
+			"keywords": [
+				"manager",
+				"powermeter",
+				"clear",
+				"max",
+				"maximum"
+			]
+		},
+		{
+			"id": "set-manager-powermeter-clearfaults",
+			"name": "Set Manager Powermeter Clear Faults",
+			"base": "set manager powermeter clearfaults",
+			"description": "Clear rack power faults",
+			"category": "Manager - Power",
+			"keywords": [
+				"manager",
+				"powermeter",
+				"clear",
+				"faults"
+			]
+		},
+		{
+			"id": "set-manager-power-faults",
+			"name": "Set Manager Power Faults",
+			"base": "set manager power faults",
+			"description": "Clear manager power faults",
+			"category": "Manager - Power",
+			"keywords": [
+				"manager",
+				"power",
+				"faults",
+				"clear"
+			]
+		},
+		{
+			"id": "show-manager-tftp-list",
+			"name": "Show Manager TFTP List",
+			"base": "show manager tftp list",
+			"description": "List files available under TFTP location",
+			"category": "Manager - Network Services",
+			"keywords": [
+				"manager",
+				"tftp",
+				"list",
+				"files"
+			]
+		},
+		{
+			"id": "show-manager-nfs-status",
+			"name": "Show Manager NFS Status",
+			"base": "show manager nfs status",
+			"description": "Get NFS server status",
+			"category": "Manager - Network Services",
+			"keywords": [
+				"manager",
+				"nfs",
+				"status",
+				"server"
+			]
+		},
+		{
+			"id": "show-manager-ssh-status",
+			"name": "Show Manager SSH Status",
+			"base": "show manager ssh status",
+			"description": "Display SSH cipher security configuration level",
+			"category": "Manager - Network Services",
+			"keywords": [
+				"manager",
+				"ssh",
+				"status",
+				"cipher",
+				"security"
+			]
+		},
+		{
+			"id": "set-manager-tftp-get",
+			"name": "Set Manager TFTP Get",
+			"base": "set manager tftp get",
+			"description": "Get file from TFTP server",
+			"category": "Manager - Network Services",
+			"keywords": [
+				"manager",
+				"tftp",
+				"get",
+				"file",
+				"download"
+			],
+			"params": {
+				"s": {
+					"flag": "-s",
+					"placeholder": "server",
+					"description": "TFTP server IP address",
+					"required": true
+				},
+				"f": {
+					"flag": "-f",
+					"placeholder": "filename",
+					"description": "File name to retrieve",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "set-manager-tftp-put",
+			"name": "Set Manager TFTP Put",
+			"base": "set manager tftp put",
+			"description": "Put file to TFTP server",
+			"category": "Manager - Network Services",
+			"keywords": [
+				"manager",
+				"tftp",
+				"put",
+				"file",
+				"upload"
+			],
+			"params": {
+				"s": {
+					"flag": "-s",
+					"placeholder": "server",
+					"description": "TFTP server IP address",
+					"required": true
+				},
+				"l": {
+					"flag": "-l",
+					"placeholder": "localfile",
+					"description": "Local file path",
+					"required": true
+				},
+				"f": {
+					"flag": "-f",
+					"placeholder": "remotefile",
+					"description": "Remote file name",
+					"required": true
+				},
+				"t": {
+					"flag": "-t",
+					"placeholder": "type",
+					"description": "File type",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "set-manager-tftp-delete",
+			"name": "Set Manager TFTP Delete",
+			"base": "set manager tftp delete",
+			"description": "Delete file from TFTP storage",
+			"category": "Manager - Network Services",
+			"keywords": [
+				"manager",
+				"tftp",
+				"delete",
+				"file"
+			],
+			"params": {
+				"f": {
+					"flag": "-f",
+					"placeholder": "filename",
+					"description": "File name to delete",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "set-manager-sftp-get",
+			"name": "Set Manager SFTP Get",
+			"base": "set manager sftp get",
+			"description": "Get file from SFTP server",
+			"category": "Manager - Network Services",
+			"keywords": [
+				"manager",
+				"sftp",
+				"get",
+				"file",
+				"download",
+				"secure"
+			],
+			"params": {
+				"s": {
+					"flag": "-s",
+					"placeholder": "server",
+					"description": "SFTP server IP address",
+					"required": true
+				},
+				"f": {
+					"flag": "-f",
+					"placeholder": "filename",
+					"description": "File name to retrieve",
+					"required": true
+				},
+				"u": {
+					"flag": "-u",
+					"placeholder": "username",
+					"description": "SFTP username",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "set-manager-sftp-put",
+			"name": "Set Manager SFTP Put",
+			"base": "set manager sftp put",
+			"description": "Put file to SFTP server",
+			"category": "Manager - Network Services",
+			"keywords": [
+				"manager",
+				"sftp",
+				"put",
+				"file",
+				"upload",
+				"secure"
+			],
+			"params": {
+				"s": {
+					"flag": "-s",
+					"placeholder": "server",
+					"description": "SFTP server IP address",
+					"required": true
+				},
+				"f": {
+					"flag": "-f",
+					"placeholder": "filename",
+					"description": "File name to upload",
+					"required": true
+				},
+				"t": {
+					"flag": "-t",
+					"placeholder": "type",
+					"description": "File type",
+					"required": true
+				},
+				"u": {
+					"flag": "-u",
+					"placeholder": "username",
+					"description": "SFTP username",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "set-manager-nfs-start",
+			"name": "Set Manager NFS Start",
+			"base": "set manager nfs start",
+			"description": "Start NFS server",
+			"category": "Manager - Network Services",
+			"keywords": [
+				"manager",
+				"nfs",
+				"start",
+				"server"
+			]
+		},
+		{
+			"id": "set-manager-nfs-stop",
+			"name": "Set Manager NFS Stop",
+			"base": "set manager nfs stop",
+			"description": "Stop NFS server",
+			"category": "Manager - Network Services",
+			"keywords": [
+				"manager",
+				"nfs",
+				"stop",
+				"server"
+			]
+		},
+		{
+			"id": "set-manager-nfs-enable",
+			"name": "Set Manager NFS Enable",
+			"base": "set manager nfs enable",
+			"description": "Enable NFS server auto-start",
+			"category": "Manager - Network Services",
+			"keywords": [
+				"manager",
+				"nfs",
+				"enable",
+				"auto-start"
+			]
+		},
+		{
+			"id": "set-manager-nfs-disable",
+			"name": "Set Manager NFS Disable",
+			"base": "set manager nfs disable",
+			"description": "Disable NFS server auto-start",
+			"category": "Manager - Network Services",
+			"keywords": [
+				"manager",
+				"nfs",
+				"disable",
+				"auto-start"
+			]
+		},
+		{
+			"id": "show-manager-ntp-status",
+			"name": "Show Manager NTP Status",
+			"base": "show manager ntp status",
+			"description": "Show NTP service status",
+			"category": "Manager - NTP & Time",
+			"keywords": [
+				"manager",
+				"ntp",
+				"status",
+				"time",
+				"service"
+			]
+		},
+		{
+			"id": "show-manager-ntp-server",
+			"name": "Show Manager NTP Server",
+			"base": "show manager ntp server",
+			"description": "Show NTP time server configuration",
+			"category": "Manager - NTP & Time",
+			"keywords": [
+				"manager",
+				"ntp",
+				"server",
+				"configuration",
+				"time"
+			]
+		},
+		{
+			"id": "set-manager-ntp-start",
+			"name": "Set Manager NTP Start",
+			"base": "set manager ntp start",
+			"description": "Start NTP service",
+			"category": "Manager - NTP & Time",
+			"keywords": [
+				"manager",
+				"ntp",
+				"start",
+				"service"
+			]
+		},
+		{
+			"id": "set-manager-ntp-stop",
+			"name": "Set Manager NTP Stop",
+			"base": "set manager ntp stop",
+			"description": "Stop NTP service",
+			"category": "Manager - NTP & Time",
+			"keywords": [
+				"manager",
+				"ntp",
+				"stop",
+				"service"
+			]
+		},
+		{
+			"id": "set-manager-ntp-restart",
+			"name": "Set Manager NTP Restart",
+			"base": "set manager ntp restart",
+			"description": "Restart NTP service",
+			"category": "Manager - NTP & Time",
+			"keywords": [
+				"manager",
+				"ntp",
+				"restart",
+				"service"
+			]
+		},
+		{
+			"id": "set-manager-ntp-enable",
+			"name": "Set Manager NTP Enable",
+			"base": "set manager ntp enable",
+			"description": "Enable NTP service auto-start",
+			"category": "Manager - NTP & Time",
+			"keywords": [
+				"manager",
+				"ntp",
+				"enable",
+				"auto-start"
+			]
+		},
+		{
+			"id": "set-manager-ntp-disable",
+			"name": "Set Manager NTP Disable",
+			"base": "set manager ntp disable",
+			"description": "Disable NTP service auto-start",
+			"category": "Manager - NTP & Time",
+			"keywords": [
+				"manager",
+				"ntp",
+				"disable",
+				"auto-start"
+			]
+		},
+		{
+			"id": "set-manager-ntp-server",
+			"name": "Set Manager NTP Server",
+			"base": "set manager ntp server",
+			"description": "Configure NTP time server",
+			"category": "Manager - NTP & Time",
+			"keywords": [
+				"manager",
+				"ntp",
+				"server",
+				"configure",
+				"set"
+			],
+			"params": {
+				"s": {
+					"flag": "-s",
+					"placeholder": "server-ip",
+					"description": "NTP server IP address",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "set-manager-time",
+			"name": "Set Manager Time",
+			"base": "set manager time",
+			"description": "Set manager system time and date",
+			"category": "Manager - NTP & Time",
+			"keywords": [
+				"manager",
+				"time",
+				"date",
+				"set",
+				"clock"
+			],
+			"params": {
+				"m": {
+					"flag": "-m",
+					"placeholder": "1-12",
+					"description": "Month",
+					"required": true
+				},
+				"d": {
+					"flag": "-d",
+					"placeholder": "1-31",
+					"description": "Day",
+					"required": true
+				},
+				"y": {
+					"flag": "-y",
+					"placeholder": "YYYY",
+					"description": "Year",
+					"required": true
+				},
+				"H": {
+					"flag": "-H",
+					"placeholder": "0-23",
+					"description": "Hour",
+					"required": true
+				},
+				"M": {
+					"flag": "-M",
+					"placeholder": "0-59",
+					"description": "Minute",
+					"required": true
+				},
+				"S": {
+					"flag": "-S",
+					"placeholder": "0-59",
+					"description": "Second",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "set-manager-hostname",
+			"name": "Set Manager Hostname",
+			"base": "set manager hostname",
+			"description": "Set manager hostname",
+			"category": "Manager - NTP & Time",
+			"keywords": [
+				"manager",
+				"hostname",
+				"set",
+				"name"
+			],
+			"params": {
+				"n": {
+					"flag": "-n",
+					"placeholder": "hostname",
+					"description": "Hostname string",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "show-manager-throttle-count",
+			"name": "Show Manager Throttle Count",
+			"base": "show manager throttle count",
+			"description": "Show rack manager throttle count",
+			"category": "Manager - Throttle",
+			"keywords": [
+				"manager",
+				"throttle",
+				"count"
+			]
+		},
+		{
+			"id": "show-manager-throttle-count-debug",
+			"name": "Show Manager Throttle Count Debug",
+			"base": "show manager throttle count debug",
+			"description": "Show rack manager throttle count with debug information",
+			"category": "Manager - Throttle",
+			"keywords": [
+				"manager",
+				"throttle",
+				"count",
+				"debug"
+			]
+		},
+		{
+			"id": "show-manager-throttle-force",
+			"name": "Show Manager Throttle Force",
+			"base": "show manager throttle force",
+			"description": "Indicate if throttle signal is active and enabled",
+			"category": "Manager - Throttle",
+			"keywords": [
+				"manager",
+				"throttle",
+				"force",
+				"signal",
+				"active"
+			]
+		},
+		{
+			"id": "set-manager-throttle-count",
+			"name": "Set Manager Throttle Count",
+			"base": "set manager throttle count",
+			"description": "Set throttle count configuration",
+			"category": "Manager - Throttle",
+			"keywords": [
+				"manager",
+				"throttle",
+				"count",
+				"set",
+				"configuration"
+			]
+		},
+		{
+			"id": "set-manager-throttle-count-clear",
+			"name": "Set Manager Throttle Count Clear",
+			"base": "set manager throttle count clear",
+			"description": "Clear throttle count and reset time",
+			"category": "Manager - Throttle",
+			"keywords": [
+				"manager",
+				"throttle",
+				"count",
+				"clear",
+				"reset"
+			]
+		},
+		{
+			"id": "set-manager-throttle-force-enable",
+			"name": "Set Manager Throttle Force Enable",
+			"base": "set manager throttle force enable",
+			"description": "Enable or disable forced throttle signal",
+			"category": "Manager - Throttle",
+			"keywords": [
+				"manager",
+				"throttle",
+				"force",
+				"enable",
+				"disable",
+				"signal"
+			],
+			"params": {
+				"state": {
+					"flag": "",
+					"placeholder": "on|off",
+					"description": "Turn throttle on or off",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "show-manager-session-list",
+			"name": "Show Manager Session List",
+			"base": "show manager session list",
+			"description": "Show active manager SSH sessions",
+			"category": "Manager - Sessions & Recovery",
+			"keywords": [
+				"manager",
+				"session",
+				"list",
+				"ssh",
+				"active"
+			]
+		},
+		{
+			"id": "set-manager-session-kill",
+			"name": "Set Manager Session Kill",
+			"base": "set manager session kill",
+			"description": "Kill active SSH session",
+			"category": "Manager - Sessions & Recovery",
+			"keywords": [
+				"manager",
+				"session",
+				"kill",
+				"terminate",
+				"ssh"
+			],
+			"params": {
+				"s": {
+					"flag": "-s",
+					"placeholder": "session-id",
+					"description": "Session ID to terminate",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "show-manager-fwupdate-status",
+			"name": "Show Manager Firmware Update Status",
+			"base": "show manager fwupdate status",
+			"description": "Show most recent firmware update status",
+			"category": "Manager - Firmware",
+			"keywords": [
+				"manager",
+				"firmware",
+				"update",
+				"status"
+			]
+		},
+		{
+			"id": "show-manager-fwupdate-list",
+			"name": "Show Manager Firmware Update List",
+			"base": "show manager fwupdate list",
+			"description": "List available rack manager firmware packages for recovery",
+			"category": "Manager - Firmware",
+			"keywords": [
+				"manager",
+				"firmware",
+				"update",
+				"list",
+				"packages",
+				"recovery"
+			]
+		},
+		{
+			"id": "set-manager-fwupdate",
+			"name": "Set Manager Firmware Update",
+			"base": "set manager fwupdate",
+			"description": "Update manager firmware",
+			"category": "Manager - Firmware",
+			"keywords": [
+				"manager",
+				"firmware",
+				"update",
+				"flash"
+			],
+			"params": {
+				"f": {
+					"flag": "-f",
+					"placeholder": "filename",
+					"description": "Firmware package file path",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "set-manager-led-on",
+			"name": "Set Manager LED On",
+			"base": "set manager led on",
+			"description": "Turn manager LED ON",
+			"category": "Manager - LED & FRU",
+			"keywords": [
+				"manager",
+				"led",
+				"on",
+				"light"
+			]
+		},
+		{
+			"id": "set-manager-led-off",
+			"name": "Set Manager LED Off",
+			"base": "set manager led off",
+			"description": "Turn manager LED OFF",
+			"category": "Manager - LED & FRU",
+			"keywords": [
+				"manager",
+				"led",
+				"off",
+				"light"
+			]
+		},
+		{
+			"id": "set-manager-fru",
+			"name": "Set Manager FRU",
+			"base": "set manager fru",
+			"description": "Update manager FRU information",
+			"category": "Manager - LED & FRU",
+			"keywords": [
+				"manager",
+				"fru",
+				"update",
+				"set"
+			],
+			"params": {
+				"b": {
+					"flag": "-b",
+					"placeholder": "board",
+					"description": "Board identifier",
+					"required": true
+				},
+				"f": {
+					"flag": "-f",
+					"placeholder": "filename",
+					"description": "FRU data file",
+					"required": true
+				},
+				"s": {
+					"flag": "-s",
+					"placeholder": "size",
+					"description": "Data size in bytes",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "show-manager-pubsub-config",
+			"name": "Show Manager PubSub Config",
+			"base": "show manager pubsub config",
+			"description": "Display PubSub settings (brokers, topic, SSL)",
+			"category": "Manager - Configuration",
+			"keywords": [
+				"manager",
+				"pubsub",
+				"config",
+				"brokers",
+				"topic",
+				"ssl"
+			]
+		},
+		{
+			"id": "show-manager-userconfigs",
+			"name": "Show Manager User Configs",
+			"base": "show manager userconfigs",
+			"description": "Display user configuration parameter settings",
+			"category": "Manager - Configuration",
+			"keywords": [
+				"manager",
+				"userconfigs",
+				"configuration",
+				"settings"
+			],
+			"params": {
+				"k": {
+					"flag": "-k",
+					"placeholder": "key",
+					"description": "Specific configuration key"
+				},
+				"g": {
+					"flag": "-g",
+					"placeholder": "grepstr",
+					"description": "Grep pattern to filter"
+				}
+			}
+		},
+		{
+			"id": "show-manager-serialstats",
+			"name": "Show Manager Serial Stats",
+			"base": "show manager serialstats",
+			"description": "Run serial terminal statistics",
+			"category": "Manager - Configuration",
+			"keywords": [
+				"manager",
+				"serial",
+				"stats",
+				"statistics",
+				"terminal"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "interval",
+					"description": "Sampling interval in seconds",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "show-manager-serialcheck",
+			"name": "Show Manager Serial Check",
+			"base": "show manager serialcheck",
+			"description": "Run serial terminal health check",
+			"category": "Manager - Configuration",
+			"keywords": [
+				"manager",
+				"serial",
+				"check",
+				"health",
+				"terminal"
+			],
+			"params": {
+				"l": {
+					"flag": "-l",
+					"placeholder": "loop",
+					"description": "Number of check loops",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "show-manager-healthmonitor-log",
+			"name": "Show Manager Health Monitor Log",
+			"base": "show manager healthmonitor log",
+			"description": "Display logs collected by RM health monitoring",
+			"category": "Manager - Configuration",
+			"keywords": [
+				"manager",
+				"health",
+				"monitor",
+				"log"
+			]
+		},
+		{
+			"id": "show-manager-iptables-profiles",
+			"name": "Show Manager IPTables Profiles",
+			"base": "show manager iptables profiles",
+			"description": "Display list of configurable firewall profiles",
+			"category": "Manager - Configuration",
+			"keywords": [
+				"manager",
+				"iptables",
+				"profiles",
+				"firewall"
+			]
+		},
+		{
+			"id": "show-manager-iptables-rules",
+			"name": "Show Manager IPTables Rules",
+			"base": "show manager iptables rules",
+			"description": "Display iptables firewall rules",
+			"category": "Manager - Configuration",
+			"keywords": [
+				"manager",
+				"iptables",
+				"rules",
+				"firewall"
+			],
+			"params": {
+				"v": {
+					"flag": "-v",
+					"placeholder": "4|6",
+					"description": "IP version (4=IPv4, 6=IPv6)"
+				},
+				"profile": {
+					"flag": "",
+					"placeholder": "profile",
+					"description": "Specific profile name"
+				}
+			}
+		},
+		{
+			"id": "show-manager-rsyslog",
+			"name": "Show Manager Rsyslog",
+			"base": "show manager rsyslog",
+			"description": "Display current external server for rsyslog streaming",
+			"category": "Manager - Configuration",
+			"keywords": [
+				"manager",
+				"rsyslog",
+				"server",
+				"streaming",
+				"external"
+			]
+		},
+		{
+			"id": "set-manager-pubsub-config",
+			"name": "Set Manager PubSub Config",
+			"base": "set manager pubsub config",
+			"description": "Configure PubSub settings",
+			"category": "Manager - Configuration",
+			"keywords": [
+				"manager",
+				"pubsub",
+				"config",
+				"configure",
+				"set"
+			],
+			"params": {
+				"l": {
+					"flag": "-l",
+					"placeholder": "brokers",
+					"description": "Broker list (comma-separated)",
+					"required": true
+				},
+				"t": {
+					"flag": "-t",
+					"placeholder": "topic",
+					"description": "Topic name",
+					"required": true
+				},
+				"s": {
+					"flag": "-s",
+					"placeholder": "0|1",
+					"description": "SSL enable",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "set-manager-userconfigs",
+			"name": "Set Manager User Configs",
+			"base": "set manager userconfigs",
+			"description": "Set user configuration parameter",
+			"category": "Manager - Configuration",
+			"keywords": [
+				"manager",
+				"userconfigs",
+				"configuration",
+				"set"
+			],
+			"params": {
+				"k": {
+					"flag": "-k",
+					"placeholder": "keyname",
+					"description": "Configuration key name",
+					"required": true
+				},
+				"v": {
+					"flag": "-v",
+					"placeholder": "value",
+					"description": "Configuration value",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "set-manager-iptables-add",
+			"name": "Set Manager IPTables Add",
+			"base": "set manager iptables add",
+			"description": "Add iptables firewall rule",
+			"category": "Manager - Configuration",
+			"keywords": [
+				"manager",
+				"iptables",
+				"add",
+				"firewall",
+				"rule"
+			],
+			"params": {
+				"profile": {
+					"flag": "",
+					"placeholder": "profile",
+					"description": "Profile name",
+					"required": true
+				},
+				"s": {
+					"flag": "-s",
+					"placeholder": "source",
+					"description": "Source IP address/range",
+					"required": true
+				},
+				"v": {
+					"flag": "-v",
+					"placeholder": "4|6",
+					"description": "IP version (default: 4)"
+				}
+			}
+		},
+		{
+			"id": "set-manager-iptables-bulkadd",
+			"name": "Set Manager IPTables Bulk Add",
+			"base": "set manager iptables bulkadd",
+			"description": "Bulk add iptables rules from file",
+			"category": "Manager - Configuration",
+			"keywords": [
+				"manager",
+				"iptables",
+				"bulk",
+				"add",
+				"firewall",
+				"rules"
+			],
+			"params": {
+				"s": {
+					"flag": "-s",
+					"placeholder": "filepath",
+					"description": "File path containing rules",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "set-manager-iptables-delete",
+			"name": "Set Manager IPTables Delete",
+			"base": "set manager iptables delete",
+			"description": "Delete iptables firewall rule",
+			"category": "Manager - Configuration",
+			"keywords": [
+				"manager",
+				"iptables",
+				"delete",
+				"firewall",
+				"rule"
+			],
+			"params": {
+				"profile": {
+					"flag": "",
+					"placeholder": "profile",
+					"description": "Profile name",
+					"required": true
+				},
+				"s": {
+					"flag": "-s",
+					"placeholder": "source",
+					"description": "Source IP address/range",
+					"required": true
+				},
+				"v": {
+					"flag": "-v",
+					"placeholder": "4|6",
+					"description": "IP version (default: 4)"
+				}
+			}
+		},
+		{
+			"id": "set-manager-iptables-enable",
+			"name": "Set Manager IPTables Enable",
+			"base": "set manager iptables enable",
+			"description": "Enable iptables firewall profile",
+			"category": "Manager - Configuration",
+			"keywords": [
+				"manager",
+				"iptables",
+				"enable",
+				"firewall",
+				"profile"
+			],
+			"params": {
+				"profile": {
+					"flag": "",
+					"placeholder": "profile",
+					"description": "Profile name to enable",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "set-manager-iptables-disable",
+			"name": "Set Manager IPTables Disable",
+			"base": "set manager iptables disable",
+			"description": "Disable iptables firewall profile",
+			"category": "Manager - Configuration",
+			"keywords": [
+				"manager",
+				"iptables",
+				"disable",
+				"firewall",
+				"profile"
+			],
+			"params": {
+				"profile": {
+					"flag": "",
+					"placeholder": "profile",
+					"description": "Profile name to disable",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "set-manager-iptables-restore",
+			"name": "Set Manager IPTables Restore",
+			"base": "set manager iptables restore",
+			"description": "Restore iptables to default configuration",
+			"category": "Manager - Configuration",
+			"keywords": [
+				"manager",
+				"iptables",
+				"restore",
+				"default",
+				"firewall"
+			]
+		},
+		{
+			"id": "set-manager-rsyslog",
+			"name": "Set Manager Rsyslog",
+			"base": "set manager rsyslog",
+			"description": "Configure external server for rsyslog streaming",
+			"category": "Manager - Configuration",
+			"keywords": [
+				"manager",
+				"rsyslog",
+				"server",
+				"configure",
+				"set"
+			],
+			"params": {
+				"s": {
+					"flag": "-s",
+					"placeholder": "server",
+					"description": "Rsyslog server IP address",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "set-manager-gca-refresh",
+			"name": "Set Manager GCA Refresh",
+			"base": "set manager gca refresh",
+			"description": "Refresh GCA (Global Chassis Arbiter) cache",
+			"category": "Manager - System Control",
+			"keywords": [
+				"manager",
+				"gca",
+				"refresh",
+				"cache",
+				"global",
+				"chassis",
+				"arbiter"
+			]
+		},
+		{
+			"id": "set-manager-menu-on",
+			"name": "Set Manager Menu On",
+			"base": "set manager menu on",
+			"description": "Enable recovery menu",
+			"category": "Manager - System Control",
+			"keywords": [
+				"manager",
+				"menu",
+				"on",
+				"enable",
+				"recovery"
+			]
+		},
+		{
+			"id": "set-manager-menu-off",
+			"name": "Set Manager Menu Off",
+			"base": "set manager menu off",
+			"description": "Disable recovery menu",
+			"category": "Manager - System Control",
+			"keywords": [
+				"manager",
+				"menu",
+				"off",
+				"disable",
+				"recovery"
+			]
+		},
+		{
+			"id": "set-manager-defaults",
+			"name": "Set Manager Defaults",
+			"base": "set manager defaults",
+			"description": "Reset manager to default settings",
+			"category": "Manager - System Control",
+			"keywords": [
+				"manager",
+				"defaults",
+				"reset",
+				"factory"
+			]
+		},
+		{
+			"id": "set-manager-powercycle",
+			"name": "Set Manager Power Cycle",
+			"base": "set manager powercycle",
+			"description": "AC power cycle the RSCM",
+			"category": "Manager - System Control",
+			"keywords": [
+				"manager",
+				"powercycle",
+				"power",
+				"cycle",
+				"reboot",
+				"rscm"
+			]
+		},
+		{
+			"id": "show-system-info",
+			"name": "Show System Info",
+			"base": "show system info",
+			"description": "Display server information (serial number, version)",
+			"category": "System",
+			"keywords": [
+				"system",
+				"server",
+				"info",
+				"serial",
+				"version"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "show-system-health",
+			"name": "Show System Health",
+			"base": "show system health",
+			"description": "Get server health information including PCIe",
+			"category": "System",
+			"keywords": [
+				"system",
+				"server",
+				"health",
+				"pcie"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				}
+			},
+			"flags": {
+				"p": {
+					"flag": "-p",
+					"description": "Include PCIe information",
+					"boolean": true
+				}
+			}
+		},
+		{
+			"id": "show-system-fru",
+			"name": "Show System FRU",
+			"base": "show system fru",
+			"description": "Get FRU information for server",
+			"category": "System",
+			"keywords": [
+				"system",
+				"server",
+				"fru",
+				"field",
+				"replaceable",
+				"unit"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				},
+				"f": {
+					"flag": "-f",
+					"placeholder": "fru-id",
+					"description": "Specific FRU ID"
+				}
+			}
+		},
+		{
+			"id": "show-system-state",
+			"name": "Show System State",
+			"base": "show system state",
+			"description": "Get server ON/OFF state and datasafe status",
+			"category": "System",
+			"keywords": [
+				"system",
+				"server",
+				"state",
+				"on",
+				"off",
+				"datasafe"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "show-system-presence",
+			"name": "Show System Presence",
+			"base": "show system presence",
+			"description": "Show server physical presence detection",
+			"category": "System",
+			"keywords": [
+				"system",
+				"server",
+				"presence",
+				"detection",
+				"physical"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "show-system-default-power",
+			"name": "Show System Default Power",
+			"base": "show system default power",
+			"description": "Get default power state (ON/OFF) for server",
+			"category": "System",
+			"keywords": [
+				"system",
+				"server",
+				"default",
+				"power",
+				"state"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "show-system-type",
+			"name": "Show System Type",
+			"base": "show system type",
+			"description": "Show server type/platform",
+			"category": "System",
+			"keywords": [
+				"system",
+				"server",
+				"type",
+				"platform"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "show-system-led",
+			"name": "Show System LED",
+			"base": "show system led",
+			"description": "Show server LED state",
+			"category": "System",
+			"keywords": [
+				"system",
+				"server",
+				"led",
+				"state",
+				"light"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "show-system-power-limit",
+			"name": "Show System Power Limit",
+			"base": "show system power limit",
+			"description": "Show power limit configuration for server",
+			"category": "System - Power",
+			"keywords": [
+				"system",
+				"server",
+				"power",
+				"limit",
+				"configuration"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "show-system-power-reading",
+			"name": "Show System Power Reading",
+			"base": "show system power reading",
+			"description": "Get current power consumption for server",
+			"category": "System - Power",
+			"keywords": [
+				"system",
+				"server",
+				"power",
+				"reading",
+				"consumption",
+				"watts"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "show-system-power-alert",
+			"name": "Show System Power Alert",
+			"base": "show system power alert",
+			"description": "Get power alert policy configuration",
+			"category": "System - Power",
+			"keywords": [
+				"system",
+				"server",
+				"power",
+				"alert",
+				"policy"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "show-system-power-throttle",
+			"name": "Show System Power Throttle",
+			"base": "show system power throttle",
+			"description": "Get power throttling statistics",
+			"category": "System - Power",
+			"keywords": [
+				"system",
+				"server",
+				"power",
+				"throttle",
+				"statistics"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "set-system-power-alert",
+			"name": "Set System Power Alert",
+			"base": "set system power alert",
+			"description": "Configure power alert policy for server",
+			"category": "System - Power",
+			"keywords": [
+				"system",
+				"server",
+				"power",
+				"alert",
+				"policy",
+				"configure"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				},
+				"p": {
+					"flag": "-p",
+					"placeholder": "watts",
+					"description": "Power limit in watts",
+					"required": true
+				},
+				"e": {
+					"flag": "-e",
+					"placeholder": "0|1|2",
+					"description": "Alert action (0=none, 1=throttle, 2=fast throttle)",
+					"required": true
+				},
+				"f": {
+					"flag": "-f",
+					"placeholder": "ms",
+					"description": "Fast throttle duration in ms",
+					"required": true
+				},
+				"d": {
+					"flag": "-d",
+					"placeholder": "seconds",
+					"description": "Auto remove delay in seconds",
+					"required": true
+				},
+				"r": {
+					"flag": "-r",
+					"placeholder": "action",
+					"description": "Remediation action"
+				}
+			}
+		},
+		{
+			"id": "set-system-power-limit-value",
+			"name": "Set System Power Limit Value",
+			"base": "set system power limit value",
+			"description": "Set power limit for server",
+			"category": "System - Power",
+			"keywords": [
+				"system",
+				"server",
+				"power",
+				"limit",
+				"value",
+				"set"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				},
+				"l": {
+					"flag": "-l",
+					"placeholder": "watts",
+					"description": "Power limit in watts",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "set-system-power-limit-on",
+			"name": "Set System Power Limit On",
+			"base": "set system power limit on",
+			"description": "Activate power limit and enable throttling",
+			"category": "System - Power",
+			"keywords": [
+				"system",
+				"server",
+				"power",
+				"limit",
+				"on",
+				"activate",
+				"throttle"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "set-system-power-limit-off",
+			"name": "Set System Power Limit Off",
+			"base": "set system power limit off",
+			"description": "Deactivate power limit and disable throttling",
+			"category": "System - Power",
+			"keywords": [
+				"system",
+				"server",
+				"power",
+				"limit",
+				"off",
+				"deactivate",
+				"throttle"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "set-system-on",
+			"name": "Set System On",
+			"base": "set system on",
+			"description": "Soft power server ON (supply power to chipset)",
+			"category": "System - Power Control",
+			"keywords": [
+				"system",
+				"server",
+				"on",
+				"power",
+				"chipset",
+				"soft"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				},
+				"b": {
+					"flag": "-b",
+					"placeholder": "0|1",
+					"description": "Device ID (0=Host, 1=SoC)"
+				}
+			}
+		},
+		{
+			"id": "set-system-off",
+			"name": "Set System Off",
+			"base": "set system off",
+			"description": "Soft power server OFF (remove power from chipset)",
+			"category": "System - Power Control",
+			"keywords": [
+				"system",
+				"server",
+				"off",
+				"power",
+				"chipset",
+				"soft"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				},
+				"b": {
+					"flag": "-b",
+					"placeholder": "0|1",
+					"description": "Device ID (0=Host, 1=SoC)"
+				}
+			}
+		},
+		{
+			"id": "set-system-reset",
+			"name": "Set System Reset",
+			"base": "set system reset",
+			"description": "Power cycle or soft reset server",
+			"category": "System - Power Control",
+			"keywords": [
+				"system",
+				"server",
+				"reset",
+				"power",
+				"cycle",
+				"reboot"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				},
+				"b": {
+					"flag": "-b",
+					"placeholder": "0|1",
+					"description": "Device ID (0=Host, 1=SoC)"
+				}
+			}
+		},
+		{
+			"id": "set-system-vreset",
+			"name": "Set System VReset",
+			"base": "set system vreset",
+			"description": "Virtual reset BMC (Gen 11+)",
+			"category": "System - Power Control",
+			"keywords": [
+				"system",
+				"server",
+				"vreset",
+				"virtual",
+				"reset",
+				"bmc"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "set-system-led-on",
+			"name": "Set System LED On",
+			"base": "set system led on",
+			"description": "Turn server UID LED ON",
+			"category": "System - Power Control",
+			"keywords": [
+				"system",
+				"server",
+				"led",
+				"on",
+				"uid",
+				"light"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "set-system-led-off",
+			"name": "Set System LED Off",
+			"base": "set system led off",
+			"description": "Turn server UID LED OFF",
+			"category": "System - Power Control",
+			"keywords": [
+				"system",
+				"server",
+				"led",
+				"off",
+				"uid",
+				"light"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "set-system-default-power-on",
+			"name": "Set System Default Power On",
+			"base": "set system default power on",
+			"description": "Set default power state to ON",
+			"category": "System - Power Control",
+			"keywords": [
+				"system",
+				"server",
+				"default",
+				"power",
+				"on",
+				"state"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "set-system-default-power-off",
+			"name": "Set System Default Power Off",
+			"base": "set system default power off",
+			"description": "Set default power state to OFF",
+			"category": "System - Power Control",
+			"keywords": [
+				"system",
+				"server",
+				"default",
+				"power",
+				"off",
+				"state"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "show-system-fpga-health",
+			"name": "Show System FPGA Health",
+			"base": "show system fpga health",
+			"description": "Get system FPGA health status",
+			"category": "System - FPGA",
+			"keywords": [
+				"system",
+				"server",
+				"fpga",
+				"health",
+				"status"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "show-system-fpga-temp",
+			"name": "Show System FPGA Temp",
+			"base": "show system fpga temp",
+			"description": "Get system FPGA temperature in Celsius",
+			"category": "System - FPGA",
+			"keywords": [
+				"system",
+				"server",
+				"fpga",
+				"temperature",
+				"temp",
+				"celsius"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "show-system-fpga-i2cversion",
+			"name": "Show System FPGA I2C Version",
+			"base": "show system fpga i2cversion",
+			"description": "Get system FPGA I2C version",
+			"category": "System - FPGA",
+			"keywords": [
+				"system",
+				"server",
+				"fpga",
+				"i2c",
+				"version"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "show-system-fpga-assetinfo",
+			"name": "Show System FPGA Asset Info",
+			"base": "show system fpga assetinfo",
+			"description": "Get system FPGA asset information",
+			"category": "System - FPGA",
+			"keywords": [
+				"system",
+				"server",
+				"fpga",
+				"asset",
+				"info"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "show-system-boot",
+			"name": "Show System Boot",
+			"base": "show system boot",
+			"description": "Get pending boot order for next boot",
+			"category": "System - Boot & BIOS",
+			"keywords": [
+				"system",
+				"server",
+				"boot",
+				"order",
+				"next"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				},
+				"b": {
+					"flag": "-b",
+					"placeholder": "0|1",
+					"description": "Device ID (0=Host, 1=SoC)"
+				}
+			}
+		},
+		{
+			"id": "show-system-bios-config",
+			"name": "Show System BIOS Config",
+			"base": "show system bios config",
+			"description": "Get server BIOS configuration",
+			"category": "System - Boot & BIOS",
+			"keywords": [
+				"system",
+				"server",
+				"bios",
+				"config",
+				"configuration"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "show-system-bios-code",
+			"name": "Show System BIOS Code",
+			"base": "show system bios code",
+			"description": "Get BIOS POST code for server",
+			"category": "System - Boot & BIOS",
+			"keywords": [
+				"system",
+				"server",
+				"bios",
+				"post",
+				"code"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "set-system-boot",
+			"name": "Set System Boot",
+			"base": "set system boot",
+			"description": "Set boot device type for next boot",
+			"category": "System - Boot & BIOS",
+			"keywords": [
+				"system",
+				"server",
+				"boot",
+				"device",
+				"pxe",
+				"disk",
+				"bios"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				},
+				"t": {
+					"flag": "-t",
+					"placeholder": "type",
+					"description": "Boot type (none, pxe, disk, bios, remotedrive, emmc, usb, netunlock)",
+					"required": true
+				},
+				"b": {
+					"flag": "-b",
+					"placeholder": "0|1",
+					"description": "Device ID (0=Host, 1=SoC)"
+				},
+				"m": {
+					"flag": "-m",
+					"placeholder": "0|1",
+					"description": "Boot mode (0=Legacy, 1=UEFI)"
+				},
+				"p": {
+					"flag": "-p",
+					"placeholder": "0|1",
+					"description": "Persistent (0=one-time, 1=persistent)"
+				}
+			},
+			"presets": [
+				{
+					"label": "PXE (Legacy)",
+					"values": {
+						"t": "pxe",
+						"m": "0",
+						"p": "0"
+					}
+				},
+				{
+					"label": "PXE (UEFI)",
+					"values": {
+						"t": "pxe",
+						"m": "1",
+						"p": "0"
+					}
+				},
+				{
+					"label": "Disk (Legacy)",
+					"values": {
+						"t": "disk",
+						"m": "0",
+						"p": "0"
+					}
+				},
+				{
+					"label": "Disk (UEFI)",
+					"values": {
+						"t": "disk",
+						"m": "1",
+						"p": "0"
+					}
+				},
+				{
+					"label": "BIOS Setup",
+					"values": {
+						"t": "bios",
+						"m": "1",
+						"p": "0"
+					}
+				}
+			]
+		},
+		{
+			"id": "set-system-bios-config",
+			"name": "Set System BIOS Config",
+			"base": "set system bios config",
+			"description": "Set BIOS configuration for next reboot",
+			"category": "System - Boot & BIOS",
+			"keywords": [
+				"system",
+				"server",
+				"bios",
+				"config",
+				"configuration",
+				"set"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				},
+				"j": {
+					"flag": "-j",
+					"placeholder": "major",
+					"description": "Major configuration number",
+					"required": true
+				},
+				"n": {
+					"flag": "-n",
+					"placeholder": "minor",
+					"description": "Minor configuration number",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "show-system-log-read",
+			"name": "Show System Log Read",
+			"base": "show system log read",
+			"description": "Read server event log (SEL)",
+			"category": "System - Logs",
+			"keywords": [
+				"system",
+				"server",
+				"log",
+				"read",
+				"sel",
+				"event"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "set-system-log-clear",
+			"name": "Set System Log Clear",
+			"base": "set system log clear",
+			"description": "Clear server logs",
+			"category": "System - Logs",
+			"keywords": [
+				"system",
+				"server",
+				"log",
+				"clear",
+				"delete"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "show-system-bios-update",
+			"name": "Show System BIOS Update",
+			"base": "show system bios update",
+			"description": "Show BIOS firmware update status",
+			"category": "System - Firmware",
+			"keywords": [
+				"system",
+				"server",
+				"bios",
+				"firmware",
+				"update",
+				"status"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "show-system-bmc-update",
+			"name": "Show System BMC Update",
+			"base": "show system bmc update",
+			"description": "Show BMC firmware update status",
+			"category": "System - Firmware",
+			"keywords": [
+				"system",
+				"server",
+				"bmc",
+				"firmware",
+				"update",
+				"status"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				},
+				"c": {
+					"flag": "-c",
+					"placeholder": "region",
+					"description": "Flash region"
+				}
+			}
+		},
+		{
+			"id": "show-system-cpld-update",
+			"name": "Show System CPLD Update",
+			"base": "show system cpld update",
+			"description": "Show CPLD firmware update status",
+			"category": "System - Firmware",
+			"keywords": [
+				"system",
+				"server",
+				"cpld",
+				"firmware",
+				"update",
+				"status"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				},
+				"s": {
+					"flag": "-s",
+					"placeholder": "index",
+					"description": "CPLD index"
+				}
+			}
+		},
+		{
+			"id": "set-system-bios-update",
+			"name": "Set System BIOS Update",
+			"base": "set system bios update",
+			"description": "Update server BIOS firmware",
+			"category": "System - Firmware",
+			"keywords": [
+				"system",
+				"server",
+				"bios",
+				"firmware",
+				"update",
+				"flash"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				},
+				"f": {
+					"flag": "-f",
+					"placeholder": "file",
+					"description": "Firmware file path",
+					"required": true
+				},
+				"c": {
+					"flag": "-c",
+					"placeholder": "1|2",
+					"description": "Flash region (1=Primary, 2=Secondary)"
+				}
+			},
+			"flags": {
+				"a": {
+					"flag": "-a",
+					"description": "Async mode (don't wait for completion)",
+					"boolean": true
+				}
+			}
+		},
+		{
+			"id": "set-system-bmc-update",
+			"name": "Set System BMC Update",
+			"base": "set system bmc update",
+			"description": "Update server BMC firmware",
+			"category": "System - Firmware",
+			"keywords": [
+				"system",
+				"server",
+				"bmc",
+				"firmware",
+				"update",
+				"flash"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				},
+				"f": {
+					"flag": "-f",
+					"placeholder": "file",
+					"description": "Firmware file path",
+					"required": true
+				},
+				"c": {
+					"flag": "-c",
+					"placeholder": "region",
+					"description": "Flash region"
+				}
+			},
+			"flags": {
+				"a": {
+					"flag": "-a",
+					"description": "Async mode",
+					"boolean": true
+				}
+			}
+		},
+		{
+			"id": "set-system-cpld-update",
+			"name": "Set System CPLD Update",
+			"base": "set system cpld update",
+			"description": "Update server CPLD firmware",
+			"category": "System - Firmware",
+			"keywords": [
+				"system",
+				"server",
+				"cpld",
+				"firmware",
+				"update",
+				"flash"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				},
+				"f": {
+					"flag": "-f",
+					"placeholder": "file",
+					"description": "Firmware file path",
+					"required": true
+				},
+				"s": {
+					"flag": "-s",
+					"placeholder": "index",
+					"description": "CPLD index"
+				}
+			},
+			"flags": {
+				"a": {
+					"flag": "-a",
+					"description": "Async mode",
+					"boolean": true
+				}
+			}
+		},
+		{
+			"id": "show-system-tpm-presence",
+			"name": "Show System TPM Presence",
+			"base": "show system tpm presence",
+			"description": "Check if TPM physical presence is set",
+			"category": "System - Storage & Devices",
+			"keywords": [
+				"system",
+				"server",
+				"tpm",
+				"presence",
+				"physical"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "show-system-nvme",
+			"name": "Show System NVMe",
+			"base": "show system nvme",
+			"description": "Show NVMe device status",
+			"category": "System - Storage & Devices",
+			"keywords": [
+				"system",
+				"server",
+				"nvme",
+				"storage",
+				"device",
+				"status"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "show-system-datasafe-policy",
+			"name": "Show System DataSafe Policy",
+			"base": "show system datasafe policy",
+			"description": "Show datasafe (NVDIMM, PCIe) policy settings",
+			"category": "System - Storage & Devices",
+			"keywords": [
+				"system",
+				"server",
+				"datasafe",
+				"policy",
+				"nvdimm",
+				"pcie"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "show-system-datasafe-trigger",
+			"name": "Show System DataSafe Trigger",
+			"base": "show system datasafe trigger",
+			"description": "Show datasafe trigger status",
+			"category": "System - Storage & Devices",
+			"keywords": [
+				"system",
+				"server",
+				"datasafe",
+				"trigger",
+				"status"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "set-system-tpm-presence",
+			"name": "Set System TPM Presence",
+			"base": "set system tpm presence",
+			"description": "Set TPM physical presence",
+			"category": "System - Storage & Devices",
+			"keywords": [
+				"system",
+				"server",
+				"tpm",
+				"presence",
+				"physical",
+				"set"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				},
+				"p": {
+					"flag": "-p",
+					"placeholder": "0|1",
+					"description": "Presence flag (0/1 or true/false)",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "set-system-remotedrive-mount",
+			"name": "Set System Remote Drive Mount",
+			"base": "set system remotedrive mount",
+			"description": "Mount ISO image as boot drive",
+			"category": "System - Remote Drive",
+			"keywords": [
+				"system",
+				"server",
+				"remotedrive",
+				"mount",
+				"iso",
+				"boot"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				},
+				"n": {
+					"flag": "-n",
+					"placeholder": "image-name",
+					"description": "ISO image file name",
+					"required": true
+				},
+				"b": {
+					"flag": "-b",
+					"placeholder": "0|1",
+					"description": "Device ID (0=Host, 1=SoC)"
+				},
+				"m": {
+					"flag": "-m",
+					"placeholder": "1|2",
+					"description": "Mount type (1=HD, 2=CD)"
+				}
+			}
+		},
+		{
+			"id": "set-system-remotedrive-unmount",
+			"name": "Set System Remote Drive Unmount",
+			"base": "set system remotedrive unmount",
+			"description": "Unmount remote ISO image",
+			"category": "System - Remote Drive",
+			"keywords": [
+				"system",
+				"server",
+				"remotedrive",
+				"unmount",
+				"iso"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				},
+				"b": {
+					"flag": "-b",
+					"placeholder": "0|1",
+					"description": "Device ID (0=Host, 1=SoC)"
+				},
+				"m": {
+					"flag": "-m",
+					"placeholder": "1|2",
+					"description": "Mount type (1=HD, 2=CD)"
+				}
+			}
+		},
+		{
+			"id": "show-system-file-list",
+			"name": "Show System File List",
+			"base": "show system file list",
+			"description": "List files available for transfer",
+			"category": "System - File Management",
+			"keywords": [
+				"system",
+				"server",
+				"file",
+				"list",
+				"transfer"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				},
+				"d": {
+					"flag": "-d",
+					"placeholder": "directory",
+					"description": "Directory path"
+				}
+			}
+		},
+		{
+			"id": "set-system-file-delete",
+			"name": "Set System File Delete",
+			"base": "set system file delete",
+			"description": "Delete file from server",
+			"category": "System - File Management",
+			"keywords": [
+				"system",
+				"server",
+				"file",
+				"delete",
+				"remove"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				},
+				"f": {
+					"flag": "-f",
+					"placeholder": "filename",
+					"description": "File name to delete",
+					"required": true
+				},
+				"d": {
+					"flag": "-d",
+					"placeholder": "directory",
+					"description": "Directory path"
+				}
+			}
+		},
+		{
+			"id": "set-system-file-get",
+			"name": "Set System File Get",
+			"base": "set system file get",
+			"description": "Get file from server to RM",
+			"category": "System - File Management",
+			"keywords": [
+				"system",
+				"server",
+				"file",
+				"get",
+				"download"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				},
+				"f": {
+					"flag": "-f",
+					"placeholder": "filename",
+					"description": "File name to retrieve",
+					"required": true
+				},
+				"d": {
+					"flag": "-d",
+					"placeholder": "directory",
+					"description": "Directory path"
+				}
+			}
+		},
+		{
+			"id": "set-system-file-put",
+			"name": "Set System File Put",
+			"base": "set system file put",
+			"description": "Put file to server from RM",
+			"category": "System - File Management",
+			"keywords": [
+				"system",
+				"server",
+				"file",
+				"put",
+				"upload"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				},
+				"f": {
+					"flag": "-f",
+					"placeholder": "filename",
+					"description": "File name to upload",
+					"required": true
+				},
+				"d": {
+					"flag": "-d",
+					"placeholder": "directory",
+					"description": "Directory path"
+				}
+			}
+		},
+		{
+			"id": "show-system-cerberus-version",
+			"name": "Show System Cerberus Version",
+			"base": "show system cerberus version",
+			"description": "Read platform/SoC Cerberus version",
+			"category": "System - Cerberus",
+			"keywords": [
+				"system",
+				"server",
+				"cerberus",
+				"version",
+				"platform",
+				"soc"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				},
+				"t": {
+					"flag": "-t",
+					"placeholder": "0|1",
+					"description": "Type (0=Platform, 1=SoC)"
+				},
+				"b": {
+					"flag": "-b",
+					"placeholder": "0|1",
+					"description": "Device ID"
+				},
+				"c": {
+					"flag": "-c",
+					"placeholder": "index",
+					"description": "Component index"
+				}
+			}
+		},
+		{
+			"id": "set-system-cerberus-update",
+			"name": "Set System Cerberus Update",
+			"base": "set system cerberus update",
+			"description": "Update Cerberus firmware",
+			"category": "System - Cerberus",
+			"keywords": [
+				"system",
+				"server",
+				"cerberus",
+				"update",
+				"firmware"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				},
+				"b": {
+					"flag": "-b",
+					"placeholder": "device-id",
+					"description": "Device ID (0=Platform, 1=SoC-CMC, 2=SoC-OMC, 3x=MCTP)",
+					"required": true
+				},
+				"f": {
+					"flag": "-f",
+					"placeholder": "file",
+					"description": "Firmware file path",
+					"required": true
+				},
+				"c": {
+					"flag": "-c",
+					"placeholder": "index",
+					"description": "Component index"
+				},
+				"m": {
+					"flag": "-m",
+					"placeholder": "0|1",
+					"description": "Impactful update flag"
+				},
+				"t": {
+					"flag": "-t",
+					"placeholder": "tokenfile",
+					"description": "Token file path"
+				}
+			}
+		},
+		{
+			"id": "show-system-user-list",
+			"name": "Show System User List",
+			"base": "show system user list",
+			"description": "List all users in server BMC",
+			"category": "System - User Management",
+			"keywords": [
+				"system",
+				"server",
+				"user",
+				"list",
+				"bmc"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "set-system-user-password",
+			"name": "Set System User Password",
+			"base": "set system user password",
+			"description": "Set BMC user password",
+			"category": "System - User Management",
+			"keywords": [
+				"system",
+				"server",
+				"user",
+				"password",
+				"bmc",
+				"set"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				},
+				"u": {
+					"flag": "-u",
+					"placeholder": "username",
+					"description": "Username",
+					"required": true
+				},
+				"p": {
+					"flag": "-p",
+					"placeholder": "password",
+					"description": "New password",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "start-serial-session",
+			"name": "Start Serial Session",
+			"base": "start serial session",
+			"description": "Start serial console session to server (Ctrl-X to exit)",
+			"category": "System - Serial Console",
+			"keywords": [
+				"system",
+				"server",
+				"serial",
+				"session",
+				"start",
+				"console"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				},
+				"b": {
+					"flag": "-b",
+					"placeholder": "0|1",
+					"description": "Device ID (0=Host, 1=SoC)"
+				},
+				"p": {
+					"flag": "-p",
+					"placeholder": "portid",
+					"description": "Port ID"
+				}
+			},
+			"flags": {
+				"f": {
+					"flag": "-f",
+					"description": "Force session start",
+					"boolean": true
+				}
+			}
+		},
+		{
+			"id": "stop-serial-session",
+			"name": "Stop Serial Session",
+			"base": "stop serial session",
+			"description": "Stop serial console session to server",
+			"category": "System - Serial Console",
+			"keywords": [
+				"system",
+				"server",
+				"serial",
+				"session",
+				"stop",
+				"terminate"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				},
+				"b": {
+					"flag": "-b",
+					"placeholder": "0|1",
+					"description": "Device ID (0=Host, 1=SoC)"
+				},
+				"p": {
+					"flag": "-p",
+					"placeholder": "portid",
+					"description": "Port ID"
+				}
+			}
+		},
+		{
+			"id": "set-system-jtag-start",
+			"name": "Set System JTAG Start",
+			"base": "set system jtag start",
+			"description": "Start JTAG/ITP server on BMC",
+			"category": "System - JTAG",
+			"keywords": [
+				"system",
+				"server",
+				"jtag",
+				"itp",
+				"start",
+				"bmc"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "set-system-jtag-stop",
+			"name": "Set System JTAG Stop",
+			"base": "set system jtag stop",
+			"description": "Stop JTAG/ITP server on BMC",
+			"category": "System - JTAG",
+			"keywords": [
+				"system",
+				"server",
+				"jtag",
+				"itp",
+				"stop",
+				"bmc"
+			],
+			"params": {
+				"i": {
+					"flag": "-i",
+					"placeholder": "1-48",
+					"description": "Global blade index",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "show-user-info",
+			"name": "Show User Info",
+			"base": "show user info",
+			"description": "Display user information and roles",
+			"category": "User",
+			"keywords": [
+				"user",
+				"info",
+				"roles",
+				"information"
+			],
+			"params": {
+				"t": {
+					"flag": "-t",
+					"placeholder": "users|roles",
+					"description": "Type to display"
+				},
+				"u": {
+					"flag": "-u",
+					"placeholder": "username",
+					"description": "Specific username"
+				}
+			}
+		},
+		{
+			"id": "set-user-add",
+			"name": "Set User Add",
+			"base": "set user add",
+			"description": "Add new user to RSCM",
+			"category": "User",
+			"keywords": [
+				"user",
+				"add",
+				"create",
+				"new"
+			],
+			"params": {
+				"u": {
+					"flag": "-u",
+					"placeholder": "username",
+					"description": "Username",
+					"required": true
+				},
+				"p": {
+					"flag": "-p",
+					"placeholder": "password",
+					"description": "Password",
+					"required": true
+				},
+				"r": {
+					"flag": "-r",
+					"placeholder": "role",
+					"description": "Role (admin, operator, user)",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "set-user-update",
+			"name": "Set User Update",
+			"base": "set user update",
+			"description": "Update user password or role",
+			"category": "User",
+			"keywords": [
+				"user",
+				"update",
+				"password",
+				"role",
+				"change"
+			],
+			"params": {
+				"t": {
+					"flag": "-t",
+					"placeholder": "password|role",
+					"description": "Update type",
+					"required": true
+				},
+				"u": {
+					"flag": "-u",
+					"placeholder": "username",
+					"description": "Username",
+					"required": true
+				},
+				"p": {
+					"flag": "-p",
+					"placeholder": "password",
+					"description": "New password"
+				},
+				"r": {
+					"flag": "-r",
+					"placeholder": "role",
+					"description": "New role"
+				}
+			}
+		},
+		{
+			"id": "set-user-delete",
+			"name": "Set User Delete",
+			"base": "set user delete",
+			"description": "Remove existing user",
+			"category": "User",
+			"keywords": [
+				"user",
+				"delete",
+				"remove"
+			],
+			"params": {
+				"u": {
+					"flag": "-u",
+					"placeholder": "username",
+					"description": "Username to delete",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "show-powershelf-psu-info",
+			"name": "Show Powershelf PSU Info",
+			"base": "show powershelf psu info",
+			"description": "Show PSU information (manufacturer, model, version, readings)",
+			"category": "Powershelf",
+			"keywords": [
+				"powershelf",
+				"psu",
+				"info",
+				"manufacturer",
+				"model",
+				"version"
+			],
+			"params": {
+				"s": {
+					"flag": "-s",
+					"placeholder": "1-18",
+					"description": "Specific PSU ID"
+				},
+				"f": {
+					"flag": "-f",
+					"placeholder": "0|1",
+					"description": "Force read from hardware"
+				},
+				"p": {
+					"flag": "-p",
+					"placeholder": "0|1|2",
+					"description": "Display mode"
+				}
+			}
+		},
+		{
+			"id": "show-powershelf-psu-reading",
+			"name": "Show Powershelf PSU Reading",
+			"base": "show powershelf psu reading",
+			"description": "Show PSU parameters (voltage, current, temperature, fan speed, power)",
+			"category": "Powershelf",
+			"keywords": [
+				"powershelf",
+				"psu",
+				"reading",
+				"voltage",
+				"current",
+				"temperature",
+				"fan",
+				"power"
+			],
+			"params": {
+				"s": {
+					"flag": "-s",
+					"placeholder": "1-18",
+					"description": "Specific PSU ID"
+				},
+				"f": {
+					"flag": "-f",
+					"placeholder": "0|1",
+					"description": "Force read from hardware"
+				}
+			}
+		},
+		{
+			"id": "show-powershelf-psu-version",
+			"name": "Show Powershelf PSU Version",
+			"base": "show powershelf psu version",
+			"description": "Show PSU firmware version",
+			"category": "Powershelf",
+			"keywords": [
+				"powershelf",
+				"psu",
+				"version",
+				"firmware"
+			],
+			"params": {
+				"s": {
+					"flag": "-s",
+					"placeholder": "1-18",
+					"description": "Specific PSU ID"
+				},
+				"f": {
+					"flag": "-f",
+					"placeholder": "0|1",
+					"description": "Force read from hardware"
+				}
+			}
+		},
+		{
+			"id": "show-powershelf-psu-state",
+			"name": "Show Powershelf PSU State",
+			"base": "show powershelf psu state",
+			"description": "Show PSU state (presence, AC status, alert)",
+			"category": "Powershelf",
+			"keywords": [
+				"powershelf",
+				"psu",
+				"state",
+				"presence",
+				"ac",
+				"alert"
+			],
+			"params": {
+				"s": {
+					"flag": "-s",
+					"placeholder": "1-18",
+					"description": "Specific PSU ID"
+				},
+				"f": {
+					"flag": "-f",
+					"placeholder": "0|1",
+					"description": "Force read from hardware"
+				}
+			}
+		},
+		{
+			"id": "show-powershelf-psu-update",
+			"name": "Show Powershelf PSU Update",
+			"base": "show powershelf psu update",
+			"description": "Show PSU firmware update status",
+			"category": "Powershelf",
+			"keywords": [
+				"powershelf",
+				"psu",
+				"update",
+				"firmware",
+				"status"
+			],
+			"params": {
+				"s": {
+					"flag": "-s",
+					"placeholder": "1-18",
+					"description": "Specific PSU ID"
+				},
+				"f": {
+					"flag": "-f",
+					"placeholder": "0|1",
+					"description": "Force read from hardware"
+				}
+			}
+		},
+		{
+			"id": "set-powershelf-psu-update",
+			"name": "Set Powershelf PSU Update",
+			"base": "set powershelf psu update",
+			"description": "Update PSU firmware",
+			"category": "Powershelf",
+			"keywords": [
+				"powershelf",
+				"psu",
+				"update",
+				"firmware",
+				"flash"
+			],
+			"params": {
+				"s": {
+					"flag": "-s",
+					"placeholder": "1-18",
+					"description": "PSU ID to update",
+					"required": true
+				},
+				"f": {
+					"flag": "-f",
+					"placeholder": "file",
+					"description": "Firmware file path"
+				},
+				"r": {
+					"flag": "-r",
+					"placeholder": "0|1",
+					"description": "Force update"
+				}
+			}
+		},
+		{
+			"id": "set-powershelf-psu-clear",
+			"name": "Set Powershelf PSU Clear",
+			"base": "set powershelf psu clear",
+			"description": "Clear PSU faults",
+			"category": "Powershelf",
+			"keywords": [
+				"powershelf",
+				"psu",
+				"clear",
+				"faults"
+			],
+			"params": {
+				"s": {
+					"flag": "-s",
+					"placeholder": "1-18",
+					"description": "Specific PSU ID"
+				},
+				"p": {
+					"flag": "-p",
+					"placeholder": "0|1|2",
+					"description": "Clear type"
+				}
+			}
+		},
+		{
+			"id": "show-powershelf-fru",
+			"name": "Show Powershelf FRU",
+			"base": "show powershelf fru",
+			"description": "Get FRU information of powershelf",
+			"category": "Powershelf",
+			"keywords": [
+				"powershelf",
+				"fru",
+				"field",
+				"replaceable",
+				"unit"
+			]
+		},
+		{
+			"id": "show-powershelf-c13-reading",
+			"name": "Show Powershelf C13 Reading",
+			"base": "show powershelf c13 reading",
+			"description": "Show C13 power reading",
+			"category": "Powershelf - C13",
+			"keywords": [
+				"powershelf",
+				"c13",
+				"reading",
+				"power"
+			],
+			"params": {
+				"c": {
+					"flag": "-c",
+					"placeholder": "c13-id",
+					"description": "C13 outlet ID"
+				}
+			}
+		},
+		{
+			"id": "show-powershelf-c13-status",
+			"name": "Show Powershelf C13 Status",
+			"base": "show powershelf c13 status",
+			"description": "Show C13 status (on/off)",
+			"category": "Powershelf - C13",
+			"keywords": [
+				"powershelf",
+				"c13",
+				"status",
+				"on",
+				"off"
+			],
+			"params": {
+				"c": {
+					"flag": "-c",
+					"placeholder": "c13-id",
+					"description": "C13 outlet ID"
+				}
+			}
+		},
+		{
+			"id": "set-powershelf-c13-on",
+			"name": "Set Powershelf C13 On",
+			"base": "set powershelf c13 on",
+			"description": "Switch C13 outlet ON",
+			"category": "Powershelf - C13",
+			"keywords": [
+				"powershelf",
+				"c13",
+				"on",
+				"outlet"
+			],
+			"params": {
+				"c": {
+					"flag": "-c",
+					"placeholder": "c13-id",
+					"description": "C13 outlet ID",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "set-powershelf-c13-off",
+			"name": "Set Powershelf C13 Off",
+			"base": "set powershelf c13 off",
+			"description": "Switch C13 outlet OFF",
+			"category": "Powershelf - C13",
+			"keywords": [
+				"powershelf",
+				"c13",
+				"off",
+				"outlet"
+			],
+			"params": {
+				"c": {
+					"flag": "-c",
+					"placeholder": "c13-id",
+					"description": "C13 outlet ID",
+					"required": true
+				}
+			}
+		},
+		{
+			"id": "show-cdu-fan-health",
+			"name": "Show CDU Fan Health",
+			"base": "show cdu fan health",
+			"description": "Show fan controller health status",
+			"category": "CDU",
+			"keywords": [
+				"cdu",
+				"fan",
+				"health",
+				"status",
+				"controller"
+			]
+		},
+		{
+			"id": "show-cdu-fan-info",
+			"name": "Show CDU Fan Info",
+			"base": "show cdu fan info",
+			"description": "Show fan controller device information",
+			"category": "CDU",
+			"keywords": [
+				"cdu",
+				"fan",
+				"info",
+				"device",
+				"controller"
+			],
+			"params": {
+				"f": {
+					"flag": "-f",
+					"placeholder": "fan-id",
+					"description": "Specific fan ID"
+				}
+			}
+		},
+		{
+			"id": "show-cdu-pump-health",
+			"name": "Show CDU Pump Health",
+			"base": "show cdu pump health",
+			"description": "Show pump controller health status",
+			"category": "CDU",
+			"keywords": [
+				"cdu",
+				"pump",
+				"health",
+				"status",
+				"controller"
+			]
+		},
+		{
+			"id": "show-cdu-pump-info",
+			"name": "Show CDU Pump Info",
+			"base": "show cdu pump info",
+			"description": "Show pump controller device information",
+			"category": "CDU",
+			"keywords": [
+				"cdu",
+				"pump",
+				"info",
+				"device",
+				"controller"
+			],
+			"params": {
+				"p": {
+					"flag": "-p",
+					"placeholder": "pump-id",
+					"description": "Specific pump ID"
+				}
+			}
+		},
+		{
+			"id": "show-cdu-leak-health",
+			"name": "Show CDU Leak Health",
+			"base": "show cdu leak health",
+			"description": "Show leak detection health status",
+			"category": "CDU",
+			"keywords": [
+				"cdu",
+				"leak",
+				"health",
+				"detection",
+				"status"
+			]
+		},
+		{
+			"id": "show-cdu-leak-alarm",
+			"name": "Show CDU Leak Alarm",
+			"base": "show cdu leak alarm",
+			"description": "Show leak detection alarm status",
+			"category": "CDU",
+			"keywords": [
+				"cdu",
+				"leak",
+				"alarm",
+				"detection"
+			]
+		},
+		{
+			"id": "show-cdu-sensor-health",
+			"name": "Show CDU Sensor Health",
+			"base": "show cdu sensor health",
+			"description": "Show CDU sensor health status",
+			"category": "CDU",
+			"keywords": [
+				"cdu",
+				"sensor",
+				"health",
+				"status"
+			]
+		},
+		{
+			"id": "show-cdu-status",
+			"name": "Show CDU Status",
+			"base": "show cdu status",
+			"description": "Show CDU controller status",
+			"category": "CDU",
+			"keywords": [
+				"cdu",
+				"status",
+				"controller"
+			]
+		},
+		{
+			"id": "show-cdu-health",
+			"name": "Show CDU Health",
+			"base": "show cdu health",
+			"description": "Show CDU controller health",
+			"category": "CDU",
+			"keywords": [
+				"cdu",
+				"health",
+				"controller"
+			]
+		},
+		{
+			"id": "show-cdu-fru",
+			"name": "Show CDU FRU",
+			"base": "show cdu fru",
+			"description": "Show CDU FRU information",
+			"category": "CDU",
+			"keywords": [
+				"cdu",
+				"fru",
+				"field",
+				"replaceable",
+				"unit"
+			]
+		},
+		{
+			"id": "set-cdu-fwupdate",
+			"name": "Set CDU Firmware Update",
+			"base": "set cdu fwupdate",
+			"description": "Update CDU firmware",
+			"category": "CDU",
+			"keywords": [
+				"cdu",
+				"firmware",
+				"update",
+				"flash"
+			]
+		},
+		{
+			"id": "show-manager-cerberus",
+			"name": "Show Manager Cerberus",
+			"base": "show manager cerberus",
+			"description": "Show manager Cerberus status",
+			"category": "Cerberus (Manager)",
+			"keywords": [
+				"manager",
+				"cerberus",
+				"status"
+			]
+		},
+		{
+			"id": "show-manager-cerberus-version",
+			"name": "Show Manager Cerberus Version",
+			"base": "show manager cerberus version",
+			"description": "Show manager Cerberus firmware version",
+			"category": "Cerberus (Manager)",
+			"keywords": [
+				"manager",
+				"cerberus",
+				"version",
+				"firmware"
+			]
+		},
+		{
+			"id": "show-manager-cerberus-log",
+			"name": "Show Manager Cerberus Log",
+			"base": "show manager cerberus log",
+			"description": "Show manager Cerberus logs",
+			"category": "Cerberus (Manager)",
+			"keywords": [
+				"manager",
+				"cerberus",
+				"log",
+				"logs"
+			]
+		},
+		{
+			"id": "set-manager-cerberus-update",
+			"name": "Set Manager Cerberus Update",
+			"base": "set manager cerberus update",
+			"description": "Update manager Cerberus firmware",
+			"category": "Cerberus (Manager)",
+			"keywords": [
+				"manager",
+				"cerberus",
+				"update",
+				"firmware"
+			]
+		},
+		{
+			"id": "show-manager-cpld",
+			"name": "Show Manager CPLD",
+			"base": "show manager cpld",
+			"description": "Show manager CPLD status",
+			"category": "CPLD (Manager)",
+			"keywords": [
+				"manager",
+				"cpld",
+				"status"
+			]
+		},
+		{
+			"id": "show-manager-cpld-version",
+			"name": "Show Manager CPLD Version",
+			"base": "show manager cpld version",
+			"description": "Show manager CPLD firmware version",
+			"category": "CPLD (Manager)",
+			"keywords": [
+				"manager",
+				"cpld",
+				"version",
+				"firmware"
+			]
+		},
+		{
+			"id": "set-manager-cpld-update",
+			"name": "Set Manager CPLD Update",
+			"base": "set manager cpld update",
+			"description": "Update manager CPLD firmware",
+			"category": "CPLD (Manager)",
+			"keywords": [
+				"manager",
+				"cpld",
+				"update",
+				"firmware"
+			]
+		},
+		{
+			"id": "show-interrack-wirecheck",
+			"name": "Show Inter-Rack Wire Check",
+			"base": "show interrack wirecheck",
+			"description": "Show inter-rack wire check status",
+			"category": "Inter-Rack",
+			"keywords": [
+				"interrack",
+				"wire",
+				"check",
+				"status"
+			]
+		},
+		{
+			"id": "show-interrack-zoneshutdown",
+			"name": "Show Inter-Rack Zone Shutdown",
+			"base": "show interrack zoneshutdown",
+			"description": "Show inter-rack zone shutdown status",
+			"category": "Inter-Rack",
+			"keywords": [
+				"interrack",
+				"zone",
+				"shutdown",
+				"status"
+			]
+		},
+		{
+			"id": "show-interrack-zoneready",
+			"name": "Show Inter-Rack Zone Ready",
+			"base": "show interrack zoneready",
+			"description": "Show inter-rack zone ready status",
+			"category": "Inter-Rack",
+			"keywords": [
+				"interrack",
+				"zone",
+				"ready",
+				"status"
+			]
+		},
+		{
+			"id": "set-interrack-wirecheck",
+			"name": "Set Inter-Rack Wire Check",
+			"base": "set interrack wirecheck",
+			"description": "Perform inter-rack wire check",
+			"category": "Inter-Rack",
+			"keywords": [
+				"interrack",
+				"wire",
+				"check",
+				"perform"
+			]
+		},
+		{
+			"id": "set-interrack-zoneshutdown",
+			"name": "Set Inter-Rack Zone Shutdown",
+			"base": "set interrack zoneshutdown",
+			"description": "Set inter-rack zone shutdown",
+			"category": "Inter-Rack",
+			"keywords": [
+				"interrack",
+				"zone",
+				"shutdown",
+				"set"
+			]
+		},
+		{
+			"id": "show-smrack-health",
+			"name": "Show Smart Rack Health",
+			"base": "show smrack health",
+			"description": "Show Smart IT Rack health status",
+			"category": "Smart IT Rack",
+			"keywords": [
+				"smrack",
+				"smart",
+				"rack",
+				"health",
+				"status"
+			]
+		},
+		{
+			"id": "show-smrack-status",
+			"name": "Show Smart Rack Status",
+			"base": "show smrack status",
+			"description": "Show Smart IT Rack status",
+			"category": "Smart IT Rack",
+			"keywords": [
+				"smrack",
+				"smart",
+				"rack",
+				"status"
+			]
+		},
+		{
+			"id": "set-smrack-open",
+			"name": "Set Smart Rack Open",
+			"base": "set smrack open",
+			"description": "Open Smart IT Rack valve",
+			"category": "Smart IT Rack",
+			"keywords": [
+				"smrack",
+				"smart",
+				"rack",
+				"open",
+				"valve"
+			]
+		},
+		{
+			"id": "set-smrack-close",
+			"name": "Set Smart Rack Close",
+			"base": "set smrack close",
+			"description": "Close Smart IT Rack valve",
+			"category": "Smart IT Rack",
+			"keywords": [
+				"smrack",
+				"smart",
+				"rack",
+				"close",
+				"valve"
+			]
+		},
+		{
+			"id": "show-pcu-info",
+			"name": "Show PCU Info",
+			"base": "show pcu info",
+			"description": "Show PCU (Power Cooling Unit) information",
+			"category": "PCU",
+			"keywords": [
+				"pcu",
+				"power",
+				"cooling",
+				"unit",
+				"info"
+			]
+		},
+		{
+			"id": "show-pcu-reading",
+			"name": "Show PCU Reading",
+			"base": "show pcu reading",
+			"description": "Show PCU power and cooling readings",
+			"category": "PCU",
+			"keywords": [
+				"pcu",
+				"reading",
+				"power",
+				"cooling"
+			]
+		},
+		{
+			"id": "show-pcu-status",
+			"name": "Show PCU Status",
+			"base": "show pcu status",
+			"description": "Show PCU status",
+			"category": "PCU",
+			"keywords": [
+				"pcu",
+				"status"
+			]
+		},
+		{
+			"id": "show-pcu-state",
+			"name": "Show PCU State",
+			"base": "show pcu state",
+			"description": "Show PCU state",
+			"category": "PCU",
+			"keywords": [
+				"pcu",
+				"state"
+			]
+		},
+		{
+			"id": "set-pcu-update",
+			"name": "Set PCU Update",
+			"base": "set pcu update",
+			"description": "Update PCU firmware",
+			"category": "PCU",
+			"keywords": [
+				"pcu",
+				"update",
+				"firmware"
+			]
+		},
+		{
+			"id": "show-nvswitch-status",
+			"name": "Show NVSwitch Status",
+			"base": "show nvswitch status",
+			"description": "Show NVSwitch status",
+			"category": "NVSwitch",
+			"keywords": [
+				"nvswitch",
+				"status",
+				"nvidia"
+			]
+		},
+		{
+			"id": "set-nvswitch-on",
+			"name": "Set NVSwitch On",
+			"base": "set nvswitch on",
+			"description": "Turn NVSwitch ON",
+			"category": "NVSwitch",
+			"keywords": [
+				"nvswitch",
+				"on",
+				"power",
+				"nvidia"
+			]
+		},
+		{
+			"id": "set-nvswitch-off",
+			"name": "Set NVSwitch Off",
+			"base": "set nvswitch off",
+			"description": "Turn NVSwitch OFF",
+			"category": "NVSwitch",
+			"keywords": [
+				"nvswitch",
+				"off",
+				"power",
+				"nvidia"
+			]
+		},
+		{
+			"id": "help",
+			"name": "Help",
+			"base": "help",
+			"description": "Show list of command categories",
+			"category": "Help",
+			"keywords": [
+				"help",
+				"commands",
+				"categories"
+			]
+		},
+		{
+			"id": "help-show",
+			"name": "Help Show",
+			"base": "help show",
+			"description": "Show help for all 'show' commands",
+			"category": "Help",
+			"keywords": [
+				"help",
+				"show",
+				"commands"
+			]
+		},
+		{
+			"id": "help-set",
+			"name": "Help Set",
+			"base": "help set",
+			"description": "Show help for all 'set' commands",
+			"category": "Help",
+			"keywords": [
+				"help",
+				"set",
+				"commands"
+			]
+		},
+		{
+			"id": "start-mte",
+			"name": "Start MTE",
+			"base": "start mte",
+			"description": "Execute MTE utility",
+			"category": "MTE",
+			"keywords": [
+				"mte",
+				"manufacturing",
+				"test",
+				"environment",
+				"utility"
+			],
+			"params": {
+				"u": {
+					"flag": "-u",
+					"placeholder": "utility",
+					"description": "Utility name",
+					"required": true
+				},
+				"p": {
+					"flag": "-p",
+					"placeholder": "params",
+					"description": "Utility parameters"
+				},
+				"t": {
+					"flag": "-t",
+					"placeholder": "times",
+					"description": "Number of times to execute"
+				},
+				"d": {
+					"flag": "-d",
+					"placeholder": "duration",
+					"description": "Duration to run"
+				}
+			}
+		},
+		{
+			"id": "show-mte",
+			"name": "Show MTE",
+			"base": "show mte",
+			"description": "Show all executing MTE utilities",
+			"category": "MTE",
+			"keywords": [
+				"mte",
+				"show",
+				"executing",
+				"utilities"
+			]
+		},
+		{
+			"id": "stop-mte",
+			"name": "Stop MTE",
+			"base": "stop mte",
+			"description": "Stop all executing MTE utilities",
+			"category": "MTE",
+			"keywords": [
+				"mte",
+				"stop",
+				"utilities"
+			]
+		}
+	]
+}
