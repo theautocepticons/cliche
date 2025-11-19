@@ -1,0 +1,83 @@
+:root {
+	/* Primary Interactive Colors (Blue Scale) */
+	--color-blue-900: #1e3a8a;
+	--color-blue-800: #1e40af;
+	--color-blue-600: #2563eb;
+	--color-blue-500: #3b82f6;
+	--color-blue-400: #60a5fa;
+	--color-blue-300: #93c5fd;
+	--color-blue-200: #bfdbfe;
+	--color-blue-100: #dbeafe;
+	--color-blue-50: #eff6ff;
+
+	/* Status Colors - Success/Approved (Green) */
+	--status-success-bg-start: #d1fae5;
+	--status-success-bg-end: #a7f3d0;
+	--status-success-hover-end: #6ee7b7;
+	--status-success-border: #34d399;
+	--status-success-text: #064e3b;
+
+	/* Status Colors - Warning/Pending (Yellow) */
+	--status-warning-bg-start: #fef3c7;
+	--status-warning-bg-end: #fde68a;
+	--status-warning-hover-end: #fcd34d;
+	--status-warning-border: #fbbf24;
+	--status-warning-text: #78350f;
+
+	/* Status Colors - Error/Rejected (Red) */
+	--status-error-bg-start: #fee2e2;
+	--status-error-bg-end: #fecaca;
+	--status-error-hover-end: #fca5a5;
+	--status-error-border: #f87171;
+	--status-error-border-dark: #ef4444;
+	--status-error-text: #7f1d1d;
+
+	/* Status Colors - Neutral/Expired (Gray) */
+	--status-neutral-bg-start: #e5e7eb;
+	--status-neutral-bg-end: #d1d5db;
+	--status-neutral-hover-end: #b0b5bd;
+	--status-neutral-border: #b4bcc8;
+	--status-neutral-text: #374151;
+}
+
+[data-theme="dark"] {
+	/* Primary Interactive Colors (Blue Scale) - Dark Theme */
+	--color-blue-900: #1e3a8a;
+	--color-blue-800: #1e40af;
+	--color-blue-600: #2563eb;
+	--color-blue-500: #3b82f6;
+	--color-blue-400: #60a5fa;
+	--color-blue-300: #93c5fd;
+	--color-blue-200: #bfdbfe;
+	--color-blue-100: #dbeafe;
+	--color-blue-50: #eff6ff;
+
+	/* Status Colors - Success/Approved (Green) - Dark Theme */
+	--status-success-bg-start: #064e3b;
+	--status-success-bg-end: #065f46;
+	--status-success-hover-end: #047857;
+	--status-success-border: #10b981;
+	--status-success-text: #d1fae5;
+
+	/* Status Colors - Warning/Pending (Yellow) - Dark Theme */
+	--status-warning-bg-start: #78350f;
+	--status-warning-bg-end: #92400e;
+	--status-warning-hover-end: #b45309;
+	--status-warning-border: #f59e0b;
+	--status-warning-text: #fef3c7;
+
+	/* Status Colors - Error/Rejected (Red) - Dark Theme */
+	--status-error-bg-start: #7f1d1d;
+	--status-error-bg-end: #991b1b;
+	--status-error-hover-end: #b91c1c;
+	--status-error-border: #ef4444;
+	--status-error-border-dark: #dc2626;
+	--status-error-text: #fee2e2;
+
+	/* Status Colors - Neutral/Expired (Gray) - Dark Theme */
+	--status-neutral-bg-start: #374151;
+	--status-neutral-bg-end: #4b5563;
+	--status-neutral-hover-end: #6b7280;
+	--status-neutral-border: #6b7280;
+	--status-neutral-text: #e5e7eb;
+}

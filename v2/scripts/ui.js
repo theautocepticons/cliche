@@ -31,7 +31,11 @@ export function initializeUI(state) {
 
 	// Click on command preview to select text
 	commandPreview.addEventListener('click', () => {
-		commandPreview.select();
+		const selection = window.getSelection();
+		const range = document.createRange();
+		range.selectNodeContents(commandPreview);
+		selection.removeAllRanges();
+		selection.addRange(range);
 	});
 
 	// Global index input handler
@@ -102,7 +106,7 @@ function renderPresets(presets, command, container) {
 
 	for (const preset of presets) {
 		const button = document.createElement('button');
-		button.className = 'preset-button';
+		button.className = 'btn btn-primary btn-sm';
 		button.textContent = preset.label;
 
 		button.addEventListener('click', () => {
@@ -218,6 +222,77 @@ function renderFlags(flags, container) {
 }
 
 /**
+ * Syntax highlight a command string
+ */
+function highlightSyntax(commandString) {
+	const tokens = [];
+	let i = 0;
+
+	while (i < commandString.length) {
+		// Skip whitespace
+		if (/\s/.test(commandString[i])) {
+			tokens.push(commandString[i]);
+			i++;
+			continue;
+		}
+
+		// Check for quoted strings
+		if (commandString[i] === '"' || commandString[i] === "'") {
+			const quote = commandString[i];
+			let str = quote;
+			i++;
+			while (i < commandString.length && commandString[i] !== quote) {
+				str += commandString[i];
+				i++;
+			}
+			if (i < commandString.length) {
+				str += commandString[i];
+				i++;
+			}
+			tokens.push({ type: 'string', value: str });
+			continue;
+		}
+
+		// Read word
+		let word = '';
+		while (i < commandString.length && !/\s/.test(commandString[i])) {
+			word += commandString[i];
+			i++;
+		}
+
+		// Classify word
+		if (word.startsWith('-')) {
+			tokens.push({ type: 'flag', value: word });
+		} else if (/^\d+$/.test(word)) {
+			tokens.push({ type: 'number', value: word });
+		} else if (tokens.length === 0 || (tokens.length === 1 && typeof tokens[0] === 'string')) {
+			// First non-whitespace token is the command
+			tokens.push({ type: 'command', value: word });
+		} else {
+			// Everything else is text
+			tokens.push({ type: 'text', value: word });
+		}
+	}
+
+	// Build HTML
+	return tokens.map(token => {
+		if (typeof token === 'string') {
+			return token;
+		}
+		return `<span class="syntax-${token.type}">${escapeHtml(token.value)}</span>`;
+	}).join('');
+}
+
+/**
+ * Escape HTML special characters
+ */
+function escapeHtml(text) {
+	const div = document.createElement('div');
+	div.textContent = text;
+	return div.innerHTML;
+}
+
+/**
  * Build command string from inputs
  */
 function buildCommand() {
@@ -251,9 +326,10 @@ function buildCommand() {
 		}
 	});
 
-	// Update preview
+	// Update preview with syntax highlighting
 	const commandPreview = document.getElementById('command-preview');
-	commandPreview.value = commandString;
+	commandPreview.innerHTML = highlightSyntax(commandString);
+	commandPreview.dataset.plainText = commandString;
 
 	// Dispatch event for command builder
 	const event = new CustomEvent('command-built', { detail: commandString });
@@ -267,27 +343,30 @@ function copyCommand() {
 	const commandPreview = document.getElementById('command-preview');
 	const copyButton = document.getElementById('copy-button');
 
-	// Select and copy
-	commandPreview.select();
-	document.execCommand('copy');
+	// Get plain text command
+	const command = commandPreview.dataset.plainText || commandPreview.textContent;
 
-	// Save to history
-	if (appState.currentCommand) {
-		const command = commandPreview.value;
-		const commandName = appState.currentCommand.name;
-		const commandId = appState.currentCommand.id;
-		const generation = appState.activeGeneration || 'legacy';
+	// Copy to clipboard using modern API
+	navigator.clipboard.writeText(command).then(() => {
+		// Save to history
+		if (appState.currentCommand) {
+			const commandName = appState.currentCommand.name;
+			const commandId = appState.currentCommand.id;
+			const generation = appState.activeGeneration || 'legacy';
 
-		saveToHistory(command, commandName, generation, commandId);
-	}
+			saveToHistory(command, commandName, generation, commandId);
+		}
 
-	// Visual feedback
-	const originalText = copyButton.textContent;
-	copyButton.textContent = 'Copied!';
-	copyButton.classList.add('copied');
+		// Visual feedback
+		const originalText = copyButton.textContent;
+		copyButton.textContent = 'Copied!';
+		copyButton.classList.add('copied');
 
-	setTimeout(() => {
-		copyButton.textContent = originalText;
-		copyButton.classList.remove('copied');
-	}, 1500);
+		setTimeout(() => {
+			copyButton.textContent = originalText;
+			copyButton.classList.remove('copied');
+		}, 1500);
+	}).catch(err => {
+		console.error('Failed to copy:', err);
+	});
 }

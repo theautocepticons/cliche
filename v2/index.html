@@ -6,19 +6,21 @@
 	<title>CLICHE v2</title>
 
 	<!-- Fonts -->
-	 <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
 
 	<!-- Styles -->
-	 <link rel="stylesheet" href="fonts.css">
-	<link rel="stylesheet" href="styles.css">
+	<link rel="stylesheet" href="/css/colors.css">
+	<link rel="stylesheet" href="/css/fonts.css">
+	<link rel="stylesheet" href="/css/styles.css">
+	<link rel="stylesheet" href="/css/buttons.css">
 </head>
 <body>
 	<div class="container">
 		<!-- Header -->
 		<header>
-			<h1>CLICHE</h1>
+			<h1>Cliché</h1>
 			<button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
 				<span class="theme-icon">☀️</span>
 			</button>
@@ -27,8 +29,8 @@
 		<!-- Generation Toggle and Global Index -->
 		<div class="controls-container">
 			<div class="gen-toggle">
-				<button id="gen-legacy" class="gen-button active" data-gen="legacy">Gen &lt; 6</button>
-				<button id="gen-6plus" class="gen-button" data-gen="6plus">Gen 6+</button>
+				<button id="gen-legacy" class="btn btn-primary active" data-gen="legacy">Gen &lt; 6</button>
+				<button id="gen-6plus" class="btn btn-secondary" data-gen="6plus">Gen 6+</button>
 			</div>
 
 			<div class="separator"></div>
@@ -70,27 +72,30 @@
 			</div>
 		</div>
 
+		<!-- Hidden template for preloading Easter egg images -->
+		<div style="display: none;" aria-hidden="true">
+			<img src="images/kirby.webp" alt="preload">
+			<img src="images/menacing.gif" alt="preload">
+		</div>
+
 		<!-- Command Card -->
 		<div id="command-card" class="command-card hidden">
 			<div class="card-header">
-				<h2 id="card-title"></h2>
+				<div></div>
+				<span id="card-title"></span>
 				<button id="close-card" class="close-button" aria-label="Close card">×</button>
 			</div>
-			<p id="card-description" class="card-description"></p>
+			<div class="card-padding">
+				<p id="card-description" class="card-description"></p>
 
-			<div id="card-content" class="card-content">
-				<!-- Dynamic inputs will be inserted here -->
-			</div>
+				<div id="card-content" class="card-content">
+					<!-- Dynamic inputs will be inserted here -->
+				</div>
 
-			<div class="command-preview-container">
-				<label for="command-preview">Command:</label>
-				<input
-					type="text"
-					id="command-preview"
-					class="command-preview"
-					readonly
-				/>
-				<button id="copy-button" class="copy-button">Copy</button>
+				<div class="command-preview-container">
+					<code id="command-preview" class="command-preview"></code>
+					<button id="copy-button" class="btn btn-primary">Copy</button>
+				</div>
 			</div>
 		</div>
 	</div>

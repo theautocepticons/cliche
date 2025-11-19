@@ -105,8 +105,10 @@ function initializeGenToggle() {
 		if (state.currentGeneration !== 'legacy') {
 			state.currentGeneration = 'legacy';
 			state.activeGeneration = 'legacy';
-			genLegacy.classList.add('active');
-			gen6Plus.classList.remove('active');
+			genLegacy.classList.remove('btn-secondary');
+			genLegacy.classList.add('btn-primary', 'active');
+			gen6Plus.classList.remove('btn-primary', 'active');
+			gen6Plus.classList.add('btn-secondary');
 
 			// Trigger search update
 			const searchInput = document.getElementById('search-input');
@@ -118,8 +120,10 @@ function initializeGenToggle() {
 		if (state.currentGeneration !== '6plus') {
 			state.currentGeneration = '6plus';
 			state.activeGeneration = '6plus';
-			gen6Plus.classList.add('active');
-			genLegacy.classList.remove('active');
+			gen6Plus.classList.remove('btn-secondary');
+			gen6Plus.classList.add('btn-primary', 'active');
+			genLegacy.classList.remove('btn-primary', 'active');
+			genLegacy.classList.add('btn-secondary');
 
 			// Trigger search update
 			const searchInput = document.getElementById('search-input');

@@ -80,6 +80,19 @@ function performSearch(query) {
 	const searchResults = document.getElementById('search-results');
 	const commands = appState.commands[appState.currentGeneration];
 
+	// Easter egg: JoJo reference
+	if (query.toLowerCase() === 'jojo') {
+		searchResults.innerHTML = `
+			<div style="display: flex; align-items: center; justify-content: center; padding: 40px; gap: 20px;">
+				<img src="images/menacing.gif" alt="menacing" style="width: 100px; height: 100px; object-fit: contain;">
+				<img src="images/kirby.webp" alt="kirby" style="width: 200px; height: 200px; object-fit: contain;">
+				<img src="images/menacing.gif" alt="menacing" style="width: 100px; height: 100px; object-fit: contain;">
+			</div>
+		`;
+		searchResults.classList.remove('hidden');
+		return;
+	}
+
 	if (commands.length === 0) {
 		searchResults.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--text-color);">No commands available for this generation</div>';
 		searchResults.classList.remove('hidden');

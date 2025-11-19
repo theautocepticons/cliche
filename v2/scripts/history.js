@@ -189,13 +189,14 @@ function createHistoryModal() {
         <div class="modal-overlay"></div>
         <div class="modal-content">
             <div class="modal-header">
-                <h2>Command History</h2>
+				<div></div>
+                <span>Command History</span>
                 <button class="modal-close" aria-label="Close">&times;</button>
             </div>
             <div class="modal-body">
                 <div class="history-controls">
                     <input type="text" class="history-search-input" placeholder="Search history..." />
-                    <button class="history-clear-btn">Clear All History</button>
+                    <button class="btn btn-danger">Clear All History</button>
                 </div>
                 <div class="history-list"></div>
             </div>
@@ -205,7 +206,7 @@ function createHistoryModal() {
     // Add event listeners
     const overlay = modal.querySelector('.modal-overlay');
     const closeBtn = modal.querySelector('.modal-close');
-    const clearBtn = modal.querySelector('.history-clear-btn');
+    const clearBtn = modal.querySelector('.btn-danger');
     const searchInput = modal.querySelector('.history-search-input');
 
     overlay.addEventListener('click', () => hideHistoryModal());
@@ -262,8 +263,8 @@ function populateHistoryModal(modal, history) {
                 <code class="history-item-command">${escapeHtml(entry.command)}</code>
             </div>
             <div class="history-item-actions">
-                <button class="history-item-reuse" data-index="${index}">Use</button>
-                <button class="history-item-delete" data-index="${index}">Delete</button>
+                <button class="btn btn-primary btn-sm history-item-reuse" data-index="${index}">Use</button>
+                <button class="btn btn-danger btn-sm history-item-delete" data-index="${index}">Delete</button>
             </div>
         `;
 
@@ -402,6 +403,7 @@ export function showRecentHistory(count = 10) {
 
     panel.innerHTML = `
         <div class="recent-history-header">
+			<div></div>
             <span class="recent-history-title">Recent Commands</span>
             <button class="recent-history-close" aria-label="Close">&times;</button>
         </div>
