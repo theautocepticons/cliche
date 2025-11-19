@@ -3,1061 +3,116 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>CLICHE - CLI Cheat Helper Engine</title>
-	<link rel="stylesheet" href="./styles.css">
+	<title>CLICHE v2</title>
+
+	<!-- Fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+
+	<!-- Styles -->
+	<link rel="stylesheet" href="/css/colors.css">
+	<link rel="stylesheet" href="/css/fonts.css">
+	<link rel="stylesheet" href="/css/styles.css">
+	<link rel="stylesheet" href="/css/buttons.css">
 </head>
-<body data-theme="light">
+<body>
 	<div class="container">
+		<!-- Header -->
 		<header>
-			<div class="header-content">
-				<h1>CLICHE</h1>
-				<div class="header-inputs">
-					<input type="number" id="globalIndex" class="index-input" placeholder="Index" min="1" value="1">
-					<input type="text" id="searchInput" class="search-input" placeholder="Search commands...">
-				</div>
-				<button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">🌙</button>
-			</div>
+			<h1>Cliché</h1>
+			<button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+				<span class="theme-icon">☀️</span>
+			</button>
 		</header>
 
-		<div class="tabs-bar">
-			<button class="tab-btn active" data-tab="gen5">Gen &lt; 6</button>
-			<button class="tab-btn" data-tab="gen6">Gen 6+</button>
-			<button class="tab-btn" data-tab="sac">SAC</button>
-			<button class="tab-btn" data-tab="fru">FRU</button>
+		<!-- Generation Toggle and Global Index -->
+		<div class="controls-container">
+			<div class="gen-toggle">
+				<button id="gen-legacy" class="btn btn-primary active" data-gen="legacy">Gen &lt; 6</button>
+				<button id="gen-6plus" class="btn btn-secondary" data-gen="6plus">Gen 6+</button>
+			</div>
+
+			<div class="separator"></div>
+
+			<div class="global-index">
+				<label for="global-index-input">Blade Index:</label>
+				<input
+					type="text"
+					id="global-index-input"
+					class="global-index-input"
+					placeholder="1-24"
+					value="1"
+					autocomplete="off"
+				/>
+			</div>
+
+			<div class="separator"></div>
+
+			<div class="history-button-container">
+				<button id="history-button" class="history-button" aria-label="Command History">
+					<img src="images/history.svg" alt="History" class="history-icon">
+					<span class="tooltip">Command History</span>
+				</button>
+				<button id="recent-button" class="history-button" aria-label="Recent Commands">
+					<img src="images/recent.svg" alt="Recent" class="history-icon">
+					<span class="tooltip">Recent Commands</span>
+				</button>
+				<button id="bookmarks-button" class="history-button" aria-label="Bookmarks">
+					<img src="images/bookmark.svg" alt="Bookmarks" class="history-icon">
+					<span class="tooltip">Bookmarks</span>
+				</button>
+			</div>
 		</div>
 
-		<main class="main-content">
-
-			<div class="tab-content" data-generation="gen5">
-			<div class="command" data-command="cm-connection">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Establish CM Connection</h2>
-				<div class="command-header">
-					<input type="text" class="command-display" readonly value="-establishcmconnection">
-					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
-				</div>
-					<div class="command-options grid-4">
-						<div class="option-group">
-							<label>Port</label>
-							<input type="text" placeholder="Port (-p)" value="8080">
-						</div>
-						<div class="option-group">
-							<label>Username</label>
-							<input type="text" placeholder="Username (-u)">
-						</div>
-						<div class="option-group">
-							<label>Password</label>
-							<input type="password" placeholder="Password (-x)">
-						</div>
-						<div class="option-group">
-							<label>Mask</label>
-							<input type="text" placeholder="Mask (-m)">
-						</div>
-					</div>
-					<div class="flags-section">
-						<div class="checkbox-group">
-							<input type="checkbox" id="cm-flag-s" checked>
-							<label for="cm-flag-s">-s (SSL)</label>
-						</div>
-					</div>
-					<div class="credential-presets">
-						<label class="preset-label">Default Credentials</label>
-						<div class="preset-buttons">
-							<button class="preset-btn" onclick="applyCMPreset('admin', '$pl3nd1D')">admin / $pl3nd1D</button>
-							<button class="preset-btn" onclick="applyCMPreset('administrator', '$pl3nd1D')">administrator / $pl3nd1D</button>
-							<button class="preset-btn" onclick="applyCMPreset('admin', 'Rd!Pa$$w0rd!#9K')">admin / Rd!Pa$$w0rd!#9K</button>
-							<button class="preset-btn" onclick="applyCMPreset('WcsRma', '')">WcsRma</button>
-							<button class="preset-btn" onclick="applyCMPreset('root', '')">root</button>
-						</div>
-					</div>
+		<!-- Search Bar -->
+		<div class="search-container">
+			<input
+				type="text"
+				id="search-input"
+				class="search-input"
+				placeholder="Search commands..."
+				autocomplete="off"
+			/>
+			<div id="search-results" class="search-results hidden">
+				<!-- Search results will be dynamically inserted here -->
 			</div>
+		</div>
 
-			<div class="command">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Blade Power</h2>
-				<div class="command-header">
-					<input type="text" class="command-display" readonly value="-setpoweron -i">
-					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
-				</div>
-				<div class="command-header">
-					<input type="text" class="command-display" readonly value="-setpoweroff -i">
-					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
-				</div>
-			</div>
+		<!-- Hidden template for preloading Easter egg images -->
+		<div style="display: none;" aria-hidden="true">
+			<img src="images/kirby.webp" alt="preload">
+			<img src="images/menacing.gif" alt="preload">
+		</div>
 
-			<div class="command">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Blade Attention LED</h2>
-				<div class="command-header">
-					<input type="text" class="command-display" readonly value="-setbladeattentionledon -i">
-					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+		<!-- Cards container -->
+		<div id="cards">
+			<!-- Command Card -->
+			<div id="command-card" class="command-card card-margin hidden">
+				<div class="card-header">
+					<div></div>
+					<span id="card-title"></span>
+					<button id="close-card" class="close-button" aria-label="Close card">×</button>
 				</div>
-				<div class="command-header">
-					<input type="text" class="command-display" readonly value="-setbladeattentionledoff -i">
-					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
-				</div>
-			</div>
+				<div class="card-padding">
+					<p id="card-description" class="card-description"></p>
 
-			<div class="command">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Blade Active Power Cycle</h2>
-				<div class="command-header">
-					<input type="text" class="command-display" readonly value="-setbladeactivepowercycle -i">
-					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
-				</div>
-			</div>
-
-			<div class="command" data-command="blade-info">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Get Blade Info</h2>
-				<div class="command-header">
-					<input type="text" class="command-display" readonly value="-getbladeinfo -i">
-					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
-				</div>
-				<div class="flags-section">
-					<div class="checkbox-group">
-						<input type="checkbox" id="info-all" data-flag="a">
-						<label for="info-all">-a (All blades)</label>
+					<div id="card-content" class="card-content">
+						<!-- Dynamic inputs will be inserted here -->
 					</div>
-					<div class="checkbox-group">
-						<input type="checkbox" id="info-help" data-flag="h">
-						<label for="info-help">-h (Help)</label>
+
+					<div class="command-preview-container">
+						<code id="command-preview" class="command-preview"></code>
+						<button id="bookmark-command-button" class="btn btn-secondary" title="Bookmark">
+						<img src="images/bookmark.svg" alt="Bookmark" class="button-icon">
+					</button>
+						<button id="copy-button" class="btn btn-primary">Copy</button>
 					</div>
 				</div>
-			</div>
-
-			<div class="command">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Blade Serial Session</h2>
-				<div class="command-header">
-					<input type="text" class="command-display" readonly value="-startbladeserialsession -i">
-					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
-				</div>
-				<div class="command-header">
-					<input type="text" class="command-display" readonly value="-stopbladeserialsession -i">
-					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
-				</div>
-			</div>
-
-			<div class="command">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Blade Log</h2>
-				<div class="command-header">
-					<input type="text" class="command-display" readonly value="-readbladelog -i">
-					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
-				</div>
-				<div class="command-header">
-					<input type="text" class="command-display" readonly value="-clearbladelog -i">
-					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
-				</div>
-			</div>
-
-			<div class="command" data-command="blade-health">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Blade Health</h2>
-				<div class="command-header">
-					<input type="text" class="command-display" readonly value="-getbladehealth -i">
-					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
-				</div>
-				<div class="flags-section">
-					<div class="checkbox-group">
-						<input type="checkbox" id="health-q" data-flag="q">
-						<label for="health-q">-q (CPU)</label>
-					</div>
-					<div class="checkbox-group">
-						<input type="checkbox" id="health-m" data-flag="m">
-						<label for="health-m">-m (Memory)</label>
-					</div>
-					<div class="checkbox-group">
-						<input type="checkbox" id="health-d" data-flag="d">
-						<label for="health-d">-d (JBOD Disk)</label>
-					</div>
-					<div class="checkbox-group">
-						<input type="checkbox" id="health-p" data-flag="p">
-						<label for="health-p">-p (PCIe)</label>
-					</div>
-					<div class="checkbox-group">
-						<input type="checkbox" id="health-s" data-flag="s">
-						<label for="health-s">-s (Sensor)</label>
-					</div>
-					<div class="checkbox-group">
-						<input type="checkbox" id="health-t" data-flag="t">
-						<label for="health-t">-t (Temperature)</label>
-					</div>
-					<div class="checkbox-group">
-						<input type="checkbox" id="health-f" data-flag="f">
-						<label for="health-f">-f (FRU)</label>
-					</div>
-					<div class="checkbox-group">
-						<input type="checkbox" id="health-h" data-flag="h">
-						<label for="health-h">-h (Help)</label>
-					</div>
-				</div>
-			</div>
-
-			<div class="command">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Blade Power Reading</h2>
-				<div class="command-header">
-					<input type="text" class="command-display" readonly value="-getbladepowerreading -i">
-					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
-				</div>
-			</div>
-
-			<div class="command">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Blade Mezz Status</h2>
-				<div class="command-header">
-					<input type="text" class="command-display" readonly value="-getblademezzstatus -i">
-					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
-				</div>
-				<div style="margin-top: 16px;">
-					<label class="preset-label">Paste Status Output for Analysis</label>
-					<textarea id="mezzStatusInput" class="mezz-textarea" placeholder="Paste the output from -getblademezzstatus command here..."></textarea>
-					<div id="mezzStatusResults" class="mezz-results"></div>
-				</div>
-			</div>
-
-			<div class="command" data-command="chassis-health">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Chassis Health</h2>
-				<div class="command-header">
-					<input type="text" class="command-display" readonly value="-getchassishealth">
-					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
-				</div>
-				<div class="flags-section">
-					<div class="checkbox-group">
-						<input type="checkbox" id="chassis-b" data-flag="b">
-						<label for="chassis-b">-b (Blade)</label>
-					</div>
-					<div class="checkbox-group">
-						<input type="checkbox" id="chassis-p" data-flag="p">
-						<label for="chassis-p">-p (PSU)</label>
-					</div>
-					<div class="checkbox-group">
-						<input type="checkbox" id="chassis-f" data-flag="f">
-						<label for="chassis-f">-f (Fan)</label>
-					</div>
-					<div class="checkbox-group">
-						<input type="checkbox" id="chassis-t" data-flag="t">
-						<label for="chassis-t">-t (Battery)</label>
-					</div>
-					<div class="checkbox-group">
-						<input type="checkbox" id="chassis-h" data-flag="h">
-						<label for="chassis-h">-h (Help)</label>
-					</div>
-				</div>
-			</div>
-
-			<div class="command" data-command="chassis-info">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Chassis Info</h2>
-				<div class="command-header">
-					<input type="text" class="command-display" readonly value="-getchassisinfo">
-					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
-				</div>
-				<div class="flags-section">
-					<div class="checkbox-group">
-						<input type="checkbox" id="chassis-info-s" data-flag="s">
-						<label for="chassis-info-s">-s (Blades)</label>
-					</div>
-					<div class="checkbox-group">
-						<input type="checkbox" id="chassis-info-p" data-flag="p">
-						<label for="chassis-info-p">-p (Power Supplies)</label>
-					</div>
-					<div class="checkbox-group">
-						<input type="checkbox" id="chassis-info-c" data-flag="c">
-						<label for="chassis-info-c">-c (Chassis Manager)</label>
-					</div>
-					<div class="checkbox-group">
-						<input type="checkbox" id="chassis-info-t" data-flag="t">
-						<label for="chassis-info-t">-t (Battery)</label>
-					</div>
-					<div class="checkbox-group">
-						<input type="checkbox" id="chassis-info-h" data-flag="h">
-						<label for="chassis-info-h">-h (Help)</label>
-					</div>
-				</div>
-			</div>
-
-			<div class="command" data-command="bios-config">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Blade BIOS Config</h2>
-				<div class="command-header">
-					<input type="text" class="command-display" readonly value="-getbladebiosconfig -i">
-					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
-				</div>
-				<div class="command-header">
-					<input type="text" class="command-display" readonly value="-setbladebiosconfig -i">
-					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
-				</div>
-				<div class="command-options">
-					<div class="option-group">
-						<label>BIOS Setting Index (-j)</label>
-						<input type="text" placeholder="Index" data-flag="j">
-					</div>
-					<div class="option-group">
-						<label>Setting Value (-n)</label>
-						<input type="text" placeholder="Value" data-flag="n">
-					</div>
-				</div>
-				<div class="credential-presets">
-					<label class="preset-label">Default Configurations</label>
-					<div class="preset-buttons">
-						<button class="preset-btn" onclick="applyBIOSPreset(0, 0)">GN1 (WCS General)</button>
-						<button class="preset-btn" onclick="applyBIOSPreset(1, 0)">AZ1 (Azure Compute)</button>
-						<button class="preset-btn" onclick="applyBIOSPreset(1, 1)">AH1 (Azure Compute HT/Legacy)</button>
-						<button class="preset-btn" onclick="applyBIOSPreset(1, 2)">AS1 (Azure XStore Standard)</button>
-						<button class="preset-btn" onclick="applyBIOSPreset(1, 3)">AT1 (Azure XStore Utility)</button>
-						<button class="preset-btn" onclick="applyBIOSPreset(1, 4)">AX1 (Azure XIO Standard)</button>
-						<button class="preset-btn" onclick="applyBIOSPreset(1, 5)">AY1 (Azure XIO Utility)</button>
-						<button class="preset-btn" onclick="applyBIOSPreset(1, 6)">AA1 (Azure Compute HT/Legacy)</button>
-						<button class="preset-btn" onclick="applyBIOSPreset(1, 7)">AI1 (Azure Compute HT/UEFI)</button>
-						<button class="preset-btn" onclick="applyBIOSPreset(2, 0)">BA1 (Bing Online)</button>
-						<button class="preset-btn" onclick="applyBIOSPreset(2, 1)">BB1 (Bing Offline)</button>
-						<button class="preset-btn" onclick="applyBIOSPreset(2, 2)">BC1 (Bing Offline/HT)</button>
-						<button class="preset-btn" onclick="applyBIOSPreset(3, 0)">EA1 (Exchange)</button>
-						<button class="preset-btn" onclick="applyBIOSPreset(4, 0)">PA1 (CPS)</button>
-					</div>
-				</div>
-			</div>
-
-			<div class="command" data-command="next-boot">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Set Next Boot</h2>
-				<div style="margin-bottom: 12px; padding: 12px; background-color: var(--bg-tertiary); border-radius: 8px; font-size: 13px; color: var(--text-secondary);">
-					Note: A soft power cycle is required after setting boot options for the changes to take effect.
-				</div>
-				<div class="command-header">
-					<input type="text" class="command-display" readonly value="-setnextboot -i">
-					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
-				</div>
-				<div class="command-options grid-4">
-					<div class="option-group">
-						<label>Boot Type (-t)</label>
-						<input type="text" placeholder="1-5" data-flag="t">
-					</div>
-					<div class="option-group">
-						<label>Mode (-m)</label>
-						<input type="text" placeholder="0=Legacy, 1=UEFI" data-flag="m">
-					</div>
-					<div class="option-group">
-						<label>Persistent (-p)</label>
-						<input type="text" placeholder="0=One-time, 1=Persistent" data-flag="p">
-					</div>
-					<div class="option-group">
-						<label>Instance (-n)</label>
-						<input type="text" placeholder="0-31" data-flag="n">
-					</div>
-				</div>
-				<div style="margin-top: 12px; padding: 12px; background-color: var(--bg-tertiary); border-radius: 8px; font-size: 13px; color: var(--text-secondary);">
-					<strong>Boot Types:</strong> 1=NoOverride, 2=ForcePxe, 3=ForceDefaultHdd, 4=ForceIntoBiosSetup, 5=ForceFloppyOrRemovable
-				</div>
-				<div class="credential-presets">
-					<label class="preset-label">Common Boot Configurations</label>
-					<div class="preset-buttons">
-						<button class="preset-btn" onclick="applyBootPreset(2, 0, 0, 0)">PXE (Legacy, One-time)</button>
-						<button class="preset-btn" onclick="applyBootPreset(2, 1, 0, 0)">PXE (UEFI, One-time)</button>
-						<button class="preset-btn" onclick="applyBootPreset(4, 0, 0, null)">BIOS Setup (Legacy)</button>
-						<button class="preset-btn" onclick="applyBootPreset(4, 1, 0, null)">BIOS Setup (UEFI)</button>
-						<button class="preset-btn" onclick="applyBootPreset(3, 0, 0, null)">Default HDD (Legacy)</button>
-						<button class="preset-btn" onclick="applyBootPreset(3, 1, 0, null)">Default HDD (UEFI)</button>
-						<button class="preset-btn" onclick="applyBootPreset(5, 0, 0, null)">Removable (Legacy)</button>
-					</div>
-				</div>
-			</div>
-
-			<div class="command" data-command="set-nic">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Set NIC</h2>
-				<div style="margin-bottom: 12px; padding: 12px; background-color: var(--bg-tertiary); border-radius: 8px; font-size: 13px; color: var(--text-secondary);">
-					Configure network interface settings. Gateway IP can be cleared by switching to DHCP and then back to Static.
-				</div>
-				<div class="command-header">
-					<input type="text" class="command-display" readonly value="-setnic">
-					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
-				</div>
-				<div class="flags-section" style="margin-bottom: 16px;">
-					<div class="checkbox-group">
-						<input type="checkbox" id="nic-dhcp" value="DHCP" data-flag="a" data-group="nic-source">
-						<label for="nic-dhcp">-a DHCP</label>
-					</div>
-					<div class="checkbox-group">
-						<input type="checkbox" id="nic-static" value="STATIC" data-flag="a" data-group="nic-source">
-						<label for="nic-static">-a STATIC</label>
-					</div>
-				</div>
-				<div class="command-options grid-4">
-					<div class="option-group">
-						<label>IP Address (-i)</label>
-						<input type="text" placeholder="Required for Static" data-flag="i">
-					</div>
-					<div class="option-group">
-						<label>Subnet Mask (-m)</label>
-						<input type="text" placeholder="Required for Static" data-flag="m">
-					</div>
-					<div class="option-group">
-						<label>Gateway (-g)</label>
-						<input type="text" placeholder="Optional" data-flag="g">
-					</div>
-					<div class="option-group">
-						<label>Primary DNS (-p)</label>
-						<input type="text" placeholder="Optional" data-flag="p">
-					</div>
-					<div class="option-group">
-						<label>Secondary DNS (-d)</label>
-						<input type="text" placeholder="Optional" data-flag="d">
-					</div>
-					<div class="option-group">
-						<label>Interface # (-t)</label>
-						<input type="text" placeholder="0-index, default 0" data-flag="t">
-					</div>
-				</div>
-				<div style="margin-top: 12px; padding: 12px; background-color: var(--bg-tertiary); border-radius: 8px; font-size: 13px; color: var(--text-secondary);">
-					<strong>Note:</strong> For Static IP, -a, -i, and -m are required. Secondary DNS (-d) is only valid if Primary DNS (-p) is also specified.
-				</div>
-			</div>
-
-			<div class="command">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Aux Device Status</h2>
-				<div class="command-header">
-					<input type="text" class="command-display" readonly value="-getauxdevicestatus -i">
-					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
-				</div>
-			</div>
-
-			<div class="command">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Version</h2>
-				<div class="command-header">
-					<input type="text" class="command-display" readonly value="-v">
-					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
-				</div>
-			</div>
-
-			</div>
-
-			<div class="tab-content" data-generation="gen6">
-
-			<!-- Network Commands Card -->
-			<div class="command gen6-network-card">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Network Commands</h2>
-
-				<!-- Action Selector -->
-				<div style="margin-bottom: 16px;">
-					<div style="display: flex; gap: 8px;">
-						<button class="gen6-action-btn active" data-action="show">Show</button>
-						<button class="gen6-action-btn" data-action="set">Set</button>
-					</div>
-				</div>
-
-				<!-- Command Dropdown -->
-				<div style="margin-bottom: 16px;">
-					<label style="display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px;">Select Command:</label>
-					<select id="gen6-network-command" style="width: 100%; padding: 8px 12px; font-size: 14px; border: 1px solid var(--border); border-radius: 6px; background-color: var(--bg-secondary); color: var(--text-primary); cursor: pointer;">
-						<option value="">Select a command...</option>
-					</select>
-				</div>
-
-				<!-- Parameters Container -->
-				<div id="gen6-params-container" style="margin-bottom: 16px;">
-					<!-- Parameters will be dynamically inserted here -->
-				</div>
-
-				<!-- Command Display -->
-				<div class="command-header">
-					<input type="text" id="gen6-network-command-display" class="command-display" readonly value="">
-					<button class="copy-btn" onclick="copyGen6Command(this)">Copy</button>
-				</div>
-			</div>
-
-			<!-- Manager Commands Section -->
-			<div style="margin: 32px 0 20px 0; padding-bottom: 12px; border-bottom: 2px solid var(--border);">
-				<h2 style="font-size: 20px; font-weight: 700; color: var(--text-primary); margin: 0;">Manager Commands</h2>
-			</div>
-
-			<!-- Manager Info & Health Card -->
-			<div id="gen6-manager-info-card" class="command gen6-manager-info-card">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Info & Health</h2>
-
-				<!-- Action Selector -->
-				<div style="margin-bottom: 16px;">
-					<div style="display: flex; gap: 8px;">
-						<button class="gen6-action-btn active" data-action="show">Show</button>
-						<button class="gen6-action-btn" data-action="set">Set</button>
-					</div>
-				</div>
-
-				<!-- Command Dropdown -->
-				<div style="margin-bottom: 16px;">
-					<label style="display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px;">Select Command:</label>
-					<select id="gen6-manager-info-command" style="width: 100%; padding: 8px 12px; font-size: 14px; border: 1px solid var(--border); border-radius: 6px; background-color: var(--bg-secondary); color: var(--text-primary); cursor: pointer;">
-						<option value="">Select a command...</option>
-					</select>
-				</div>
-
-				<!-- Parameters Container -->
-				<div id="gen6-manager-info-params-container" style="margin-bottom: 16px;">
-					<!-- Parameters will be dynamically inserted here -->
-				</div>
-
-				<!-- Command Display -->
-				<div class="command-header">
-					<input type="text" id="gen6-manager-info-command-display" class="command-display" readonly value="">
-					<button class="copy-btn" onclick="copyGen6Command(this)">Copy</button>
-				</div>
-			</div>
-
-			<!-- Manager Power Card -->
-			<div id="gen6-manager-power-card" class="command gen6-manager-power-card">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Power</h2>
-
-				<!-- Action Selector -->
-				<div style="margin-bottom: 16px;">
-					<div style="display: flex; gap: 8px;">
-						<button class="gen6-action-btn active" data-action="show">Show</button>
-						<button class="gen6-action-btn" data-action="set">Set</button>
-					</div>
-				</div>
-
-				<div style="margin-bottom: 16px;">
-					<label style="display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px;">Select Command:</label>
-					<select id="gen6-manager-power-command" style="width: 100%; padding: 8px 12px; font-size: 14px; border: 1px solid var(--border); border-radius: 6px; background-color: var(--bg-secondary); color: var(--text-primary); cursor: pointer;">
-						<option value="">Select a command...</option>
-					</select>
-				</div>
-				<div id="gen6-manager-power-params-container" style="margin-bottom: 16px;"></div>
-				<div class="command-header">
-					<input type="text" id="gen6-manager-power-command-display" class="command-display" readonly value="">
-					<button class="copy-btn" onclick="copyGen6Command(this)">Copy</button>
-				</div>
-			</div>
-
-			<!-- Manager Logging Card -->
-			<div id="gen6-manager-logging-card" class="command gen6-manager-logging-card">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Logging</h2>
-
-				<!-- Action Selector -->
-				<div style="margin-bottom: 16px;">
-					<div style="display: flex; gap: 8px;">
-						<button class="gen6-action-btn active" data-action="show">Show</button>
-						<button class="gen6-action-btn" data-action="set">Set</button>
-					</div>
-				</div>
-
-				<div style="margin-bottom: 16px;">
-					<label style="display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px;">Select Command:</label>
-					<select id="gen6-manager-logging-command" style="width: 100%; padding: 8px 12px; font-size: 14px; border: 1px solid var(--border); border-radius: 6px; background-color: var(--bg-secondary); color: var(--text-primary); cursor: pointer;">
-						<option value="">Select a command...</option>
-					</select>
-				</div>
-				<div id="gen6-manager-logging-params-container" style="margin-bottom: 16px;"></div>
-				<div class="command-header">
-					<input type="text" id="gen6-manager-logging-command-display" class="command-display" readonly value="">
-					<button class="copy-btn" onclick="copyGen6Command(this)">Copy</button>
-				</div>
-			</div>
-
-			<!-- Manager Network & Services Card -->
-			<div id="gen6-manager-network-card" class="command gen6-manager-network-card">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Network & Services</h2>
-
-				<!-- Action Selector -->
-				<div style="margin-bottom: 16px;">
-					<div style="display: flex; gap: 8px;">
-						<button class="gen6-action-btn active" data-action="show">Show</button>
-						<button class="gen6-action-btn" data-action="set">Set</button>
-					</div>
-				</div>
-
-				<div style="margin-bottom: 16px;">
-					<label style="display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px;">Select Command:</label>
-					<select id="gen6-manager-network-command" style="width: 100%; padding: 8px 12px; font-size: 14px; border: 1px solid var(--border); border-radius: 6px; background-color: var(--bg-secondary); color: var(--text-primary); cursor: pointer;">
-						<option value="">Select a command...</option>
-					</select>
-				</div>
-				<div id="gen6-manager-network-params-container" style="margin-bottom: 16px;"></div>
-				<div class="command-header">
-					<input type="text" id="gen6-manager-network-command-display" class="command-display" readonly value="">
-					<button class="copy-btn" onclick="copyGen6Command(this)">Copy</button>
-				</div>
-			</div>
-
-			<!-- Manager Configuration Card -->
-			<div id="gen6-manager-config-card" class="command gen6-manager-config-card">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Configuration</h2>
-
-				<!-- Action Selector -->
-				<div style="margin-bottom: 16px;">
-					<div style="display: flex; gap: 8px;">
-						<button class="gen6-action-btn active" data-action="show">Show</button>
-						<button class="gen6-action-btn" data-action="set">Set</button>
-					</div>
-				</div>
-
-				<div style="margin-bottom: 16px;">
-					<label style="display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px;">Select Command:</label>
-					<select id="gen6-manager-config-command" style="width: 100%; padding: 8px 12px; font-size: 14px; border: 1px solid var(--border); border-radius: 6px; background-color: var(--bg-secondary); color: var(--text-primary); cursor: pointer;">
-						<option value="">Select a command...</option>
-					</select>
-				</div>
-				<div id="gen6-manager-config-params-container" style="margin-bottom: 16px;"></div>
-				<div class="command-header">
-					<input type="text" id="gen6-manager-config-command-display" class="command-display" readonly value="">
-					<button class="copy-btn" onclick="copyGen6Command(this)">Copy</button>
-				</div>
-			</div>
-
-			<!-- Manager Security (Cerberus) Card -->
-			<div id="gen6-manager-cerberus-card" class="command gen6-manager-cerberus-card">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Security (Cerberus)</h2>
-
-				<!-- Action Selector -->
-				<div style="margin-bottom: 16px;">
-					<div style="display: flex; gap: 8px;">
-						<button class="gen6-action-btn active" data-action="show">Show</button>
-						<button class="gen6-action-btn" data-action="set">Set</button>
-					</div>
-				</div>
-
-				<div style="margin-bottom: 16px;">
-					<label style="display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px;">Select Command:</label>
-					<select id="gen6-manager-cerberus-command" style="width: 100%; padding: 8px 12px; font-size: 14px; border: 1px solid var(--border); border-radius: 6px; background-color: var(--bg-secondary); color: var(--text-primary); cursor: pointer;">
-						<option value="">Select a command...</option>
-					</select>
-				</div>
-				<div id="gen6-manager-cerberus-params-container" style="margin-bottom: 16px;"></div>
-				<div class="command-header">
-					<input type="text" id="gen6-manager-cerberus-command-display" class="command-display" readonly value="">
-					<button class="copy-btn" onclick="copyGen6Command(this)">Copy</button>
-				</div>
-			</div>
-
-			<!-- Manager Firmware & System Card -->
-			<div id="gen6-manager-system-card" class="command gen6-manager-system-card">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Firmware & System</h2>
-
-				<!-- Action Selector -->
-				<div style="margin-bottom: 16px;">
-					<div style="display: flex; gap: 8px;">
-						<button class="gen6-action-btn active" data-action="show">Show</button>
-						<button class="gen6-action-btn" data-action="set">Set</button>
-					</div>
-				</div>
-
-				<div style="margin-bottom: 16px;">
-					<label style="display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px;">Select Command:</label>
-					<select id="gen6-manager-system-command" style="width: 100%; padding: 8px 12px; font-size: 14px; border: 1px solid var(--border); border-radius: 6px; background-color: var(--bg-secondary); color: var(--text-primary); cursor: pointer;">
-						<option value="">Select a command...</option>
-					</select>
-				</div>
-				<div id="gen6-manager-system-params-container" style="margin-bottom: 16px;"></div>
-				<div class="command-header">
-					<input type="text" id="gen6-manager-system-command-display" class="command-display" readonly value="">
-					<button class="copy-btn" onclick="copyGen6Command(this)">Copy</button>
-				</div>
-			</div>
-
-			<!-- Server Commands Section -->
-			<div style="margin: 32px 0 20px 0; padding-bottom: 12px; border-bottom: 2px solid var(--border);">
-				<h2 style="font-size: 20px; font-weight: 700; color: var(--text-primary); margin: 0;">Server Commands</h2>
-			</div>
-
-			<!-- System Info & General Card -->
-			<div id="gen6-system-info-card" class="command gen6-system-info-card">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Info & General</h2>
-
-				<!-- Action Selector -->
-				<div style="margin-bottom: 16px;">
-					<div style="display: flex; gap: 8px;">
-						<button class="gen6-action-btn active" data-action="show">Show</button>
-						<button class="gen6-action-btn" data-action="set">Set</button>
-					</div>
-				</div>
-
-				<div style="margin-bottom: 16px;">
-					<label style="display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px;">Select Command:</label>
-					<select id="gen6-system-info-command" style="width: 100%; padding: 8px 12px; font-size: 14px; border: 1px solid var(--border); border-radius: 6px; background-color: var(--bg-secondary); color: var(--text-primary); cursor: pointer;">
-						<option value="">Select a command...</option>
-					</select>
-				</div>
-				<div id="gen6-system-info-params-container" style="margin-bottom: 16px;"></div>
-				<div class="command-header">
-					<input type="text" id="gen6-system-info-command-display" class="command-display" readonly value="">
-					<button class="copy-btn" onclick="copyGen6Command(this)">Copy</button>
-				</div>
-			</div>
-
-			<!-- System Power Card -->
-			<div id="gen6-system-power-card" class="command gen6-system-power-card">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Power</h2>
-
-				<!-- Action Selector -->
-				<div style="margin-bottom: 16px;">
-					<div style="display: flex; gap: 8px;">
-						<button class="gen6-action-btn active" data-action="show">Show</button>
-						<button class="gen6-action-btn" data-action="set">Set</button>
-					</div>
-				</div>
-
-				<div style="margin-bottom: 16px;">
-					<label style="display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px;">Select Command:</label>
-					<select id="gen6-system-power-command" style="width: 100%; padding: 8px 12px; font-size: 14px; border: 1px solid var(--border); border-radius: 6px; background-color: var(--bg-secondary); color: var(--text-primary); cursor: pointer;">
-						<option value="">Select a command...</option>
-					</select>
-				</div>
-				<div id="gen6-system-power-params-container" style="margin-bottom: 16px;"></div>
-				<div class="command-header">
-					<input type="text" id="gen6-system-power-command-display" class="command-display" readonly value="">
-					<button class="copy-btn" onclick="copyGen6Command(this)">Copy</button>
-				</div>
-			</div>
-
-			<!-- System FPGA Card -->
-			<div id="gen6-system-fpga-card" class="command gen6-system-fpga-card">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">FPGA</h2>
-
-				<!-- Action Selector -->
-				<div style="margin-bottom: 16px;">
-					<div style="display: flex; gap: 8px;">
-						<button class="gen6-action-btn active" data-action="show">Show</button>
-						<button class="gen6-action-btn" data-action="set">Set</button>
-					</div>
-				</div>
-
-				<div style="margin-bottom: 16px;">
-					<label style="display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px;">Select Command:</label>
-					<select id="gen6-system-fpga-command" style="width: 100%; padding: 8px 12px; font-size: 14px; border: 1px solid var(--border); border-radius: 6px; background-color: var(--bg-secondary); color: var(--text-primary); cursor: pointer;">
-						<option value="">Select a command...</option>
-					</select>
-				</div>
-				<div id="gen6-system-fpga-params-container" style="margin-bottom: 16px;"></div>
-				<div class="command-header">
-					<input type="text" id="gen6-system-fpga-command-display" class="command-display" readonly value="">
-					<button class="copy-btn" onclick="copyGen6Command(this)">Copy</button>
-				</div>
-			</div>
-
-			<!-- System Boot & BIOS Card -->
-			<div id="gen6-system-boot-card" class="command gen6-system-boot-card">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Boot & BIOS</h2>
-
-				<!-- Action Selector -->
-				<div style="margin-bottom: 16px;">
-					<div style="display: flex; gap: 8px;">
-						<button class="gen6-action-btn active" data-action="show">Show</button>
-						<button class="gen6-action-btn" data-action="set">Set</button>
-					</div>
-				</div>
-
-				<div style="margin-bottom: 16px;">
-					<label style="display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px;">Select Command:</label>
-					<select id="gen6-system-boot-command" style="width: 100%; padding: 8px 12px; font-size: 14px; border: 1px solid var(--border); border-radius: 6px; background-color: var(--bg-secondary); color: var(--text-primary); cursor: pointer;">
-						<option value="">Select a command...</option>
-					</select>
-				</div>
-				<div id="gen6-system-boot-params-container" style="margin-bottom: 16px;"></div>
-				<div class="command-header">
-					<input type="text" id="gen6-system-boot-command-display" class="command-display" readonly value="">
-					<button class="copy-btn" onclick="copyGen6Command(this)">Copy</button>
-				</div>
-			</div>
-
-			<!-- System Storage & Devices Card -->
-			<div id="gen6-system-storage-card" class="command gen6-system-storage-card">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Storage & Devices</h2>
-
-				<!-- Action Selector -->
-				<div style="margin-bottom: 16px;">
-					<div style="display: flex; gap: 8px;">
-						<button class="gen6-action-btn active" data-action="show">Show</button>
-						<button class="gen6-action-btn" data-action="set">Set</button>
-					</div>
-				</div>
-
-				<div style="margin-bottom: 16px;">
-					<label style="display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px;">Select Command:</label>
-					<select id="gen6-system-storage-command" style="width: 100%; padding: 8px 12px; font-size: 14px; border: 1px solid var(--border); border-radius: 6px; background-color: var(--bg-secondary); color: var(--text-primary); cursor: pointer;">
-						<option value="">Select a command...</option>
-					</select>
-				</div>
-				<div id="gen6-system-storage-params-container" style="margin-bottom: 16px;"></div>
-				<div class="command-header">
-					<input type="text" id="gen6-system-storage-command-display" class="command-display" readonly value="">
-					<button class="copy-btn" onclick="copyGen6Command(this)">Copy</button>
-				</div>
-			</div>
-
-			<!-- System Cerberus Card -->
-			<div id="gen6-system-cerberus-card" class="command gen6-system-cerberus-card">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Cerberus</h2>
-
-				<!-- Action Selector -->
-				<div style="margin-bottom: 16px;">
-					<div style="display: flex; gap: 8px;">
-						<button class="gen6-action-btn active" data-action="show">Show</button>
-						<button class="gen6-action-btn" data-action="set">Set</button>
-					</div>
-				</div>
-
-				<div style="margin-bottom: 16px;">
-					<label style="display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px;">Select Command:</label>
-					<select id="gen6-system-cerberus-command" style="width: 100%; padding: 8px 12px; font-size: 14px; border: 1px solid var(--border); border-radius: 6px; background-color: var(--bg-secondary); color: var(--text-primary); cursor: pointer;">
-						<option value="">Select a command...</option>
-					</select>
-				</div>
-				<div id="gen6-system-cerberus-params-container" style="margin-bottom: 16px;"></div>
-				<div class="command-header">
-					<input type="text" id="gen6-system-cerberus-command-display" class="command-display" readonly value="">
-					<button class="copy-btn" onclick="copyGen6Command(this)">Copy</button>
-				</div>
-			</div>
-
-			</div>
-
-			<div class="tab-content" data-generation="sac">
-
-			<div class="command">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Channel Management</h2>
-				<div class="command-header">
-					<input type="text" class="command-display" readonly value="ch -?">
-					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
-				</div>
-			</div>
-
-			<div class="command">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Create Command Prompt Channel</h2>
-				<div class="command-header">
-					<input type="text" class="command-display" readonly value="cmd">
-					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
-				</div>
-			</div>
-
-			<div class="command">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Dump Kernel Log</h2>
-				<div class="command-header">
-					<input type="text" class="command-display" readonly value="d">
-					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
-				</div>
-			</div>
-
-			<div class="command">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Toggle Process Info Detail</h2>
-				<div class="command-header">
-					<input type="text" class="command-display" readonly value="f">
-					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
-				</div>
-			</div>
-
-			<div class="command">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Help</h2>
-				<div class="command-header">
-					<input type="text" class="command-display" readonly value="?">
-					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
-				</div>
-				<div class="command-header">
-					<input type="text" class="command-display" readonly value="help">
-					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
-				</div>
-			</div>
-
-			<div class="command">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">List IP Networks</h2>
-				<div class="command-header">
-					<input type="text" class="command-display" readonly value="i">
-					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
-				</div>
-			</div>
-
-			<div class="command" data-command="sac-setip">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Set IP Address</h2>
-				<div style="margin-bottom: 12px; padding: 12px; background-color: var(--bg-tertiary); border-radius: 8px; font-size: 13px; color: var(--text-secondary);">
-					Set IP address, subnet, and gateway for an IP network number.
-				</div>
-				<div class="command-header">
-					<input type="text" class="command-display" readonly value="i">
-					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
-				</div>
-				<div class="command-options grid-4">
-					<div class="option-group">
-						<label>Network #</label>
-						<input type="text" placeholder="0" data-param="network">
-					</div>
-					<div class="option-group">
-						<label>IP Address</label>
-						<input type="text" placeholder="192.168.1.100" data-param="ip">
-					</div>
-					<div class="option-group">
-						<label>Subnet Mask</label>
-						<input type="text" placeholder="255.255.255.0" data-param="subnet">
-					</div>
-					<div class="option-group">
-						<label>Gateway</label>
-						<input type="text" placeholder="192.168.1.1" data-param="gateway">
-					</div>
-				</div>
-			</div>
-
-			<div class="command">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Display Windows nPartition ID</h2>
-				<div class="command-header">
-					<input type="text" class="command-display" readonly value="id">
-					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
-				</div>
-			</div>
-
-			<div class="command" data-command="sac-kill">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Kill Process</h2>
-				<div style="margin-bottom: 12px; padding: 12px; background-color: var(--bg-tertiary); border-radius: 8px; font-size: 13px; color: var(--text-secondary);">
-					Kill the given process by Process ID (PID).
-				</div>
-				<div class="command-header">
-					<input type="text" class="command-display" readonly value="k">
-					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
-				</div>
-				<div class="command-options">
-					<div class="option-group">
-						<label>Process ID (PID)</label>
-						<input type="text" placeholder="1234" data-param="pid">
-					</div>
-				</div>
-			</div>
-
-			<div class="command" data-command="sac-lower">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Lower Process Priority</h2>
-				<div style="margin-bottom: 12px; padding: 12px; background-color: var(--bg-tertiary); border-radius: 8px; font-size: 13px; color: var(--text-secondary);">
-					Lower the priority of a process to the lowest possible level.
-				</div>
-				<div class="command-header">
-					<input type="text" class="command-display" readonly value="l">
-					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
-				</div>
-				<div class="command-options">
-					<div class="option-group">
-						<label>Process ID (PID)</label>
-						<input type="text" placeholder="1234" data-param="pid">
-					</div>
-				</div>
-			</div>
-
-			<div class="command">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Lock Command Prompt Access</h2>
-				<div class="command-header">
-					<input type="text" class="command-display" readonly value="lock">
-					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
-				</div>
-			</div>
-
-			<div class="command" data-command="sac-memory">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Limit Process Memory</h2>
-				<div style="margin-bottom: 12px; padding: 12px; background-color: var(--bg-tertiary); border-radius: 8px; font-size: 13px; color: var(--text-secondary);">
-					Limit the memory usage of a process to the specified MB.
-				</div>
-				<div class="command-header">
-					<input type="text" class="command-display" readonly value="m">
-					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
-				</div>
-				<div class="command-options">
-					<div class="option-group">
-						<label>Process ID (PID)</label>
-						<input type="text" placeholder="1234" data-param="pid">
-					</div>
-					<div class="option-group">
-						<label>Memory Limit (MB)</label>
-						<input type="text" placeholder="512" data-param="mb">
-					</div>
-				</div>
-			</div>
-
-			<div class="command">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Toggle Paging</h2>
-				<div class="command-header">
-					<input type="text" class="command-display" readonly value="p">
-					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
-				</div>
-			</div>
-
-			<div class="command" data-command="sac-raise">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Raise Process Priority</h2>
-				<div style="margin-bottom: 12px; padding: 12px; background-color: var(--bg-tertiary); border-radius: 8px; font-size: 13px; color: var(--text-secondary);">
-					Raise the priority of a process by one level.
-				</div>
-				<div class="command-header">
-					<input type="text" class="command-display" readonly value="r">
-					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
-				</div>
-				<div class="command-options">
-					<div class="option-group">
-						<label>Process ID (PID)</label>
-						<input type="text" placeholder="1234" data-param="pid">
-					</div>
-				</div>
-			</div>
-
-			<div class="command">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Display Time and Date</h2>
-				<div class="command-header">
-					<input type="text" class="command-display" readonly value="s">
-					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
-				</div>
-			</div>
-
-			<div class="command" data-command="sac-settime">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Set Time and Date</h2>
-				<div style="margin-bottom: 12px; padding: 12px; background-color: var(--bg-tertiary); border-radius: 8px; font-size: 13px; color: var(--text-secondary);">
-					Set the current time and date (24 hour clock used).
-				</div>
-				<div class="command-header">
-					<input type="text" class="command-display" readonly value="s">
-					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
-				</div>
-				<div class="command-options">
-					<div class="option-group">
-						<label>Date (mm/dd/yyyy)</label>
-						<input type="text" placeholder="12/31/2025" data-param="date">
-					</div>
-					<div class="option-group">
-						<label>Time (hh:mm)</label>
-						<input type="text" placeholder="14:30" data-param="time">
-					</div>
-				</div>
-			</div>
-
-			<div class="command">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Display Process List (tlist)</h2>
-				<div class="command-header">
-					<input type="text" class="command-display" readonly value="t">
-					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
-				</div>
-			</div>
-
-			<div class="command">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Restart System</h2>
-				<div style="margin-bottom: 12px; padding: 12px; background-color: var(--bg-tertiary); border-radius: 8px; font-size: 13px; color: var(--text-secondary);">
-					<strong>Warning:</strong> Restart the system immediately.
-				</div>
-				<div class="command-header">
-					<input type="text" class="command-display" readonly value="restart">
-					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
-				</div>
-			</div>
-
-			<div class="command">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Shutdown System</h2>
-				<div style="margin-bottom: 12px; padding: 12px; background-color: var(--bg-tertiary); border-radius: 8px; font-size: 13px; color: var(--text-secondary);">
-					<strong>Warning:</strong> Shutdown the system immediately. This puts the nPartition in a shutdown for reconfig (inactive) state. To boot the nPartition (make it active), use the BO command at the service processor Command menu.
-				</div>
-				<div class="command-header">
-					<input type="text" class="command-display" readonly value="shutdown">
-					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
-				</div>
-			</div>
-
-			<div class="command">
-				<h2 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Crash Windows System</h2>
-				<div style="margin-bottom: 12px; padding: 12px; background-color: var(--bg-tertiary); border-radius: 8px; font-size: 13px; color: var(--text-secondary);">
-					<strong>Warning:</strong> Crash the Windows system running on the nPartition. You must have crash dump enabled.
-				</div>
-				<div class="command-header">
-					<input type="text" class="command-display" readonly value="crashdump">
-					<button class="copy-btn" onclick="copyCommand(this)">Copy</button>
-				</div>
-			</div>
-
-			</div>
-
-			<div class="tab-content" data-generation="fru">
-			</div>
-		</main>
+			</div> <!-- Command Card -->
+		</div> <!-- Cards container -->
 	</div>
 
-	<script src="./scripts/main.js"></script>
-	<script src="./scripts/wcs.js"></script>
-	<script src="./scripts/gen6.js"></script>
-	<script src="./scripts/sac.js"></script>
+	<script src="scripts/main.js" type="module"></script>
 </body>
 </html>
