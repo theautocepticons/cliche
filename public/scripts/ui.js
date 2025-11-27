@@ -499,29 +499,68 @@ function analyzeBlademezzStatus() {
 	}
 
 	// Helper function to parse boolean value - returns true/false/null
-	function parseBool(pattern) {
-		const match = pattern.exec(input);
-		if (!match) return null;
-		return match[1].toLowerCase() === 'true';
+	// Supports both formats: "= True/False" and ": 1/0"
+	function parseBool(...patterns) {
+		for (const pattern of patterns) {
+			const match = pattern.exec(input);
+			if (match) {
+				const value = match[1].toLowerCase();
+				if (value === 'true' || value === '1') return true;
+				if (value === 'false' || value === '0') return false;
+			}
+		}
+		return null;
 	}
 
 	// Parse the status values using regex
+	// Supports both old format (Pcie Lane 0 Up = True) and new format (PCIe HIP 0 Up: 1)
+	// @TODO: Add support for Link 2 (currently only tracking Links 0 and 1)
 	const status = {
-		pcieLane0Up: parseBool(/Pcie\s+Lane\s+0\s+Up\s*=\s*(True|False)/i),
-		pcieLane1Up: parseBool(/Pcie\s+Lane\s+1\s+Up\s*=\s*(True|False)/i),
-		networkLink0Up: parseBool(/Network\s+Link\s+0\s+Up\s*=\s*(True|False)/i),
-		networkLink0Tx: parseBool(/Network\s+Link\s+0\s+Tx\s+Activity\s*=\s*(True|False)/i),
-		networkLink0Rx: parseBool(/Network\s+Link\s+0\s+Rx\s+Activity\s*=\s*(True|False)/i),
-		networkLink1Up: parseBool(/Network\s+Link\s+1\s+Up\s*=\s*(True|False)/i),
-		networkLink1Tx: parseBool(/Network\s+Link\s+1\s+Tx\s+Activity\s*=\s*(True|False)/i),
-		networkLink1Rx: parseBool(/Network\s+Link\s+1\s+Rx\s+Activity\s*=\s*(True|False)/i),
+		pcieLane0Up: parseBool(
+			/Pcie\s+Lane\s+0\s+Up\s*=\s*(True|False)/i,
+			/PCIe\s+HIP\s+0\s+Up\s*:\s*([01])/i
+		),
+		pcieLane1Up: parseBool(
+			/Pcie\s+Lane\s+1\s+Up\s*=\s*(True|False)/i,
+			/PCIe\s+HIP\s+1\s+Up\s*:\s*([01])/i
+		),
+		networkLink0Up: parseBool(
+			/Network\s+Link\s+0\s+Up\s*=\s*(True|False)/i,
+			/Link\s+0\s+Up\s*:\s*([01])/i
+		),
+		networkLink0Tx: parseBool(
+			/Network\s+Link\s+0\s+Tx\s+Activity\s*=\s*(True|False)/i,
+			/Link\s+0\s+Tx\s+Activity\s*:\s*([01])/i
+		),
+		networkLink0Rx: parseBool(
+			/Network\s+Link\s+0\s+Rx\s+Activity\s*=\s*(True|False)/i,
+			/Link\s+0\s+Rx\s+Activity\s*:\s*([01])/i
+		),
+		networkLink0TxReady: parseBool(
+			/Link\s+0\s+Tx\s+Ready\s*:\s*([01])/i
+		),
+		networkLink1Up: parseBool(
+			/Network\s+Link\s+1\s+Up\s*=\s*(True|False)/i,
+			/Link\s+1\s+Up\s*:\s*([01])/i
+		),
+		networkLink1Tx: parseBool(
+			/Network\s+Link\s+1\s+Tx\s+Activity\s*=\s*(True|False)/i,
+			/Link\s+1\s+Tx\s+Activity\s*:\s*([01])/i
+		),
+		networkLink1Rx: parseBool(
+			/Network\s+Link\s+1\s+Rx\s+Activity\s*=\s*(True|False)/i,
+			/Link\s+1\s+Rx\s+Activity\s*:\s*([01])/i
+		),
+		networkLink1TxReady: parseBool(
+			/Link\s+1\s+Tx\s+Ready\s*:\s*([01])/i
+		),
 		statusCode: /Status\s*=\s*(0x[0-9A-Fa-f]+)/i.exec(input)?.[1]?.toUpperCase()
 	};
 
 	// Check if we found any values
 	const hasData = Object.values(status).some(val => val !== null);
 	if (!hasData) {
-		resultsDiv.innerHTML = '<div class="mezz-error">Could not parse status values. Please check the format.<br><br>Expected format:<br>Pcie Lane 0 Up = True<br>Network Link 0 Up = False<br>etc.</div>';
+		resultsDiv.innerHTML = '<div class="mezz-error">Could not parse status values. Please check the format.<br><br>Supported formats:<br><strong>Format 1:</strong> Pcie Lane 0 Up = True<br><strong>Format 2:</strong> Link 0 Up: 1<br>etc.</div>';
 		return;
 	}
 
@@ -610,6 +649,16 @@ function analyzeBlademezzStatus() {
 			issues['Network Configuration'] += 30;
 			anomalies.push('Link 0: Up but no activity');
 		}
+		// Tx Ready indicates link health (75% confidence)
+		if (status.networkLink0TxReady === false) {
+			issues['Loop Back Cable'] += 25;
+			issues['Motherboard/NIC/Backplane'] += 15;
+			anomalies.push('Link 0: Tx Ready is not asserted');
+		} else if (status.networkLink0TxReady === true) {
+			// Reduce probability of Link 0 issues by 20 points (75% confidence)
+			issues['Loop Back Cable'] -= 20;
+			issues['Motherboard/NIC/Backplane'] -= 15;
+		}
 
 		// Analyze Network Link 1 (cable to switch)
 		if (status.networkLink1Up === false) {
@@ -627,6 +676,14 @@ function analyzeBlademezzStatus() {
 		if (status.networkLink1Tx === false && status.networkLink1Rx === false && status.networkLink1Up === true) {
 			issues['Network Configuration'] += 30;
 			anomalies.push('Link 1: Up but no activity');
+		}
+		// Tx Ready indicates link health (75% confidence)
+		if (status.networkLink1TxReady === false) {
+			issues['DAC Cable to Switch'] += 25;
+			anomalies.push('Link 1: Tx Ready is not asserted');
+		} else if (status.networkLink1TxReady === true) {
+			// Reduce probability of Link 1 issues by 20 points (75% confidence)
+			issues['DAC Cable to Switch'] -= 20;
 		}
 
 		// Sort issues by probability
